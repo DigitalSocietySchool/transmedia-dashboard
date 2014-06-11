@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+	<html>
+
+	<head>
+		<script src="js/d3.min.js"></script>
+	</head>
+	
+	<style>
+	
+	</style>
+
+	
+<body>
+	
+	<div style="width:625px;heigth:700px">
+		<script>
+			var x = d3.scale.identity().domain([0,430]);
+			var y = d3.scale.identity().domain([0,500]);
+			
+		
+		
+		
+		</script> 
+
+
+
+
+
+	<div>
+	
+</body>
+	
+	
+	
+	
+	
+	
+	
+	
+	</html>
+
+
+
+

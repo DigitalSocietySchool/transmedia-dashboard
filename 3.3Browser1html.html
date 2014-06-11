@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Bar Chart with Negative Values</title>
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.bar.positive {
+  fill: #57B7B9;
+}
+
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+				var margin = {top: 30, right: 150, bottom: 40, left: 150},
+					width = 1200 - margin.left - margin.right,
+					height = 500 - margin.top - margin.bottom;
+
+				var x = d3.scale.linear()
+					.range([0, width]);
+
+				var y = d3.scale.ordinal()
+					.rangeRoundBands([0, height], .3);
+
+				var yAxis = d3.svg.axis()
+					.scale(y)
+					.orient("left");
+				
+				var xAxis = d3.svg.axis()
+					.scale(x)
+					.orient("bottom");
+
+				var svg = d3.select("body").append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+				  .append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+					
+					
+
+				d3.tsv("data/3.3Browser1.tsv", type, function(error, data) {
+				  x.domain([0, d3.max(data, function(d) { return d.avgsessionduration; })]);////d3.extent(data, function(d) { return d.avgsessionduration; })).nice();
+				  y.domain(data.map(function(d) { return d.browser; }));
+				  
+alert(d3.max(data, function(d) { return d.avgsessionduration; }));//);
+				  svg.selectAll(".bar")
+					  .data(data)
+					.enter().append("rect")
+					  .attr("class",  "bar positive")
+					  .attr("x", 0)
+					  .attr("y", function(d) { return y(d.browser); })
+					  .attr("width", function(d) { return d.avgsessionduration; })
+					  .attr("height", y.rangeBand())
+					  .append("g")
+					  .attr("class", "axis");
+
+
+// code to place the X-axis at the bottom of graph
+				   svg.append("g")
+					  .attr("class", "x axis")
+					  .attr("transform", "translate(0," + height + ")")
+					  .call(xAxis);
+
+// code for Y-axis
+				  svg.append("g")
+					  .attr("class", "y axis")
+					  .call(yAxis)
+				 		.selectAll("text")  
+						.style("text-anchor", "end")
+						.attr("dx", "-.8em")
+						.attr("dy", ".15em");
+				 
+					  
+// Label X-axis					  
+				svg.append("text")      
+						.attr("x", 860 )
+						.attr("y", 440 )
+						.style("text-anchor", "middle")
+						.text("avg time on site");
+				});
+
+				function type(d) {
+				  d.value = +d.value;
+				  return d;
+				}
+
+</script>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+	<html>
+	
+<!-- START HEAD-->
+		<head>
+			<style> 
+			.chart div {background-color: #5858FA;
+			border:1px solid black;
+			color:white;
+			}
+			</style> 
+			
+			<script src="http://d3js.org/d3.v3.min.js"></script> 
+		</head>
+<!-- END HEAD -->
+
+
+<!-- START BODY -->
+		<body>
+			<div class="chart"></div>
+				<script>
+		//START var data
+					var data= [100, 200, 300, 400, 500, 600, 800, 900];
+					var chart = d3.select(".chart");
+					chart.selectAll("div").data(data)
+						.enter()
+							.append("div")
+							.style ("width", function(vd) {return vd+"px";}).text(function(vd){return vd;});
+		//END var data
+					
+				</script>
+			
+				
+		
+		
+		
+		
+		
+		
+		
+		</body>
+<!-- END BODY -->
+			
+	</html> 
+

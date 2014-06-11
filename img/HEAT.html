@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)http://www.patrick-wied.at/static/heatmapjs/examples.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>heatmap.js | Examples: Static Heatmap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A heatmap.js example showing a static heatmap.">
+    <meta name="keywords" content="html5 heatmap, static heatmap">
+    <meta name="author" content="Patrick Wied">
+    <link href="http://www.patrick-wied.at/static/heatmapjs/css/bootstrap.css" rel="stylesheet">
+    <link href="http://www.patrick-wied.at/static/heatmapjs/css/prettify.css" rel="stylesheet">
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="http://www.patrick-wied.at/static/heatmapjs/index.html">heatmap.js</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="http://www.patrick-wied.at/static/heatmapjs/index.html">Home</a></li>
+              <li class="active"><a href="./HEAT_files/HEAT.html" title="heatmap.js examples">Examples</a></li>
+              <li><a href="http://www.patrick-wied.at/static/heatmapjs/showcases.html" title="Real World Usage of heatmap.js">Showcases</a></li>
+              <li><a href="https://github.com/pa7/heatmap.js/blob/master/README.md" target="_blank" title="Documentation on Github">Documentation</a></li>
+              <li><a href="http://www.patrick-wied.at/static/heatmapjs/contact.html" title="Contact for Support &amp; Feedback">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>
+            Examples
+            <small>See how easy it is to create heatmaps with heatmap.js</small>
+            </h1>
+        </div>
+        <div class="row">
+            <div class="span4 well" style="padding:8px 0;">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                    Basic Examples
+                    </li>
+                    <li class="active">
+                        <a href="./HEAT_files/HEAT.html" title="static heatmap example">Static Heatmap</a>
+                    </li>
+                    <li>
+                        <a href="http://www.patrick-wied.at/static/heatmapjs/example-heatmap-legend.html" title="static heatmap example with legend">Static Heatmap with Legend</a>
+                    </li>
+                    <li>
+                        <a href="http://www.patrick-wied.at/static/heatmapjs/example-heatmap-click.html">Realtime Heatmap - Mouse Clicks</a>
+                    </li>
+                    <li>
+                        <a href="http://www.patrick-wied.at/static/heatmapjs/example-heatmap-mousemove.html">Realtime Heatmap - Mouse Movement</a>
+                    </li>
+                    <li class="nav-header">
+                    Map Layer Examples
+                    </li>
+                    <li>
+                        <a href="http://www.patrick-wied.at/static/heatmapjs/example-heatmap-googlemaps.html">Google Maps V3 Layer</a>
+                    </li>
+                    <li>
+                        <a href="http://www.patrick-wied.at/static/heatmapjs/example-heatmap-openlayers.html">Openlayers Layer</a>
+                    </li>
+                    <li>
+                        <a href="http://www.patrick-wied.at/static/heatmapjs/example-heatmap-arcgis.html">ArcGIS Layer</a>
+                    </li>
+                    <li>
+                        <a href="http://www.patrick-wied.at/static/heatmapjs/example-heatmap-leaflet.html">Leaflet Layer</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tabbable span7" style="width:615px;"> <!-- Onlyrequired for left/right tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="http://www.patrick-wied.at/static/heatmapjs/examples.html#tab1" data-toggle="tab">Live Demo</a></li>
+                    <li><a href="http://www.patrick-wied.at/static/heatmapjs/examples.html#tab2" data-toggle="tab">Code</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                    <div style="padding:8px 0">This example shows a simple static heatmap. In this context static means that the data will not be changed at any time after the heatmap creation process.</div>
+                        <div class="alert alert-info">Click on the heatmap in order to refresh the dataset</div>
+                        <div id="heatmapArea" class="well" style="width:610px;padding:0;height:400px;cursor:pointer;position:relative;">
+
+                        <canvas width="610" height="400" style="position: absolute; top: 0px; left: 0px; z-index: 10000000;"></canvas></div>
+                                            </div>
+                    <div class="tab-pane" id="tab2">
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="dec">&lt;!DOCTYPE html&gt;</span></li><li class="L1"><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">lang</span><span class="pun">=</span><span class="atv">"en"</span><span class="tag">&gt;</span></li><li class="L2"><span class="pln">...</span></li><li class="L3"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"heatmapArea"</span><span class="pln"> </span><span class="tag">/&gt;</span></li><li class="L4"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"heatmap.js"</span><span class="tag">&gt;&lt;/script&gt;</span></li><li class="L5"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span></li><li class="L6"><span class="pln">window</span><span class="pun">.</span><span class="pln">onload </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span></li><li class="L7"><span class="pln">&nbsp;</span></li><li class="L8"><span class="pln">    </span><span class="com">// heatmap configuration</span></li><li class="L9"><span class="pln">    </span><span class="kwd">var</span><span class="pln"> config </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></li><li class="L0"><span class="pln">        element</span><span class="pun">:</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">"heatmapArea"</span><span class="pun">),</span></li><li class="L1"><span class="pln">        radius</span><span class="pun">:</span><span class="pln"> </span><span class="lit">30</span><span class="pun">,</span></li><li class="L2"><span class="pln">        opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">50</span></li><li class="L3"><span class="pln">    </span><span class="pun">};</span></li><li class="L4"><span class="pln">    </span></li><li class="L5"><span class="pln">    </span><span class="com">//creates and initializes the heatmap</span></li><li class="L6"><span class="pln">    </span><span class="kwd">var</span><span class="pln"> heatmap </span><span class="pun">=</span><span class="pln"> h337</span><span class="pun">.</span><span class="pln">create</span><span class="pun">(</span><span class="pln">config</span><span class="pun">);</span></li><li class="L7"><span class="pln">&nbsp;</span></li><li class="L8"><span class="pln">    </span><span class="com">// let's get some data</span></li><li class="L9"><span class="pln">    </span><span class="kwd">var</span><span class="pln"> data </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></li><li class="L0"><span class="pln">        max</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pun">,</span></li><li class="L1"><span class="pln">        data</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span></li><li class="L2"><span class="pln">            </span><span class="pun">{</span><span class="pln"> x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pun">,</span><span class="pln"> count</span><span class="pun">:</span><span class="pln"> </span><span class="lit">18</span><span class="pln"> </span><span class="pun">},</span></li><li class="L3"><span class="pln">            </span><span class="pun">{</span><span class="pln"> x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">25</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">:</span><span class="pln"> </span><span class="lit">25</span><span class="pun">,</span><span class="pln"> count</span><span class="pun">:</span><span class="pln"> </span><span class="lit">14</span><span class="pln"> </span><span class="pun">},</span></li><li class="L4"><span class="pln">            </span><span class="pun">{</span><span class="pln"> x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">50</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">:</span><span class="pln"> </span><span class="lit">30</span><span class="pun">,</span><span class="pln"> count</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pln"> </span><span class="pun">}</span></li><li class="L5"><span class="pln">            </span><span class="com">// ...</span></li><li class="L6"><span class="pln">        </span><span class="pun">]</span></li><li class="L7"><span class="pln">    </span><span class="pun">};</span></li><li class="L8"><span class="pln">&nbsp;</span></li><li class="L9"><span class="pln">    heatmap</span><span class="pun">.</span><span class="pln">store</span><span class="pun">.</span><span class="pln">setDataSet</span><span class="pun">(</span><span class="pln">data</span><span class="pun">);</span></li><li class="L0"><span class="pun">};</span></li><li class="L1"><span class="tag">&lt;/script&gt;</span></li><li class="L2"><span class="tag">&lt;/html&gt;</span></li></ol></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+      <footer>
+        <p style="width:330px;margin:auto;">heatmap.js by <a href="http://www.patrick-wied.at/" title="patrick wied javascript developer" target="_blank">Patrick Wied</a> (<a href="http://twitter.com/patrickwied" target="_blank">@patrickwied</a>) 2011-2013</p>
+      </footer>
+<a href="https://github.com/pa7/heatmap.js" target="_blank"><img style="position: fixed; top: 0; left: 0; border: 0;z-index:10000" src="./HEAT_files/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+    </div> <!-- /container -->
+    <script type="text/javascript" src="./HEAT_files/jquery.js"></script>
+    <script type="text/javascript" src="./HEAT_files/prettify.js"></script>
+    <script type="text/javascript" src="./HEAT_files/bootstrap.js"></script>
+    <script type="text/javascript" src="./HEAT_files/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="./HEAT_files/heatmap.js"></script>
+    <script type="text/javascript">
+        !function($){
+            $(function(){
+                window.prettyPrint && prettyPrint();
+                var heatmap = h337.create({
+                    element: $("#heatmapArea")[0],
+                    radius: 30,
+                    opacity: 50
+                });
+                window.heatmap = heatmap;
+
+                var generateData = function(){ 
+                    var max = (Math.random()*100+1) >> 0,
+                        data = [],
+                        length = 200,
+                        width = heatmap.get("width"),
+                        height = heatmap.get("height");
+
+                    while(length--){
+                        data.push({
+                            x: (Math.random()*width) >> 0,
+                            y: (Math.random()*height) >> 0,
+                            count: (Math.random()*max) >> 0
+                        });
+                    }
+
+                    return {
+                        max: max,
+                        data: data
+                    };
+                };
+
+                var data = generateData();
+
+                heatmap.store.setDataSet(data);
+
+                $('#heatmapArea').click(function(){
+                    heatmap.store.setDataSet(generateData());
+                });
+            });
+        }(window.jQuery)
+    </script>
+
+    <!-- Remove this from your site, it's my analytics script !-->
+    <script type="text/javascript">
+      var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.patrick-wied.at/helper/piwik/" : "http://www.patrick-wied.at/helper/piwik/");
+      document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+      </script><script src="./HEAT_files/piwik.js" type="text/javascript"></script><script type="text/javascript">
+      try {
+      var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+      piwikTracker.trackPageView();
+      piwikTracker.enableLinkTracking();
+      } catch( err ) {}
+    </script><noscript>&lt;p&gt;&lt;img src="http://www.patrick-wied.at/helper/piwik/piwik.php?idsite=1" style="border:0" alt="" /&gt;&lt;/p&gt;</noscript>
+    <!-- End of Analytics Script -->
+  
+
+
+</body></html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<script src="js/d3.min.js"></script>
+		<link href="ballsstyle.css" rel="stylesheet" />
+		<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'/>
+	</head>
+
+	<style>
+				
+	</style>
+
+	
+	<body>
+		<div id="base" style="width:660px;heigth:700px">
+			<script>
+			
+				var margin={top:20, right:20, bottom:30, left:44},
+					width=660-margin.left-margin.right,
+					height=700-margin.top-margin.bottom;
+				
+				var x=d3.scale.linear()
+					.range([0,width]);
+					
+				var y = d3.scale.ordinal()
+    				.domain(["Source 1", "Source 2", "Source 3", "Source 4", "Source 5", "Source 6", "Source 7", "Source 8","Source 9", "Source 10"])
+   					.rangePoints([0, width]);
+				
+				/*var y=d3.scale.linear()
+					.range([height,0]);*/
+				
+				var color = d3.scale.category10();
+				
+				var formatAxis = d3.format("0");
+								
+				var xAxis=d3.svg.axis()
+					.scale(x)
+					.orient("bottom");
+			
+				var yAxis=d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.ticks(10); 
+				
+				var svg=d3.select("#base").append("svg")
+					.attr("width", width+margin.left + margin.right)
+					.attr("height", height+margin.top + margin.bottom)
+					.append("g")
+					.attr("transform","translate("+margin.left+","+margin.top+")");
+			
+				
+				function make_x_axis() {        
+    				return d3.svg.axis()
+        			.scale(x)
+        	   		.orient("bottom")
+         			.ticks(10)
+         		
+				}
+
+				function make_y_axis() {        
+  				 	return d3.svg.axis()
+       			 	.scale(y)
+        			.orient("left")
+        			.ticks(10)
+				}
+				
+				
+				d3.tsv("data/data_referralPerforman_2.3.1.tsv", function(error, data) {
+				  
+				// Defines the min and max values of the scales for the axis
+				x.domain([0,100]); 
+  				//y.domain([0,10]);
+
+					
+			   var chart = d3.select("body")
+			    .append("svg")
+				.attr("class", "chart")
+				.attr("width", 490)
+				.attr("height", 330)
+				.append("g")
+				  // move 0,0 slightly down and right to accomodate axes
+				 .attr("transform", "translate(30,20)");
+
+				svg.append("g")
+					  .attr("class", "x axis") 
+					  .attr("transform", "translate(0," + height + ")")
+					  .call(xAxis)
+					.append("text")
+					  .attr("class", "label")
+					  .attr("x", width)
+					  .attr("y", -6)
+					  .style("text-anchor", "end")
+					  .text("Average % of content watched");
+// Code for Y axis
+
+				  svg.append("g")
+					  .attr("class", "y axis")
+					  .call(yAxis)
+					.append("text")
+					  .attr("class", "label")
+					  .attr("transform", "rotate(-90)")
+					  .attr("y", 6)
+					  .attr("dy", ".71em")
+					  .style("text-anchor", "end")
+					  .text("Sources");
+					  
+// Code for grid
+						svg.append("g")
+						.attr("class", "grid")
+						.attr("width", width)
+						.attr("height", height)
+						.style("fill", color)
+						.attr("id", "gradient");
+					
+								
+					svg.append("g")       
+        				.attr("class", "grid")
+       					 .attr("transform", "translate(0," + height + ")")
+        				.call(make_x_axis()
+            				.tickSize(-height, 0, 0)
+            				.tickFormat("")
+            			);
+       					
+       					svg.append("g")         
+       					 .attr("class", "grid")
+       					 .call(make_y_axis()
+           				 .tickSize(-width, 0, 0)
+            			.tickFormat("")
+        				);    			
+        				
+// Code for circles
+				 	 svg.selectAll(".dot")
+					  .data(data)
+					.enter().append("circle")
+					  .attr("class", "dot")
+					  .attr("r", function(d) { return d.session; })//Size
+					  .attr("cx", function(d) { return x(d.percentage); })//position x-axis
+					  .attr("cy", function(d) { return y(d.source); });//position y-axis
+					  
+
+// Code to create the legend in the upper right corner
+
+					var legend = svg.selectAll(".legend") 
+					  .data(color.domain())
+					.enter().append("g")
+					  .attr2
+					  .attr("transform", function(d, i) { return "translate(0," + i * 40 + ")"; });
+
+				  legend.append("rect")
+					  .attr("x", width - 18)
+					  .attr("width", 18)
+					  .attr("height", 18)
+					  .style("fill", color);
+
+				  legend.append("text")
+					  .attr("x", width - 24)
+					  .attr("y", 9)
+					  .attr("dy", ".35em")
+					  .style("text-anchor", "end")
+					  .text(function(d) { return d; });
+					  
+
+        				
+				});
+			</script>                                                                                                                            
+		</div>
+		
+		
+	</body>
+</html>
+
+
+
+

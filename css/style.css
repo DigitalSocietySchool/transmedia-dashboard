@@ -3503,3 +3503,14 @@ ul.amounts li {
 .feedback .control-group  {
     margin-bottom: 15px;
 }
+
+/*Transmedia Analitics modifications*/
+.left {
+	position: relative;
+    float: left;
+}
+
+.right {
+	position: relative;
+    float: right;
+}

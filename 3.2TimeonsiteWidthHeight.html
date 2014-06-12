@@ -25,7 +25,13 @@
   display: none;
 }
 
-
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
 
 </style>
 <body>
@@ -59,12 +65,44 @@
 			  .append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
+// function for grid y axis (not being used here)
+					
+				function make_y_axis() {        
+					return d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.ticks(10)
+					}
+	
+// function for grid x axis
+					 
+				function make_x_axis() {        
+					return d3.svg.axis()
+					.scale(x)
+					 .orient("bottom")
+					 .ticks(10)
+					}
+
+
+
 			d3.tsv("databar.tsv", type, function(error, data) {
 	  		  //x.domain([0,1000]);
 			  x.domain(data.map(function(d) { return d.widthrange; }));
 			  y.domain([0, d3.max(data, function(d) { return d.averagesessionduration; })]);
 			  
 			  
+// code to draw the grids			    
+			    
+				
+			  
+				svg.append("g")         
+					.attr("class", "grid")
+					.style("stroke-dasharray", ("2, 2"))
+					.call(make_y_axis()
+					.tickSize(-width, 0, 0)
+					.tickFormat("")
+					)
 				
 			//outerTickSize(function(d) { return d.sessions; });
 

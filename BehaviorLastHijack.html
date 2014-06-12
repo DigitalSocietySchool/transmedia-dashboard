@@ -249,9 +249,8 @@ a:hover.tooltips span {
                 
 						</ul>
 					</div>
-<!-- END BREADCRUMB-->
-						
-					
+
+										
 <!-- START BEHAVIOR TITLE + QUESTION -->
 					<div>
 						<h1>BEHAVIOR</h1>	
@@ -259,269 +258,462 @@ a:hover.tooltips span {
 						stopping exploration of the content?</h5>
 					</div>
 	
-<!-- START INTRO STATE: PIECHART OVERVIEW -->
+<!-- START INTRO STATE:OVERVIEW -->
 				 
-                <div class="span10" > 
-                    <div class="widget"> 
+                <div style="width:100%"> 
+                	<div class="widget"> 
                         <div class="widget-title">
                             <h4> Intro state: overview </h4>
                      			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-                   	 </div>
-                   	 
-                   	 	
-                    <div class="widget-body"> 
-                        <div id="pieIntro">
-                        <p> This graph shows the ratio between how many visitors skipped the intro (in % of all sessions), how many visitors leave the website without watching the full (intro in % of all sessions) and how many visitors watch the entire intro in % of all sessions.  </p>
-								
-<!-- DATEPICKER CODE-->								
-					<div class="left">
-			<p>Start date:</p> <input type="text" id="departing"></p>
-		</div>
-								
-		<div class="right">
-			<p> End date:</p> <input type="text" id="returning">
-		</div> 
-		
-		<div id="main">
-									
-		</div>
-		<div> 
-
-<!-- SCRIPT PIECHART -->								
-                    
-                        <script>
-						var width = 980,
-   						 height = 400,
-    					radius = Math.min(width, height) / 2;
-
-						var color = d3.scale.ordinal()
-						.range(["#EEE8D6", " #E9B690", " #57B7B9"]);
-
-
-						var arc = d3.svg.arc()
-						 .outerRadius(radius - 19)
-						 .innerRadius(0);
-						 
-						var arcBorder = d3.svg.arc()
-						  .innerRadius(radius - 15 )
-						  .outerRadius(radius - 10);
-						
-						var pie = d3.layout.pie()
-						 .sort(null)
-						.value(function(d) { return d.session; });
-						
-
-						var svg = d3.select("#pieIntro").append("svg")
-						 .attr("width", width)
-						 .attr("height", height)
-						 .append("g")
-						 .attr("class","circle")
-						 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-						d3.csv("data/data1.1.2.csv", function(error, data) {
-
-						data.forEach(function(d) {
-						 d.session = +d.session;
-						 });
-
-						var div = d3.select("body").append("div")   
-							.attr("class", "tooltip")               
-							.style("opacity", 0);
-	
-						var g = svg.selectAll(".arc")
-							.data(pie(data))
-							.enter().append("g")
-							.attr("class", "arc");
-
-						 g.append("path")
-							.attr("d", arc)
-							.style("fill", function(d) { return color(d.data.label); });
+                   	 	</div>	
+						<div class="widget-body"> 
 							
-						g.append("path")
-							.attr("fill", "#5D686E")
-    						.attr("d", arcBorder)
-    						.style("stroke-width", "1pt");
+							<p> This graph shows the ratio between how many visitors skipped the intro (in % of all sessions), how many visitors leave the website without watching the full (intro in % of all sessions) and how many visitors watch the entire intro in % of all sessions.  </p>
+							
+							<!-- DATEPICKER CODE-->								
+							<div class="left">
+								<p>Start date:</p> <input type="text" id="departing"></p> 
+							</div>
+							
+							<div class="right">
+								<p> End date:</p> <input type="text" id="returning">
+							</div> 
 
-						 g.append("text")
-							.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-							 .attr("dy", ".35em")
-							 .style("text-anchor", "middle")
-							 .text(function(d) { return d.data.percentage; });
-			
-						g.on("mouseover", function(d) {      
-							div.transition()        
-								.duration(200)      
-								.style("opacity", .9);      
-							div.html(d.data.session )  
-								.style("left", (d3.event.pageX) + "px")     
-								.style("top", (d3.event.pageY - 28) + "px")
-								.style("padding-left","10px")
-								.style ("padding-right","10px")
-								.style("font-size", "11pt" )
-								.style("background-color", "#5D686E")
-								.style("color", "#FFF");
-							})                  
-						.on("mouseout", function(d) {       
-							div.transition()        
-								.duration(500)      
-								.style("opacity", 0);   
-						});
+							<div id="pieIntro" ></div> 
+							
+<!-- SCRIPT PIECHART INTRO STATE-->								
 					
-					
-			
-			
-<!-- LABEL-->
-	
-						var outerRadius = 100;
-						g.append("text")
-							.attr("transform", function(d) { var pos = arc.centroid(d);
-							var posY=pos[1]*1.3;
-							if(pos[1]<0){
-							posY=pos[1]*0.7;
-											}
-        						return "translate(" + pos[0] +"," + posY + ")";})
-							 .attr("dy", ".35em")
-							 .style("text-anchor", "middle")
-							 .text(function(d) {  return d.data.label ; });
+							<script>
+								var width = 980,
+								 height = 400,
+								radius = Math.min(width, height) / 2;
 
-						});
-					
+								var color = d3.scale.ordinal()
+								.range(["#EEE8D6", " #E9B690", " #57B7B9"]);
 
 
-
-				</script>
-					
-					<p style="text-align:center;"> total sessions = 2473 </p>
-                        </div>
-                     </div>    
-                     </div>
-                            		
-		 
-<!-- START Manual vs. autopilot: overview-->	
-	<div class="widget">
-        <div class="widget-title">
-            <h4>Manual vs. autoplay: overview</h4>
-            <a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-			<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-        </div>
-                                
-	<div class="widget-body">
-
-<!-- DATEPICKER CODE-->								
-					
-	<div class="left">
-			<p>Start date:</p> <input type="text" id="departing"></p>
-	</div>
-								
-	<div class="right">
-		<p> End date:</p> <input type="text" id="returning">
-	</div> 
-		
-	<div id="main">
-									
-		</div>
-		</div> 
-                             
-								
- <!-- START Video populuarity-->	
- 
-        <div class="widget">
-            <div class="widget-title">
-                <h4>Video popularity</h4>
-                <a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-				<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-        </div> 	
-                           			
-        <div class="widget-body">
-                           											
-<!-- DATEPICKER CODE-->		
+								var arc = d3.svg.arc()
+								 .outerRadius(radius - 19)
+								 .innerRadius(0);
+						 
+								var arcBorder = d3.svg.arc()
+								  .innerRadius(radius - 15 )
+								  .outerRadius(radius - 10);
 						
-			<div class="left">
-				<p>Start date:</p> <input type="text" id="departing"></p>
-			</div>
-								
-			<div class="right">
-				<p> End date:</p> <input type="text" id="returning">
-			</div> 
-		
-			<div id="main">	</div>
-		
-			</div>
-                                            
+								var pie = d3.layout.pie()
+								 .sort(null)
+								.value(function(d) { return d.session; });
+						
 
-<!-- START Narrative paths: overview-->	
+								var svg = d3.select("#pieIntro").append("svg")
+								 .attr("width", width)
+								 .attr("height", height)
+								 .append("g")
+								 .attr("class","circle")
+								 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+								d3.csv("data/data1.1.2.csv", function(error, data) {
+
+								data.forEach(function(d) {
+								 d.session = +d.session;
+								 });
+
+								var div = d3.select("body").append("div")   
+									.attr("class", "tooltip")               
+									.style("opacity", 0);
 	
-	<div class="widget">
-        <div class="widget-title">
-            <h4>Narrative paths: overview</h4>
-            <a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-			<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-        </div>              		
-                           		
-    <div class="widget-body">
-                    		      								
-<!-- DATEPICKER CODE-->								
-		<div class="left">
-			<p>Start date:</p> <input type="text" id="departing"></p>
-		</div>
+								var g = svg.selectAll(".arc")
+									.data(pie(data))
+									.enter().append("g")
+									.attr("class", "arc");
+
+								 g.append("path")
+									.attr("d", arc)
+									.style("fill", function(d) { return color(d.data.label); });
+							
+								g.append("path")
+									.attr("fill", "#5D686E")
+									.attr("d", arcBorder)
+									.style("stroke-width", "1pt");
+
+								 g.append("text")
+									.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+									 .attr("dy", ".35em")
+									 .style("text-anchor", "middle")
+									 .text(function(d) { return d.data.percentage; });
+									 
+//LABEL (ON HOVER) INTRO STATE: OVERVIEW
+								g.on("mouseover", function(d) {      
+									div.transition()        
+										.duration(200)      
+										.style("opacity", .9);      
+									div.html(d.data.session )  
+										.style("left", (d3.event.pageX) + "px")     
+										.style("top", (d3.event.pageY - 28) + "px")
+										.style("padding-left","10px")
+										.style ("padding-right","10px")
+										.style("font-size", "11pt" )
+										.style("background-color", "#5D686E")
+										.style("color", "#FFF");
+									})                  
+								.on("mouseout", function(d) {       
+									div.transition()        
+										.duration(500)      
+										.style("opacity", 0);   
+								});
+					
+// end 
+	
+								var outerRadius = 100;
+								g.append("text")
+									.attr("transform", function(d) { var pos = arc.centroid(d);
+									var posY=pos[1]*1.3;
+									if(pos[1]<0){
+									posY=pos[1]*0.7;
+													}
+										return "translate(" + pos[0] +"," + posY + ")";})
+									 .attr("dy", ".35em")
+									 .style("text-anchor", "middle")
+									 .text(function(d) {  return d.data.label ; });
+
+								});
+							</script>
+					
+							<p style="text-align:center;"> total sessions = 2473 </p>
+							
+						 </div>    
+					</div>
+                </div>
+                            		
+   
+	
+					 
+
+<!-- START MANUAL VS AUTO:OVERVIEW-->
+						
+					<div style="width:100%">
+					<div class="span6">	
+						<div class="widget">
+							<div class="widget-title">
+								<h4>Manual vs. autoplay: overview </h4>
+								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+							</div>
 								
-		<div class="right">
-			<p> End date:</p> <input type="text" id="returning">
-		</div> 
+							<div class="widget-body">
+
+<!-- DATEPICKER MANUAL VS AUTO-->								
+					
+								<div class="left">
+										<p>Start date:</p> <input type="text" id="start_ManualvsAuto"></p>
+								</div>
+								
+								<div class="right">
+									<p> End date:</p> <input type="text" id="end_ManualvsAuto">
+								</div> 
 		
-		<div id="main"> </div>
+								
+<!-- SCRIPT MANUAL VS AUTO -->
+
+							<div>
+								<div id="pieManual"> </div> 
+
+									<script>
+										var width = 500,
+										 height = 400,
+										radius = Math.min(width, height) / 2;
+
+
+										var div = d3.select("body").append("div")   
+											.attr("class", "tooltip")               
+											.style("opacity", 0);
+
+										var color = d3.scale.ordinal()
+										.range(["#EEE8D6", " #E9B690", "#57B7B9", "#9BA3B1"]);
+
+										var arc = d3.svg.arc()
+										 .outerRadius(radius - 19)
+										 .innerRadius(0);
+ 
+										var arcBorder = d3.svg.arc()
+										  .innerRadius(radius - 15 )
+										  .outerRadius(radius - 10);
+
+										var pie = d3.layout.pie()
+										 .sort(null)
+										.value(function(d) { return d.session; });
+	
+										var svg2 = d3.select("#pieManual").append("svg")
+										 .attr("width", width)
+										 .attr("height", height)
+										 .append("g")
+										 .attr("class","circle")
+										 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+										d3.csv("data/data1.4.1.csv", function(error, data) {
+
+										data.forEach(function(d) {
+										 d.session = +d.session;
+										 });
+
+										var g = svg2.selectAll(".arc")
+											.data(pie(data))
+											.enter().append("g")
+											.attr("class", "arc");
+	
+										 g.append("path")
+											.attr("d", arc)
+											.style("fill", function(d) { return color(d.data.label); });
+	
+										g.append("path")
+											.attr("fill", "#5D686E")
+											.attr("d", arcBorder)
+											.style("stroke-width", "1pt");
+
+										 g.append("text")
+											.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+											 .attr("dy", ".35em")
+											 .style("text-anchor", "middle")
+											 .text(function(d) { return d.data.percentage; });
+	 
+										 g.on("mouseover", function(d) {      
+											div.transition()        
+												.duration(200)      
+												.style("opacity", .9);      
+											div.html(d.data.session)  
+												.style("left", (d3.event.pageX) + "px")     
+												.style("top", (d3.event.pageY - 28) + "px")
+												.style("padding-left", "10px")
+												.style ("padding-right","10px")
+												.style("font-size", "11pt" )
+												.style("background-color", "#5D686E")
+												.style("color", "#FFF");
+											})                  
+										.on("mouseout", function(d) {       
+											div.transition()        
+												.duration(500)      
+												.style("opacity", 0);   
+										});
+
+//LABEL (ON HOVER) MANUAL VS AUTO
 		
-	</div>
+										var outerRadius = 100;
+										g.append("text")
+											.attr("transform", function(d) {  var pos = arc.centroid(d);
+												var posY=pos[1]*1.3;
+												if(pos[1]<0){
+													posY=pos[1]*0.7;
+												}
+												return "translate(" + pos[0] +"," + posY + ")";})
+											 .attr("dy", ".35em")
+											 .style("text-anchor", "middle")
+											 .text(function(d) {  return d.data.label ; });
+
+										});
+									</script>
+					
+								
+									<p> Total sessions = 6897 </p>		
+								</div>
+							</div>
+						</div> 
+							
+					</div>
+				
+					<div class="span6" >		 
+				
+						<!-- START Narrative paths: overview-->	
+						<div class="widget">
+							<div class="widget-title">
+								<h4>Narrative paths: overview</h4>
+								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+							</div>
+								
+							<div class="widget-body">
+
+	<!-- DATEPICKER-->								
+					
+								<div class="left">
+										<p>Start date:</p> <input type="text" id="start_ManualvsAuto"></p>
+								</div>
+								
+								<div class="right">
+									<p> End date:</p> <input type="text" id="end_ManualvsAuto">
+								</div> 
+		
+								<div>
+									<div id="pie2"> </div> 
+
+	<!-- SCRIPT MANUAL VS AUTO -->
+										<script>
+						
+											var arc1 = d3.svg.arc()
+											 .outerRadius(radius - 19)
+											 .innerRadius(0);
+				 
+											var div1 = d3.select("body").append("div")   
+												.attr("class", "tooltip")               
+												.style("opacity", 0)
+												.style("padding", "30px");
+				 
+											var arcBorder1 = d3.svg.arc()
+											  .innerRadius(radius - 15 )
+											  .outerRadius(radius - 10);
+				
+											var pie1 = d3.layout.pie()
+											 .sort(null)
+											.value(function(d) { return d.session; });
+				
+
+											var svg1 = d3.select("#pie2").append("svg")
+											 .attr("width", width)
+											 .attr("height", height)
+											 .append("g")
+											 .attr("class","circle")
+											 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+				
+
+											d3.csv("data/data1.4.2.csv", function(error, data) {
+
+											data.forEach(function(d) {
+											 d.session = +d.session;
+											 });
+
+											var g1 = svg1.selectAll(".arc")
+												.data(pie(data))
+												.enter().append("g")
+												.attr("class", "arc");
+
+											g1.append("path")
+												.attr("d", arc1)
+												.style("fill", function(d) { return color(d.data.label); });
+					
+											g1.append("text")
+												.attr("transform", function(d) { return "translate(" + arc1.centroid(d) + ")"; })
+												 .attr("dy", ".35em")
+												 .style("text-anchor", "middle")
+												 .style("z-index", "8")
+												 .text(function(d) { return d.data.percentage; });
+					
+											g1.append("path")
+												.attr("fill", "#5D686E")
+												.attr("d", arcBorder1)
+												.style("stroke-width", "1pt");
+
+						
+			
+											g1.on("mouseover", function(d) {      
+												div1.transition()        
+													.duration(200)      
+													.style("opacity", .9);      
+												div1.html(d.data.session)  
+													.style("left", (d3.event.pageX) + "px")     
+													.style("top", (d3.event.pageY - 28) + "px")
+													.style("padding", "0px")
+													.style("padding-left", "10px")
+													.style ("padding-right","10px")
+													.style("font-size", "11pt" )
+													.style("background-color", "#5D686E")
+													.style("color", "#FFF")
 									
+												})                  
+											 .on("mouseout", function(d) {       
+												  div1.transition()        
+													.duration(500)      
+													.style("opacity", 0);  
+						
+											});  
+			
+			
+											var outerRadius = 100;
+													g1.append("text")
+														.attr("transform", function(d) {  var pos = arc.centroid(d);
+															var posY=pos[1]*1.3;
+															if(pos[1]<0){
+																posY=pos[1]*0.7;
+															}
+															return "translate(" + pos[0] +"," + posY + ")";})
+														 .attr("dy", ".35em")
+														 .style("text-anchor", "middle")
+														 .style("z-index","10")
+														 .style("position","absolute")
+														 .text(function(d) {  return d.data.label ; });
+
+													});
+
+											</script>
+											<p style="text-align:center"> Total session = 7890 </p>
+								</div>
+							</div>
+						</div> 
+							 
+					</div>	
+				</div>	
+ 
+ 
+
+
+
+
+
+<!-- START VIDEO POPULARITY-->	
+ 
+				<div class="widget">
+					<div class="widget-title">
+						<h4>Video popularity</h4>
+						<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+						<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+				</div> 	
+									
+				<div class="widget-body">
+                           											
+<!-- DATEPICKER VIDEO POPULARITY-->		
+						
+				<div class="left">
+					<p>Start date:</p> <input type="text" id="start_VideoPopularity"></p>
+				</div>
+								
+				<div class="right">
+					<p> End date:</p> <input type="text" id="end_VideoPopularity">
+				</div> 
 		
-                
-        			 	
+				<div>	</div>
+		
+				</div>
+											
         			 
-<!-- START First Click-->
+<!-- START FIRST CLICK-->
         			 
-    <div class="widget">
-         <div class="widget-title">
-            <h4>First Click</h4>
-            <a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-			<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-    </div> 
-                           		
-    <div class="widget-body">
+				<div class="widget">
+					 <div class="widget-title">
+						<h4>First Click</h4>
+						<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+						<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+				</div> 
+								
+				<div class="widget-body">
                     			                      											
-<!-- DATEPICKER CODE-->								
-		<div class="left">
-			<p>Start date:</p> <input type="text" id="departing"></p>
-		</div>
+<!-- DATEPICKER FIRST CLICK -->								
+		
+				<div class="left">
+					<p>Start date:</p> <input type="text" id="start_FirstClick"></p>
+				</div>
 								
-		<div class="right">
-			<p> End date:</p> <input type="text" id="returning">
-		</div> 
+				<div class="right">
+					<p> End date:</p> <input type="text" id="end_FirstClick">
+				</div> 
 		
-		<div id="main">
+				<div id="main">
 		
 		
-		</div> 
+				</div> 
+				</div> 
 									
 		
 
-				
-				
-			
-		
-		
-	
-			
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				<!-- END PAGE CONTENT-->
+<!-- END PAGE CONTENT-->
 	
 			<!-- END PAGE CONTAINER-->
 		</div>

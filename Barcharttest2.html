@@ -108,6 +108,11 @@ d3.csv("data/datatest2.csv", function(error, data) {
       .style("text-anchor", "end")
       .text("avg time on site (in seconds)");
 
+		var div = d3.select("body").append("div")   
+			.attr("class", "tooltip")               
+			.style("opacity", 0);
+
+
 // bars
 
   var state = svg.selectAll(".ratio")

@@ -17,213 +17,121 @@
                 fill: none;
                 stroke-width: 1.5px;
             }
+            .bar.positive {
+			  fill: #E9B690;
+			}
+
+			.bar.negative {
+			  fill: #57B7B9;
+			}
+			
+			.axis text {
+			  font: 10px sans-serif;
+			}
+
+			.axis path,
+			.axis line {
+			  fill: none;
+			  stroke: #000;
+			  shape-rendering: crispEdges;
+			}
         </style>
 </head>
 <body>
-        <script>
-            var perfdata = new Array();
-
-            var margin = {top: 120, right: 60, bottom: 60, left: 60},
-                width = 960 - margin.right - margin.left,
-                height = 500 - margin.top - margin.bottom;
-            
-            var x = d3.time.scale()
-                .range([0, width - 60]);
-            
-            var y = d3.scale.linear()
-                .range([height - 20, 0]);
-        
-            var duration = 1500,
-                delay = 500;
-            
-			var color = d3.scale.ordinal()
-				.range([" #E9B690", "#57B7B9"]);
-            
-            var svg = d3.select("body").append("svg")
-                .attr("width", width + margin.right + margin.left)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            
-            var parse = d3.time.format("%m/%d/%Y").parse, format = d3.time.format("%Y"),
-              perfdata = new Array();   
-         </script>
-         <script> 
          
-         
-					//origdata.cDataSet;
-        /* var data, origdata = {
-   "cDataSet":[      {
-         "date":"12/31/1991",
-         "portfolio":"16.27",
-         "sp500":"30.47"
-      },
-      {
-         "date":"12/31/1992",
-         "portfolio":"7.99",
-         "sp500":"7.62"
-      },
-      {
-         "date":"12/31/1993",
-         "portfolio":"6.55",
-         "sp500":"10.08"
-      },
-      {
-         "date":"12/31/1994",
-         "portfolio":"0.44",
-         "sp500":"1.32"
-      },
-      {
-         "date":"12/31/2010",
-         "portfolio":"13.59",
-         "sp500":"15.06"
-      },
-      {
-         "date":"12/31/2011",
-         "portfolio":"-1.58",
-         "sp500":"2.11"
-      }
-    ]
- };*/
-</script>
         <script>
         
                 var inc = 0;
             
-                d3.tsv("data/data_perspectiveChange2.tsv", function(data) {
+                
+
+				var margin = {top: 30, right: 10, bottom: 10, left: 30},
+					width = 960 - margin.left - margin.right,
+					height = 500 - margin.top - margin.bottom;
+
+				//var y0 = Math.max(Math.abs(d3.min(data)), Math.abs(d3.max(data)));
+				
+				var y = d3.scale.linear()
+				.range([0, width]);
+				
+				/*var y = d3.scale.linear()
+					//.range([height,0])
+					.nice();
+*/
+				var x = d3.scale.ordinal()
+					.rangeRoundBands([0, width], .2);
+
+				var yAxis = d3.svg.axis()
+					.scale(y)
+					.orient("left");
+
+				var svg = d3.select("body").append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+				  .append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+					
+				d3.tsv("data/data_perspectiveChange2.tsv", function(data) {
 				
 					//alert(data);
 					data.forEach(function(d) {
+						if (d.videos.indexOf('W') >= 0){//western videos are down (negative)
+								d.changes = 0-d.changes;
+							}
 						//d.changes = +d.changes;
-						//alert(d.changes);
+						
 					});
+					
+					alert(d3.min(data, function(d) { return d.changes;}));
+					var y0 = Math.max(Math.abs(d3.min(data,function(d) { return d.changes})), Math.abs(d3.max(data, function(d) { return d.changes})));
+					
+					//barPosition();
+					x.domain(data.map(function(d) {return d.videos; }));
+					
+					
+					//y.domain([d3.min(function(d) { return d.changes;}),d3.max(function(d) { return d.changes})]);
+					//y.domain([100,0]);
+					//y.domain(data.map(function(d) {return d.changes; }));
+					y.domain([-y0, y0])
+					.range([height,0])
+					.nice();
+					alert(y(0));
+					
+					svg.selectAll(".bar")
+						.data(data)
+					  .enter().append("rect")
+						.attr("class", function(d) { return d.changes < 0 ? "bar negative" : "bar positive"; })
+						.attr("y", function(d) { return y(Math.max(0, d.changes)); })
+						.attr("x", function(d, i) { return x(i); })
+						.attr("height", function(d) { return Math.abs(y(d.changes) - y(0)); })
+						.attr("width", x.rangeBand());
+
+					svg.append("g")
+						.attr("class", "x axis")
+						.call(yAxis);
+
+					svg.append("g")
+						.attr("class", "y axis")
+					  .append("line")
+						.attr("y1", y(0))
+						.attr("y2", y(0))
+						.attr("x1", 0)
+						.attr("x2", width);
+						
+					function barPosition(){
+						data.forEach(function(d) {
+							
+						});
+						/*-'changes')
 				
-                	x.domain(data.map(function(d) { return d.videos; }));
-                	barPosition();
-                	y.domain([d3.min(function(d) { return d.changes;}),d3.max(function(d) { return d.changes})]);
-                	alert(d3.min(data, function(d) { return d.changes;}));
-                	alert(d3.max(data, function(d) { return d.changes}));
-                	
-					var cumul = new Array();
-                 
-                //if we want to filter only some set of what is there
-                //stocks = perfdata.filter(function(d) { return d.symbol in filter; });
-                
-                
-                
-                
-                
-                // Compute the minimum and maximum date across symbols.
-                /*x.domain([
-                    d3.min(symbols, function(d) { return d.values[0].date; }),
-                    d3.max(symbols, function(d) { return d.values[d.values.length - 1].date; })
-                ]);*/
-               
-                
-                var g = svg.selectAll("g")
-                    .data(symbols)
-                    .enter().append("g")
-                        .attr("class", "symbol");  
-                        
-            //barPosition();
+						"#E9B690"
+						else
+						"" */
+					};
+
+               });                 
             
-            function barPosition(){
-            	data.forEach(function(d) {
-					if (d.videos.indexOf('W') >= 0){//western videos are down (negative)
-						d.changes = 0-d.changes;
-					}
-            	});
-            	/*-'changes')
-            	
-            	"#E9B690"
-            	else
-            	"#57B7B9" */
-            };
-    
-                                
-            groupedBar();
-
-            function groupedBar() {
-                  x = d3.scale.ordinal()
-                      .domain(symbols[0].values.map(function(d) { return d.videos; }))
-                      .rangeBands([0, width - 60], .1);
-                
-                  var x1 = d3.scale.ordinal()
-                      .domain(symbols.map(function(d) { return d.key; }))
-                      .rangeBands([0, x.rangeBand()]);
-    
-                var y0 = Math.max(Math.abs(d3.min(symbols.map(function(d) { return d3.min(d.values.map(function(d) { return d.perf; })); }))), d3.max(symbols.map(function(d) { return d3.max(d.values.map(function(d) { return d.perf; })); })));                
-                y
-                    .domain([-y0, y0])
-                    //.domain([d3.min(symbols.map(function(d) { return d3.min(d.values.map(function(d) { return d.perf; })); })), d3.max(symbols.map(function(d) { return d3.max(d.values.map(function(d) { return d.perf; })); }))])
-                    .range([height, 0])
-                    .nice();
-                
-                var yAxis = d3.svg.axis().scale(y).orient("left");                            
-
-                svg.selectAll(".labels")
-                    .data(symbols[0].values.map(function(d) { return d.date; }))
-                    .enter().append("text")
-                        .attr("class", "labels")
-                        .attr("text-anchor", "middle")
-                        .attr("x", function(d,i) { return x(i) + x.rangeBand() / 2 ; })
-                        .attr("y", height / 2 + 15)
-                        .text(function(d) {return format(d) })
-                        .style("fill-opacity", 1);
-
-                
-                  var g = svg.selectAll(".symbol");
-                
-                  var t = g.transition()
-                      .duration(duration);
-                      
-                    //got working with lots of help but this section particularly dedicated to http://stackoverflow.com/questions/10127402/bar-chart-with-negative-values
-                  g.each(function(p, j) {
-                    d3.select(this).selectAll("rect")
-                        .data(function(d) { return d.values; })
-                      .enter().append("rect")
-                        .attr("x", function(d) { return x(d.videos) + x1(p.key); })
-                        .attr("y", function(d, i) { return y(Math.max(0, d.perf)); })                        
-                        //.attr("y", function(d) { return y(d.perf); })
-                        .attr("width", x1.rangeBand())
-                        .attr("height", function(d, i) { return Math.abs(y(d.perf) - y(0)); })                        
-                        //.attr("height", function(d) { return height - y(d.perf); })
-                        .style("fill", color(p.key))
-                        .style("fill-opacity", 1e-6)                    
-                        //very grateful to http://blog.nextgenetics.net/demo/entry0032/ for help here on mouseover highlighting
-                        //another nice example http://bl.ocks.org/2164562
-                        .on('mouseover', function(d, i) {
-                             d3.select(this).style('fill','gray');
-                             statusText
-                                .text(p.key + " " + d.perf)
-                                .attr('fill',color(p.key))
-                                .attr("text-anchor", d.perf < 0 ? "begin" : "begin")
-                                .attr("x", x(d.videos) + x1(p.key) + x.rangeBand() / 2 )
-                                .attr("y", y(d.perf))
-                                .attr("transform", d.perf < 0 ? "rotate(90 " + (x(d.videos) + x1(p.key) + x.rangeBand() / 4 ) + "," +   y(d.perf) + ")" : "rotate(-90 " + (x(d.videos) + x1(p.key) + x.rangeBand() / 4 ) + "," +   y(d.perf) + ")"); 
-                          })
-                          .on('mouseout', function(d,i) {
-                             statusText
-                                .text('');
-                             d3.select(this).style('fill',color(p.key));
-                          })
-                          .transition()
-                                .duration(duration)
-                                .style("fill-opacity", 1);
-
-                    
-                  var statusText = svg.append('svg:text');
-                      
-                       
-                    svg.append("g")
-                        .attr("class", "y axis")
-                        .call(yAxis);
-
-                
-            });
-            };
             
-            });
       </script>
 
  </body>

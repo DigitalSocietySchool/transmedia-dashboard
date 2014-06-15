@@ -56,8 +56,8 @@
 				.scale(y)
 				.orient("left")
 				.ticks(10);
-				
-			var pos=0;	
+
+			var pos=0;
 
 			var svg = d3.select("body").append("svg")
 				.attr("width", width + margin.left + margin.right)
@@ -67,17 +67,17 @@
 
 
 // function for grid y axis (not being used here)
-					
-				function make_y_axis() {        
+
+				function make_y_axis() {
 					return d3.svg.axis()
 					.scale(y)
 					.orient("left")
 					.ticks(10)
 					}
-	
+
 // function for grid x axis
-					 
-				function make_x_axis() {        
+
+				function make_x_axis() {
 					return d3.svg.axis()
 					.scale(x)
 					 .orient("bottom")
@@ -90,40 +90,40 @@
 	  		  //x.domain([0,1000]);
 			  x.domain(data.map(function(d) { return d.widthrange; }));
 			  y.domain([0, d3.max(data, function(d) { return d.averagesessionduration; })]);
-			  
-			  
-// code to draw the grids			    
-			    
-				
-			  
-				svg.append("g")         
+
+
+// code to draw the grids
+
+
+
+				svg.append("g")
 					.attr("class", "grid")
 					.style("stroke-dasharray", ("2, 2"))
 					.call(make_y_axis()
 					.tickSize(-width, 0, 0)
 					.tickFormat("")
 					)
-				
+
 			//outerTickSize(function(d) { return d.sessions; });
 
 			  svg.append("g")
 				  .attr("class", "x axis")
 				  .attr("transform", "translate(0," + height + ")")
 				  .call(xAxis)
-				 .selectAll("text")  
+				 .selectAll("text")
 						.style("text-anchor", "end")
 						.attr("dx", "-.8em")
 						.attr("dy", ".15em")
 						.attr("transform", function(d) {
-							return "rotate(-90)" 
+							return "rotate(-90)"
 							});
-						
+
 				svg.selectAll(".x")
 					.selectAll(".tick")
 					.data(data)
 					.attr("transform", function(d) {return "translate("+x(d.widthrange)+",0)"; });
 					//.attr("transform", function(d) {pos+= parseInt(d.widthrange); return "translate("+(pos)+",0)"; });
-	
+
 // code for label y axis
 			  svg.append("g")
 				  .attr("class", "y axis")
@@ -134,28 +134,28 @@
 				  .attr("dy", ".71em")
 				  .style("text-anchor", "end")
 				  .text("avg time on site (in seconds)");
-				  
-// code for label x axis				  
+
+// code for label x axis
 			svg.append("text")
-				.attr("class", "x axis")  
+				.attr("class", "x axis")
 					.attr("x", 1300 )
 					.attr("y",  680 )
 					.style("text-anchor", "middle")
 					.html("screen ratio");
-					
+
 			svg.append("text")
-				.attr("class", "x axis")  
+				.attr("class", "x axis")
 					.attr("x", 1300 )
 					.attr("y",  690 )
 					.style("text-anchor", "middle")
 					.html("and introstate");
 
 
-// tooltip 
-			
-					
-					
-			
+// tooltip
+
+
+
+
 
 // rect
 
@@ -169,15 +169,15 @@
 				  .attr("height", function(d) { return height - y(d.averagesessionduration); });
 
 			});
-			
-			
-		
+
+
+
 
 			function type(d) {
 			  d.averagesessionduration = +d.averagesessionduration;
 			  return d;
 			}
-			
+
 			function axisPos(d) {
 			  //d.averagesessionduration = +d.averagesessionduration;
 			  //return d;

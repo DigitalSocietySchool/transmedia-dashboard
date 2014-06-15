@@ -32,12 +32,12 @@ Website: http://thevectorlab.net/
 	<script type='text/javascript' src='script.js'></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
-	
-	
+
+
 </head>
 
-	
-	
+
+
 	<script src="js/d3.min.js"></script>
 </head>
 <style>
@@ -51,7 +51,7 @@ body {font-family: 'Gudea', sans-serif;
 .arc path {
   stroke: #fff;
   stroke-width:5;
-  
+
 }
 
 #project {
@@ -73,7 +73,7 @@ a.tooltips span {
   text-align:center;
   visibility: hidden;
   border-radius: 14px;
-  
+
 }
 a.tooltips span:after {
   position: absolute;
@@ -107,7 +107,7 @@ a:hover.tooltips span {
             <div class="container-fluid">
                 <!-- BEGIN LOGO -->
                 <a class="brand" href="Behavior1AB.html">
-                 
+
                 </a>
                 <!-- END LOGO -->
                 <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -134,7 +134,7 @@ a:hover.tooltips span {
                 <!-- END  NOTIFICATION -->
                 <div class="top-nav ">
                     <ul class="nav pull-right top-menu" >
-                     
+
                         <!-- BEGIN USER LOGIN DROPDOWN -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -189,9 +189,9 @@ a:hover.tooltips span {
                     <ul class="sub">
                         <li><a class="" href="Acquisition1AB.html" > Visitor Flow</a></li>
                          <li class="active"><a class="" href="Acquisition1AB.html" >Intro State</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li> 
-                         <li><a class="" href="Acquisition1AB.html" > Narrative Paths</a></li> 
-                         <li><a class="" href="Acquisition1AB.html" > First Click </a></li> 
+                         <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li>
+                         <li><a class="" href="Acquisition1AB.html" > Narrative Paths</a></li>
+                         <li><a class="" href="Acquisition1AB.html" > First Click </a></li>
                     </ul>
                 </li>
 
@@ -203,7 +203,7 @@ a:hover.tooltips span {
                     <ul class="sub">
                         <li><a class="" href="Acquisition1AB.html" >Referral performance:  overview</a></li>
                          <li><a class="" href="Acquisition1AB.html" >Referral performance: intro state</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: engagement</a></li> 
+                         <li><a class="" href="Acquisition1AB.html" >Referral performance: engagement</a></li>
                     </ul>
                 </li>
                 <li class="has-sub">
@@ -220,7 +220,7 @@ a:hover.tooltips span {
 
                     </ul>
                 </li>
-    
+
             </ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -231,59 +231,59 @@ a:hover.tooltips span {
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
 				<div class="row-fluid">
-					
-					
-					
-<!--BEGIN BEHAVIOR -->	
-					
+
+
+
+<!--BEGIN BEHAVIOR -->
+
 			<!-- BEGIN BREADCRUMB-->
 					<div class="span12">
 						<ul class="breadcrumb">
 							<li>
-                                <a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span>
+                                <a href="index.php"><i class="icon-home"></i></a><span class="divider">&nbsp;</span>
 							</li>
                             <li>
-                                <a href="#">BEHAVIOR</a> <span class="divider">&nbsp;</span>
+                                <a href="cat_behavior.php">BEHAVIOR</a> <span class="divider">&nbsp;</span>
                             </li>
 							<li><a href="#"> Intro state</a><span class="divider-last">&nbsp;</span></li>
-                
+
 						</ul>
 					</div>
 
-										
+
 <!-- START BEHAVIOR TITLE + QUESTION -->
 					<div>
-						<h1>BEHAVIOR</h1>	
+						<h1>BEHAVIOR</h1>
 							<h5>How are users exploring the content and what is the content that drives
 						stopping exploration of the content?</h5>
 					</div>
-	
+
 <!-- START INTRO STATE:OVERVIEW -->
-				 
-                <div style="width:100%"> 
-                	<div class="widget"> 
+
+                <div style="width:100%">
+                	<div class="widget">
                         <div class="widget-title">
                             <h4> Intro state: overview </h4>
                      			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-                   	 	</div>	
-						<div class="widget-body"> 
-							
+                   	 	</div>
+						<div class="widget-body">
+
 							<p> This graph shows the ratio between how many visitors skipped the intro (in % of all sessions), how many visitors leave the website without watching the full (intro in % of all sessions) and how many visitors watch the entire intro in % of all sessions.  </p>
-							
-							<!-- DATEPICKER CODE-->								
+
+							<!-- DATEPICKER CODE-->
 							<div class="left">
-								<p>Start date:</p> <input type="text" id="departing"></p> 
+								<p>Start date:</p> <input type="text" id="departing"></p>
 							</div>
-							
+
 							<div class="right">
 								<p> End date:</p> <input type="text" id="returning">
-							</div> 
+							</div>
 
-							<div id="pieIntro" ></div> 
-							
-<!-- SCRIPT PIECHART INTRO STATE-->								
-					
+							<div id="pieIntro" ></div>
+
+<!-- SCRIPT PIECHART INTRO STATE-->
+
 							<script>
 								var width = 980,
 								 height = 400,
@@ -296,15 +296,15 @@ a:hover.tooltips span {
 								var arc = d3.svg.arc()
 								 .outerRadius(radius - 19)
 								 .innerRadius(0);
-						 
+
 								var arcBorder = d3.svg.arc()
 								  .innerRadius(radius - 15 )
 								  .outerRadius(radius - 10);
-						
+
 								var pie = d3.layout.pie()
 								 .sort(null)
 								.value(function(d) { return d.session; });
-						
+
 
 								var svg = d3.select("#pieIntro").append("svg")
 								 .attr("width", width)
@@ -319,10 +319,10 @@ a:hover.tooltips span {
 								 d.session = +d.session;
 								 });
 
-								var div = d3.select("body").append("div")   
-									.attr("class", "tooltip")               
+								var div = d3.select("body").append("div")
+									.attr("class", "tooltip")
 									.style("opacity", 0);
-	
+
 								var g = svg.selectAll(".arc")
 									.data(pie(data))
 									.enter().append("g")
@@ -331,7 +331,7 @@ a:hover.tooltips span {
 								 g.append("path")
 									.attr("d", arc)
 									.style("fill", function(d) { return color(d.data.label); });
-							
+
 								g.append("path")
 									.attr("fill", "#5D686E")
 									.attr("d", arcBorder)
@@ -342,29 +342,29 @@ a:hover.tooltips span {
 									 .attr("dy", ".35em")
 									 .style("text-anchor", "middle")
 									 .text(function(d) { return d.data.percentage; });
-									 
+
 //LABEL (ON HOVER) INTRO STATE: OVERVIEW
-								g.on("mouseover", function(d) {      
-									div.transition()        
-										.duration(200)      
-										.style("opacity", .9);      
-									div.html(d.data.session )  
-										.style("left", (d3.event.pageX) + "px")     
+								g.on("mouseover", function(d) {
+									div.transition()
+										.duration(200)
+										.style("opacity", .9);
+									div.html(d.data.session )
+										.style("left", (d3.event.pageX) + "px")
 										.style("top", (d3.event.pageY - 28) + "px")
 										.style("padding-left","10px")
 										.style ("padding-right","10px")
 										.style("font-size", "11pt" )
 										.style("background-color", "#5D686E")
 										.style("color", "#FFF");
-									})                  
-								.on("mouseout", function(d) {       
-									div.transition()        
-										.duration(500)      
-										.style("opacity", 0);   
+									})
+								.on("mouseout", function(d) {
+									div.transition()
+										.duration(500)
+										.style("opacity", 0);
 								});
-					
-// end 
-	
+
+// end
+
 								var outerRadius = 100;
 								g.append("text")
 									.attr("transform", function(d) { var pos = arc.centroid(d);
@@ -379,45 +379,45 @@ a:hover.tooltips span {
 
 								});
 							</script>
-					
+
 							<p style="text-align:center;"> total sessions = 2473 </p>
-							
-						 </div>    
+
+						 </div>
 					</div>
                 </div>
-                            		
-   
-	
-					 
+
+
+
+
 
 <!-- START MANUAL VS AUTO:OVERVIEW-->
-						
+
 					<div style="width:100%">
-					<div class="span6">	
+					<div class="span6">
 						<div class="widget">
 							<div class="widget-title">
 								<h4>Manual vs. autoplay: overview </h4>
 								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 							</div>
-								
+
 							<div class="widget-body">
 
-<!-- DATEPICKER MANUAL VS AUTO-->								
-					
+<!-- DATEPICKER MANUAL VS AUTO-->
+
 								<div class="left">
 										<p>Start date:</p> <input type="text" id="start_ManualvsAuto"></p>
 								</div>
-								
+
 								<div class="right">
 									<p> End date:</p> <input type="text" id="end_ManualvsAuto">
-								</div> 
-		
-								
+								</div>
+
+
 <!-- SCRIPT MANUAL VS AUTO -->
 
 							<div>
-								<div id="pieManual"> </div> 
+								<div id="pieManual"> </div>
 
 									<script>
 										var width = 500,
@@ -425,8 +425,8 @@ a:hover.tooltips span {
 										radius = Math.min(width, height) / 2;
 
 
-										var div = d3.select("body").append("div")   
-											.attr("class", "tooltip")               
+										var div = d3.select("body").append("div")
+											.attr("class", "tooltip")
 											.style("opacity", 0);
 
 										var color = d3.scale.ordinal()
@@ -435,7 +435,7 @@ a:hover.tooltips span {
 										var arc = d3.svg.arc()
 										 .outerRadius(radius - 19)
 										 .innerRadius(0);
- 
+
 										var arcBorder = d3.svg.arc()
 										  .innerRadius(radius - 15 )
 										  .outerRadius(radius - 10);
@@ -443,7 +443,7 @@ a:hover.tooltips span {
 										var pie = d3.layout.pie()
 										 .sort(null)
 										.value(function(d) { return d.session; });
-	
+
 										var svg2 = d3.select("#pieManual").append("svg")
 										 .attr("width", width)
 										 .attr("height", height)
@@ -461,11 +461,11 @@ a:hover.tooltips span {
 											.data(pie(data))
 											.enter().append("g")
 											.attr("class", "arc");
-	
+
 										 g.append("path")
 											.attr("d", arc)
 											.style("fill", function(d) { return color(d.data.label); });
-	
+
 										g.append("path")
 											.attr("fill", "#5D686E")
 											.attr("d", arcBorder)
@@ -476,28 +476,28 @@ a:hover.tooltips span {
 											 .attr("dy", ".35em")
 											 .style("text-anchor", "middle")
 											 .text(function(d) { return d.data.percentage; });
-	 
-										 g.on("mouseover", function(d) {      
-											div.transition()        
-												.duration(200)      
-												.style("opacity", .9);      
-											div.html(d.data.session)  
-												.style("left", (d3.event.pageX) + "px")     
+
+										 g.on("mouseover", function(d) {
+											div.transition()
+												.duration(200)
+												.style("opacity", .9);
+											div.html(d.data.session)
+												.style("left", (d3.event.pageX) + "px")
 												.style("top", (d3.event.pageY - 28) + "px")
 												.style("padding-left", "10px")
 												.style ("padding-right","10px")
 												.style("font-size", "11pt" )
 												.style("background-color", "#5D686E")
 												.style("color", "#FFF");
-											})                  
-										.on("mouseout", function(d) {       
-											div.transition()        
-												.duration(500)      
-												.style("opacity", 0);   
+											})
+										.on("mouseout", function(d) {
+											div.transition()
+												.duration(500)
+												.style("opacity", 0);
 										});
 
 //LABEL (ON HOVER) MANUAL VS AUTO
-		
+
 										var outerRadius = 100;
 										g.append("text")
 											.attr("transform", function(d) {  var pos = arc.centroid(d);
@@ -512,60 +512,60 @@ a:hover.tooltips span {
 
 										});
 									</script>
-					
-								
-									<p> Total sessions = 6897 </p>		
+
+
+									<p> Total sessions = 6897 </p>
 								</div>
 							</div>
-						</div> 
-							
+						</div>
+
 					</div>
-				
-					<div class="span6" >		 
-				
-						<!-- START Narrative paths: overview-->	
+
+					<div class="span6" >
+
+						<!-- START Narrative paths: overview-->
 						<div class="widget">
 							<div class="widget-title">
 								<h4>Narrative paths: overview</h4>
 								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 							</div>
-								
+
 							<div class="widget-body">
 
-	<!-- DATEPICKER-->								
-					
+	<!-- DATEPICKER-->
+
 								<div class="left">
 										<p>Start date:</p> <input type="text" id="start_ManualvsAuto"></p>
 								</div>
-								
+
 								<div class="right">
 									<p> End date:</p> <input type="text" id="end_ManualvsAuto">
-								</div> 
-		
+								</div>
+
 								<div>
-									<div id="pie2"> </div> 
+									<div id="pie2"> </div>
 
 	<!-- SCRIPT MANUAL VS AUTO -->
 										<script>
-						
+
 											var arc1 = d3.svg.arc()
 											 .outerRadius(radius - 19)
 											 .innerRadius(0);
-				 
-											var div1 = d3.select("body").append("div")   
-												.attr("class", "tooltip")               
+
+											var div1 = d3.select("body").append("div")
+												.attr("class", "tooltip")
 												.style("opacity", 0)
 												.style("padding", "30px");
-				 
+
 											var arcBorder1 = d3.svg.arc()
 											  .innerRadius(radius - 15 )
 											  .outerRadius(radius - 10);
-				
+
 											var pie1 = d3.layout.pie()
 											 .sort(null)
 											.value(function(d) { return d.session; });
-				
+
 
 											var svg1 = d3.select("#pie2").append("svg")
 											 .attr("width", width)
@@ -573,7 +573,7 @@ a:hover.tooltips span {
 											 .append("g")
 											 .attr("class","circle")
 											 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-				
+
 
 											d3.csv("data/data1.4.2.csv", function(error, data) {
 
@@ -589,27 +589,27 @@ a:hover.tooltips span {
 											g1.append("path")
 												.attr("d", arc1)
 												.style("fill", function(d) { return color(d.data.label); });
-					
+
 											g1.append("text")
 												.attr("transform", function(d) { return "translate(" + arc1.centroid(d) + ")"; })
 												 .attr("dy", ".35em")
 												 .style("text-anchor", "middle")
 												 .style("z-index", "8")
 												 .text(function(d) { return d.data.percentage; });
-					
+
 											g1.append("path")
 												.attr("fill", "#5D686E")
 												.attr("d", arcBorder1)
 												.style("stroke-width", "1pt");
 
-						
-			
-											g1.on("mouseover", function(d) {      
-												div1.transition()        
-													.duration(200)      
-													.style("opacity", .9);      
-												div1.html(d.data.session)  
-													.style("left", (d3.event.pageX) + "px")     
+
+
+											g1.on("mouseover", function(d) {
+												div1.transition()
+													.duration(200)
+													.style("opacity", .9);
+												div1.html(d.data.session)
+													.style("left", (d3.event.pageX) + "px")
 													.style("top", (d3.event.pageY - 28) + "px")
 													.style("padding", "0px")
 													.style("padding-left", "10px")
@@ -617,16 +617,16 @@ a:hover.tooltips span {
 													.style("font-size", "11pt" )
 													.style("background-color", "#5D686E")
 													.style("color", "#FFF")
-									
-												})                  
-											 .on("mouseout", function(d) {       
-												  div1.transition()        
-													.duration(500)      
-													.style("opacity", 0);  
-						
-											});  
-			
-			
+
+												})
+											 .on("mouseout", function(d) {
+												  div1.transition()
+													.duration(500)
+													.style("opacity", 0);
+
+											});
+
+
 											var outerRadius = 100;
 													g1.append("text")
 														.attr("transform", function(d) {  var pos = arc.centroid(d);
@@ -647,74 +647,74 @@ a:hover.tooltips span {
 											<p style="text-align:center"> Total session = 7890 </p>
 								</div>
 							</div>
-						</div> 
-							 
-					</div>	
-				</div>	
- 
- 
+						</div>
+
+					</div>
+				</div>
 
 
 
 
 
-<!-- START VIDEO POPULARITY-->	
- 
+
+
+<!-- START VIDEO POPULARITY-->
+
 				<div class="widget">
 					<div class="widget-title">
 						<h4>Video popularity</h4>
 						<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 						<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-				</div> 	
-									
+				</div>
+
 				<div class="widget-body">
-                           											
-<!-- DATEPICKER VIDEO POPULARITY-->		
-						
+
+<!-- DATEPICKER VIDEO POPULARITY-->
+
 				<div class="left">
 					<p>Start date:</p> <input type="text" id="start_VideoPopularity"></p>
 				</div>
-								
+
 				<div class="right">
 					<p> End date:</p> <input type="text" id="end_VideoPopularity">
-				</div> 
-		
-				<div>	</div>
-		
 				</div>
-											
-        			 
+
+				<div>	</div>
+
+				</div>
+
+
 <!-- START FIRST CLICK-->
-        			 
+
 				<div class="widget">
 					 <div class="widget-title">
 						<h4>First Click</h4>
 						<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 						<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-				</div> 
-								
+				</div>
+
 				<div class="widget-body">
-                    			                      											
-<!-- DATEPICKER FIRST CLICK -->								
-		
+
+<!-- DATEPICKER FIRST CLICK -->
+
 				<div class="left">
 					<p>Start date:</p> <input type="text" id="start_FirstClick"></p>
 				</div>
-								
+
 				<div class="right">
 					<p> End date:</p> <input type="text" id="end_FirstClick">
-				</div> 
-		
+				</div>
+
 				<div id="main">
-		
-		
-				</div> 
-				</div> 
-									
-		
+
+
+				</div>
+				</div>
+
+
 
 <!-- END PAGE CONTENT-->
-	
+
 			<!-- END PAGE CONTAINER-->
 		</div>
 		<!-- END PAGE -->

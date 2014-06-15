@@ -146,7 +146,6 @@ a:hover.tooltips span {
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                                <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
                                 <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
                                 <li class="divider"></li>
                                 <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
@@ -271,7 +270,7 @@ a:hover.tooltips span {
 <!-- ABOUT TEXT -->
 
               
-              <div class="span9">
+            <div class="span9">
                 <h5>
 Figures analytics dashboard is a prototype analytics tool developed by University of Amsterdam and MediaLAB Amsterdam in collaboration with transmedia production company Submarine. The tool was developed to offer producers of interactive documentaries concrete, actionable insights into the performance of their productions. 
                 </h5>
@@ -287,8 +286,15 @@ Figures analytics dashboard is a prototype analytics tool developed by Universit
                 <br>
                 <h4>Credits</h4>
                 <h5>Bernhard Rieder, Stefania Bercu, Anne van Egmond, Sieta van Horck, Geert Hagelaar, Yannick Diezenberg, Loes Bogers, Emile den Tex & Submarine</h5>
+                <div id="logos-about" ALIGN="center">
+                    <img src="img/logo_medialab.png" width="150" STYLE="margin: 5px">
+                    <img src="img/logo_submarine.png" width="150" STYLE="margin: 5px">
+                    <img src="img/logo_uva.png" width="150" STYLE="margin: 5px" STYLE="margin-top: 15px">
+                </div>
               </div>
-					</div>
+           
+
+			</div>
 
 
 

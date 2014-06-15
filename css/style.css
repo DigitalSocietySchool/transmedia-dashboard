@@ -73,9 +73,11 @@ h3 small, h2 small, h5 small {
     color: #030303;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, h7 {
     font-weight: normal;
 }
+
+
 
 
 h1.block, h2.block, h3.block, h4.block, h5.block, h6.block {
@@ -247,6 +249,12 @@ a.icon.huge i{
 /*fix outlines on click*/
 a,a:focus, a:hover, a:active {
     outline: 0;
+}
+
+.category-subtitle {
+    margin-left: 13px;
+    font-size: 10px;
+    color:black;
 }
 
 /*logo*/

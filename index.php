@@ -245,11 +245,12 @@ a:hover.tooltips span {
 							<li>
                                 <a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span>
 							</li>
+							<!--
                             <li>
                                 <a href="#">ACQUISTION</a> <span class="divider">&nbsp;</span>
                             </li>
 							<li><a href="#">Referral performance</a><span class="divider-last">&nbsp;</span></li>
-
+							-->
 						</ul>
 					</div>
 
@@ -257,8 +258,8 @@ a:hover.tooltips span {
 <!-- ACQUISITION + QUESTION -->
 
 					<div>
-						<h1>ACQUISITION</h1>
-							<h5>What is the process of user acquisition and where are the most/least users coming from?</h5>
+						<h1>LAST HIJACK ANALYTICS</h1>
+							<h5>Check stuff</h5>
 					</div>
 
 <!-- START REFERRAL PERFORMANCE: OVERVIEW -->
@@ -277,250 +278,7 @@ a:hover.tooltips span {
                         	<h5>This graph shows what kind or category of referral source drives visitors to your website. Sources are categorized for easy overview, and feature the three best performing sources per category.</h5>
                        	</div>
 
-<!-- DATEPICKER REFERRAL PERFORMANCE: OVERVIEW -->
-
-		<div class="left">
-			<p>Start date:</p> <input type="text" id="start"></p>
-		</div>
-
-		<div class="right">
-			<p> End date:</p> <input type="text" id="end">
-		</div>
-
-		<div id="main">
-
-		</div>
-		</div>
-
-
-<!-- START: REFERRAL PERFORMANCE: INTRO STATE-->
-
-			 <div class="widget">
-                <div class="widget-title">
-                        <h4>Referral performance: intro state</h4>
-                        <a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-                </div>
-
-            	<div class="widget-body">
-                	<div>
-
-                   	<h5>This graph shows which sources drive the most engaged users according to the intro. The sources are ranked by sessions, so the most relevant information stays on top. A refferal with a high number of sessions and an low average time spent is more relevant than a referral with a very lower number of sessions but with a high average time spent on the intro. </h5>
-                   	</div>
-<!-- DATEPICKER REFERRAL PERFORMANCE: INTRO STATE-->
-
-			 <div class="left">
-			<p>Start date:</p> <input type="text" id="start_intro"></p>
-		</div>
-
-		<div class="right">
-			<p> End date:</p> <input type="text" id="end_intro">
-		</div>
-
-		<div id="main">
-
-		</div>
-		</div>
-
-
-<!-- START REFERRAL PERFORMANCE: ENGAGEMENT-->
-
-         <div class="widget">
-            <div class="widget-title">
-                <h4>Referral performance: engagement</h4>
-
-            </div>
-
-        <div class="widget-body">
-        	<div>
-            	<h5> This graph shows which sources (on the y-axes) drive the most engaged users, in terms of how much of the content is watched on average in % (on the x-axis).
-                The size of the circle represents the amount of sessions. Within the grid, the saturation of red indicates an attention area in terms of low engagement.
-                 This means that a circle that is positioned on the right side of the graph, with a relatively large surface indicates a source with a high amount of engaged users. </h5>
-
-<!-- DATEPICKER REFERRAL PERFORMANCE: ENGAGEMENT-->
-
-		<div class="left">
-			<p>Start date:</p> <input type="text" id="d_engagement"></p>
-		</div>
-
-		<div class="right">
-			<p> End date:</p> <input type="text" id="r_engagement">
-		</div>
-
-		<div id="main">
-
-		</div>
-		<div>
-
-<!--SCRIPT REFERRAL PERFORMANCE: ENGAGEMENT-->
-
-    <div id="base" style="width:660px;heigth:700px">
-			<script>
-
-				var margin={top:20, right:20, bottom:30, left:44},
-					width=660-margin.left-margin.right,
-					height=700-margin.top-margin.bottom;
-
-				var x=d3.scale.linear()
-					.range([0,width]);
-
-				var y = d3.scale.ordinal()
-    				.domain(["Source 1", "Source 2", "Source 3", "Source 4", "Source 5", "Source 6", "Source 7", "Source 8","Source 9", "Source 10"])
-   					.rangePoints([0, width]);
-
-				/*var y=d3.scale.linear()
-					.range([height,0]);*/
-
-				var color = d3.scale.category10();
-
-				var formatAxis = d3.format("0");
-
-				var xAxis=d3.svg.axis()
-					.scale(x)
-					.orient("bottom");
-
-				var yAxis=d3.svg.axis()
-					.scale(y)
-					.orient("left")
-					.ticks(10);
-
-				var svg=d3.select("#base").append("svg")
-					.attr("width", width+margin.left + margin.right)
-					.attr("height", height+margin.top + margin.bottom)
-					.append("g")
-					.attr("transform","translate("+margin.left+","+margin.top+")");
-
-
-				function make_x_axis() {
-    				return d3.svg.axis()
-        			.scale(x)
-        	   		.orient("bottom")
-         			.ticks(10)
-
-				}
-
-				function make_y_axis() {
-  				 	return d3.svg.axis()
-       			 	.scale(y)
-        			.orient("left")
-        			.ticks(10)
-				}
-
-
-				d3.tsv("data/data_referralPerforman_2.3.1.tsv", function(error, data) {
-
-				// Defines the min and max values of the scales for the axis
-				x.domain([0,100]);
-  				//y.domain([0,10]);
-
-
-			   var chart = d3.select("body")
-			    .append("svg")
-				.attr("class", "chart")
-				.attr("width", 490)
-				.attr("height", 330)
-				.append("g")
-				  // move 0,0 slightly down and right to accomodate axes
-				 .attr("transform", "translate(30,20)");
-
-				svg.append("g")
-					  .attr("class", "x axis")
-					  .attr("transform", "translate(0," + height + ")")
-					  .call(xAxis)
-					.append("text")
-					  .attr("class", "label")
-					  .attr("x", width)
-					  .attr("y", -6)
-					  .style("text-anchor", "end")
-					  .text("Average % of content watched");
-// Code for Y axis
-
-				  svg.append("g")
-					  .attr("class", "y axis")
-					  .call(yAxis)
-					.append("text")
-					  .attr("class", "label")
-					  .attr("transform", "rotate(-90)")
-					  .attr("y", 6)
-					  .attr("dy", ".71em")
-					  .style("text-anchor", "end")
-					  .text("Sources")
-
-// Code for grid
-					  d3.select("#parent").append('svg:image')
-						.attr("src", 'url(/images/background_gradient-popularity_video.jpg)')
-						.attr('x', 0)
-						.attr('y', 0)
-						.attr('width', 596)
-						.attr('height', 650);
-
-					  svg.append("g")
-						.attr("class", "grid")
-						.attr("width", width)
-						.attr("height", height)
-						.attr("id","parent");
-
-
-					 svg.append("g")
-        				.attr("class", "grid")
-       					 .attr("transform", "translate(0," + height + ")")
-        				.call(make_x_axis()
-            				.tickSize(-height, 0, 0)
-            				.tickFormat("")
-            			)
-            			.attr("height", height);
-
-       					svg.append("g")
-       					 .attr("class", "grid")
-       					 .call(make_y_axis()
-           				 .tickSize(-width, 0, 0)
-            			.tickFormat("")
-        				)
-        				.style("fill", "yellow)");
-
-// Code for circles
-				 	 svg.selectAll(".dot")
-					  .data(data)
-					.enter().append("circle")
-					  .attr("class", "dot")
-					  .attr("r", function(d) { return d.session; })//Size
-					  .attr("cx", function(d) { return x(d.percentage); })//position x-axis
-					  .attr("cy", function(d) { return y(d.source); });//position y-axis
-
-
-// Code to create the legend in the upper right corner
-
-					var legend = svg.selectAll(".legend")
-					  .data(color.domain())
-					.enter().append("g")
-					  .attr("transform", function(d, i) { return "translate(0," + i * 40 + ")"; });
-
-				  legend.append("rect")
-					  .attr("x", width - 18)
-					  .attr("width", 18)
-					  .attr("height", 18);
-					  //.style("fill", color);
-
-				  legend.append("text")
-					  .attr("x", width - 24)
-					  .attr("y", 9)
-					  .attr("dy", ".35em")
-					  .style("text-anchor", "end")
-					  .text(function(d) { return d; });
-
-
-
-				});
-			</script>
-		</div>
-
-			</div>
-
-
-
-
-
-
+	</div>
 
 
 

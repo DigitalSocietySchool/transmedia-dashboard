@@ -27,7 +27,7 @@ Website: http://thevectorlab.net/
 	<link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
 	<link href="assets/jqvmap/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
 	<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'>
-	 <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+	<link rel='stylesheet' type='text/css' href='stylesheet.css'/>
 	<link rel='stylesheet' type='text/css' href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css'/>
 	<script type='text/javascript' src='script.js'></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>

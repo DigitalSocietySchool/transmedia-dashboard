@@ -179,21 +179,24 @@ a:hover.tooltips span {
 			<!-- BEGIN SIDEBAR MENU -->
             <ul class="sidebar-menu">
             <li>
-                    <a href="javascript:;" class="">
-                        <span class="icon-box"> <i class="icon-user"></i></span> PERSONAL
-                        <span class="arrow"></span>
-                    </a>
-              	  <li class="has-sub">
+                  <li class="has-sub">
                     <a href="javascript:;" class="">
                         <span class="icon-box"> <i class="icon-user"></i></span> BEHAVIOR
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
+                        <li class="subtitle"><h7>Content Navigation</h7></li>
+                        <li class="active"><a class="" href="Acquisition1AB.html" >Intro State</a></li>
+                        <li class=""><a class="" href="Acquisition1AB.html" >Deciding Time</a></li>
+                        <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li>
+                        <li><a class="" href="Acquisition1AB.html" > Infographics</a></li>
                         <li><a class="" href="Acquisition1AB.html" > Visitor Flow</a></li>
-                         <li class="active"><a class="" href="Acquisition1AB.html" >Intro State</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Narrative Paths</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > First Click </a></li>
+                        <li><a class="" href="Acquisition1AB.html" > Perspective Change</a></li>
+                        <li><a class="" href="Acquisition1AB.html" > Last Video Watched </a></li>
+                        <li class="subtitle"><h7>Interface Navigation</h7></li>
+                        <li><a class="" href="Acquisition1AB.html" > First Click</a></li>
+                        <li><a class="" href="Acquisition1AB.html" > Clicked Elements</a></li>
+                        <li><a class="" href="Acquisition1AB.html" > Mouse Nervousness + Mouse Distance</a></li>
                     </ul>
                 </li>
 
@@ -203,9 +206,9 @@ a:hover.tooltips span {
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="Acquisition1AB.html" >Referral performance:  overview</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: intro state</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: engagement</a></li>
+                        <li class="subtitle"><h7>Interface Navigation</h7></li>
+                        <li><a class="" href="Acquisition1AB.html" >Referral Performance: Overview</a></li>
+                        <li><a class="" href="Acquisition1AB.html" >Referral Performance: Engagement</a></li>
                     </ul>
                 </li>
                 <li class="has-sub">
@@ -214,9 +217,17 @@ a:hover.tooltips span {
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="Technical1AB.html">Last vido watched & loading time</a></li>
-                        <li><a class="" href="Technical2AB.html">Time on site & width/height</a></li>
+                        <li class="subtitle"><h7>Non-engaged Visits</h7></li>
                         <li><a class="" href="Technical2CD.html">Browser</a></li>
+                        <li><a class="" href="Technical1AB.html">Screenresolution</a></li>
+                        <li><a class="" href="Technical2AB.html">Time on site & width/height</a></li>
+                        <li class="subtitle"><h7>Browser</h7></li>
+                        <li><a class="" href="Technical2AB.html">Desktop / Mobile</a></li>
+                        <li class="subtitle"><h7>Screen</h7></li>
+                        <li><a class="" href="Technical2AB.html">Desktop</a></li>
+                        <li><a class="" href="Technical2AB.html">Mobile</a></li>
+
+                        
                     </ul>
                 </li>
 
@@ -224,7 +235,7 @@ a:hover.tooltips span {
                 </li>
 
             </ul>
-			<!-- END SIDEBAR MENU -->
+            <!-- END SIDEBAR MENU -->
 		</div>
 		<!-- END SIDEBAR -->
 		<!-- BEGIN PAGE -->

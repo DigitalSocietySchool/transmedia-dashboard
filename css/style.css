@@ -73,12 +73,9 @@ h3 small, h2 small, h5 small {
     color: #030303;
 }
 
-h1, h2, h3, h4, h5, h6, h7 {
+h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
-
-
-
 
 h1.block, h2.block, h3.block, h4.block, h5.block, h6.block {
     padding-bottom: 10px;
@@ -253,8 +250,9 @@ a,a:focus, a:hover, a:active {
 
 .category-subtitle {
     margin-left: 13px;
+    margin-top: 2px;
     font-size: 10px;
-    color:black;
+    color:#5d686e;
 }
 
 /*logo*/
@@ -637,9 +635,9 @@ position: fixed;
     text-decoration: none;
     color: #fff;
     cursor: pointer;
-    margin-top: -3px;
+    margin-top: 10px;
     margin-right: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     font-size: 16px;
     background-color: #111;
     opacity: 0.8;

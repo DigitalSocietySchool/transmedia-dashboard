@@ -21,25 +21,25 @@ Website: http://thevectorlab.net/
 	<link href="css/style.css" rel="stylesheet" />
 	<link href="css/style_responsive.css" rel="stylesheet" />
 	<link href="css/style_default.css" rel="stylesheet" id="style_color" />
-	<link href="css/AcquisitionLastHijackCSS.css rel="stylesheet"> 
+	<link href="css/AcquisitionLastHijackCSS.css" rel="stylesheet">
 	<link href="assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="assets/uniform/css/uniform.default.css" />
 	<link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
 	<link href="assets/jqvmap/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
-	<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'>
+	<link href="http://fonts.googleapis.com/css?family=Gudea" rel="stylesheet" type='text/css'>
 	 <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
 	<link rel='stylesheet' type='text/css' href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css'/>
-	<link href="ballsstyle.css" rel="stylesheet" />
-		<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'/>
+	<link href="cat/ballsstyle.css" rel="stylesheet" />
+	<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'/>
 	<script type='text/javascript' src='script.js'></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
-	
-	
+
+
 </head>
 
-	
-	
+
+
 	<script src="js/d3.min.js"></script>
 </head>
 <style>
@@ -53,7 +53,7 @@ body {font-family: 'Gudea', sans-serif;
 .arc path {
   stroke: #fff;
   stroke-width:5;
-  
+
 }
 
 #project {
@@ -75,7 +75,7 @@ a.tooltips span {
   text-align:center;
   visibility: hidden;
   border-radius: 14px;
-  
+
 }
 a.tooltips span:after {
   position: absolute;
@@ -109,7 +109,7 @@ a:hover.tooltips span {
             <div class="container-fluid">
                 <!-- BEGIN LOGO -->
                 <a class="brand" href="Behavior1AB.html">
-                 
+
                 </a>
                 <!-- END LOGO -->
                 <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -136,7 +136,7 @@ a:hover.tooltips span {
                 <!-- END  NOTIFICATION -->
                 <div class="top-nav ">
                     <ul class="nav pull-right top-menu" >
-                     
+
                         <!-- BEGIN USER LOGIN DROPDOWN -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -191,9 +191,9 @@ a:hover.tooltips span {
                     <ul class="sub">
                         <li><a class="" href="Acquisition1AB.html" > Visitor Flow</a></li>
                          <li class="active"><a class="" href="Acquisition1AB.html" >Intro State</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li> 
-                         <li><a class="" href="Acquisition1AB.html" > Narrative Paths</a></li> 
-                         <li><a class="" href="Acquisition1AB.html" > First Click </a></li> 
+                         <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li>
+                         <li><a class="" href="Acquisition1AB.html" > Narrative Paths</a></li>
+                         <li><a class="" href="Acquisition1AB.html" > First Click </a></li>
                     </ul>
                 </li>
 
@@ -205,7 +205,7 @@ a:hover.tooltips span {
                     <ul class="sub">
                         <li><a class="" href="Acquisition1AB.html" >Referral performance:  overview</a></li>
                          <li><a class="" href="Acquisition1AB.html" >Referral performance: intro state</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: engagement</a></li> 
+                         <li><a class="" href="Acquisition1AB.html" >Referral performance: engagement</a></li>
                     </ul>
                 </li>
                 <li class="has-sub">
@@ -222,7 +222,7 @@ a:hover.tooltips span {
 
                     </ul>
                 </li>
-    
+
             </ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -233,11 +233,11 @@ a:hover.tooltips span {
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
 				<div class="row-fluid">
-					
-					
-					
 
-					
+
+
+
+
 <!-- BEGIN BREADCRUMB-->
 
 					<div class="span12">
@@ -249,51 +249,51 @@ a:hover.tooltips span {
                                 <a href="#">ACQUISTION</a> <span class="divider">&nbsp;</span>
                             </li>
 							<li><a href="#">Referral performance</a><span class="divider-last">&nbsp;</span></li>
-                
+
 						</ul>
 					</div>
 
-										
+
 <!-- ACQUISITION + QUESTION -->
-					
+
 					<div>
-						<h1>ACQUISITION</h1>	
+						<h1>ACQUISITION</h1>
 							<h5>What is the process of user acquisition and where are the most/least users coming from?</h5>
 					</div>
-	
+
 <!-- START REFERRAL PERFORMANCE: OVERVIEW -->
-				 
-                <div class="span10" > 
-                    <div class="widget"> 
+
+                <div class="span10" >
+                    <div class="widget">
                         <div class="widget-title">
                             <h4> Referral performance: overview </h4>
                      			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
                    	 </div>
-                   	 
-                   	 	
-                    <div class="widget-body"> 
+
+
+                    <div class="widget-body">
                     	<div>
                         	<h5>This graph shows what kind or category of referral source drives visitors to your website. Sources are categorized for easy overview, and feature the three best performing sources per category.</h5>
-                       	</div>						
+                       	</div>
 
-<!-- DATEPICKER REFERRAL PERFORMANCE: OVERVIEW -->								
-								
+<!-- DATEPICKER REFERRAL PERFORMANCE: OVERVIEW -->
+
 		<div class="left">
 			<p>Start date:</p> <input type="text" id="start"></p>
 		</div>
-								
+
 		<div class="right">
 			<p> End date:</p> <input type="text" id="end">
-		</div> 
-		
-		<div id="main">
-									
-		</div>	
 		</div>
-			
-		 
-<!-- START: REFERRAL PERFORMANCE: INTRO STATE-->	
+
+		<div id="main">
+
+		</div>
+		</div>
+
+
+<!-- START: REFERRAL PERFORMANCE: INTRO STATE-->
 
 			 <div class="widget">
                 <div class="widget-title">
@@ -301,119 +301,119 @@ a:hover.tooltips span {
                         <a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
                 </div>
-                                
+
             	<div class="widget-body">
                 	<div>
-     
+
                    	<h5>This graph shows which sources drive the most engaged users according to the intro. The sources are ranked by sessions, so the most relevant information stays on top. A refferal with a high number of sessions and an low average time spent is more relevant than a referral with a very lower number of sessions but with a high average time spent on the intro. </h5>
-                   	</div> 
-<!-- DATEPICKER REFERRAL PERFORMANCE: INTRO STATE-->			
-					
+                   	</div>
+<!-- DATEPICKER REFERRAL PERFORMANCE: INTRO STATE-->
+
 			 <div class="left">
 			<p>Start date:</p> <input type="text" id="start_intro"></p>
 		</div>
-								
+
 		<div class="right">
 			<p> End date:</p> <input type="text" id="end_intro">
-		</div> 
-		
+		</div>
+
 		<div id="main">
-									
+
 		</div>
 		</div>
-                            
-                             
-<!-- START REFERRAL PERFORMANCE: ENGAGEMENT-->	
- 
+
+
+<!-- START REFERRAL PERFORMANCE: ENGAGEMENT-->
+
          <div class="widget">
             <div class="widget-title">
                 <h4>Referral performance: engagement</h4>
-                
+
             </div>
-                           			
+
         <div class="widget-body">
         	<div>
             	<h5> This graph shows which sources (on the y-axes) drive the most engaged users, in terms of how much of the content is watched on average in % (on the x-axis).
                 The size of the circle represents the amount of sessions. Within the grid, the saturation of red indicates an attention area in terms of low engagement.
                  This means that a circle that is positioned on the right side of the graph, with a relatively large surface indicates a source with a high amount of engaged users. </h5>
-                           				
-<!-- DATEPICKER REFERRAL PERFORMANCE: ENGAGEMENT-->								
-			
+
+<!-- DATEPICKER REFERRAL PERFORMANCE: ENGAGEMENT-->
+
 		<div class="left">
 			<p>Start date:</p> <input type="text" id="d_engagement"></p>
 		</div>
-								
+
 		<div class="right">
 			<p> End date:</p> <input type="text" id="r_engagement">
-		</div> 
-		
-		<div id="main">
-									
 		</div>
-		<div> 
-					
+
+		<div id="main">
+
+		</div>
+		<div>
+
 <!--SCRIPT REFERRAL PERFORMANCE: ENGAGEMENT-->
-    
+
     <div id="base" style="width:660px;heigth:700px">
 			<script>
-			
+
 				var margin={top:20, right:20, bottom:30, left:44},
 					width=660-margin.left-margin.right,
 					height=700-margin.top-margin.bottom;
-				
+
 				var x=d3.scale.linear()
 					.range([0,width]);
-					
+
 				var y = d3.scale.ordinal()
     				.domain(["Source 1", "Source 2", "Source 3", "Source 4", "Source 5", "Source 6", "Source 7", "Source 8","Source 9", "Source 10"])
    					.rangePoints([0, width]);
-				
+
 				/*var y=d3.scale.linear()
 					.range([height,0]);*/
-				
+
 				var color = d3.scale.category10();
-				
+
 				var formatAxis = d3.format("0");
-								
+
 				var xAxis=d3.svg.axis()
 					.scale(x)
 					.orient("bottom");
-			
+
 				var yAxis=d3.svg.axis()
 					.scale(y)
 					.orient("left")
-					.ticks(10); 
-				
+					.ticks(10);
+
 				var svg=d3.select("#base").append("svg")
 					.attr("width", width+margin.left + margin.right)
 					.attr("height", height+margin.top + margin.bottom)
 					.append("g")
 					.attr("transform","translate("+margin.left+","+margin.top+")");
-			
-				
-				function make_x_axis() {        
+
+
+				function make_x_axis() {
     				return d3.svg.axis()
         			.scale(x)
         	   		.orient("bottom")
          			.ticks(10)
-         		
+
 				}
 
-				function make_y_axis() {        
+				function make_y_axis() {
   				 	return d3.svg.axis()
        			 	.scale(y)
         			.orient("left")
         			.ticks(10)
 				}
-				
-				
+
+
 				d3.tsv("data/data_referralPerforman_2.3.1.tsv", function(error, data) {
-				  
+
 				// Defines the min and max values of the scales for the axis
-				x.domain([0,100]); 
+				x.domain([0,100]);
   				//y.domain([0,10]);
 
-					
+
 			   var chart = d3.select("body")
 			    .append("svg")
 				.attr("class", "chart")
@@ -424,7 +424,7 @@ a:hover.tooltips span {
 				 .attr("transform", "translate(30,20)");
 
 				svg.append("g")
-					  .attr("class", "x axis") 
+					  .attr("class", "x axis")
 					  .attr("transform", "translate(0," + height + ")")
 					  .call(xAxis)
 					.append("text")
@@ -445,7 +445,7 @@ a:hover.tooltips span {
 					  .attr("dy", ".71em")
 					  .style("text-anchor", "end")
 					  .text("Sources")
-					  
+
 // Code for grid
 					  d3.select("#parent").append('svg:image')
 						.attr("src", 'url(/images/background_gradient-popularity_video.jpg)')
@@ -453,15 +453,15 @@ a:hover.tooltips span {
 						.attr('y', 0)
 						.attr('width', 596)
 						.attr('height', 650);
-						
+
 					  svg.append("g")
 						.attr("class", "grid")
 						.attr("width", width)
 						.attr("height", height)
 						.attr("id","parent");
-					 
-								
-					 svg.append("g")         
+
+
+					 svg.append("g")
         				.attr("class", "grid")
        					 .attr("transform", "translate(0," + height + ")")
         				.call(make_x_axis()
@@ -469,15 +469,15 @@ a:hover.tooltips span {
             				.tickFormat("")
             			)
             			.attr("height", height);
-       					
-       					svg.append("g")         
+
+       					svg.append("g")
        					 .attr("class", "grid")
        					 .call(make_y_axis()
            				 .tickSize(-width, 0, 0)
             			.tickFormat("")
         				)
-        				.style("fill", "yellow)");    			
-        				
+        				.style("fill", "yellow)");
+
 // Code for circles
 				 	 svg.selectAll(".dot")
 					  .data(data)
@@ -486,11 +486,11 @@ a:hover.tooltips span {
 					  .attr("r", function(d) { return d.session; })//Size
 					  .attr("cx", function(d) { return x(d.percentage); })//position x-axis
 					  .attr("cy", function(d) { return y(d.source); });//position y-axis
-					  
+
 
 // Code to create the legend in the upper right corner
 
-					var legend = svg.selectAll(".legend") 
+					var legend = svg.selectAll(".legend")
 					  .data(color.domain())
 					.enter().append("g")
 					  .attr("transform", function(d, i) { return "translate(0," + i * 40 + ")"; });
@@ -507,28 +507,28 @@ a:hover.tooltips span {
 					  .attr("dy", ".35em")
 					  .style("text-anchor", "end")
 					  .text(function(d) { return d; });
-					  
 
-        				
+
+
 				});
-			</script>                                                                                                                            
+			</script>
 		</div>
-			
+
 			</div>
-		
-	
-			
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
+
+
+
+
+
+
+
+
+
+
+
 				<!-- END PAGE CONTENT-->
-	
+
 			<!-- END PAGE CONTAINER-->
 		</div>
 		<!-- END PAGE -->

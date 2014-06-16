@@ -191,8 +191,15 @@ a:hover.tooltips span {
 			<!-- BEGIN SIDEBAR MENU -->
             <ul class="sidebar-menu">
 				<li class="sub">
-                    <a href="cat_behavior.php" class="">
-                        <span class="icon-box"> <i class="icon-user"></i></span> BEHAVIOR
+                    <a href="cat_content.php" class="">
+                        <span class="icon-box"> <i class="icon-user"></i></span> CONTENT
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+
+                <li class="sub">
+                    <a href="cat_interface.php" class="">
+                        <span class="icon-box"> <i class="icon-user"></i></span> INTERFACE
                         <span class="arrow"></span>
                     </a>
                 </li>

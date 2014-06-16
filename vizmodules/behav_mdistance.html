@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  opacity: 0.4;
+  fill: #57B7B9;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
+
+.bar:hover {
+  fill: #E9B58C;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  display: inline;
+  width: 160px;
+  height: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-size: 11px sans-serif;
+  background-color: #5D686E;
+  color: #FFF;
+  border: 0px;
+  pointer-events: none;
+  opacity: 0.8;
+  right: 100%;
+  top: 50%;
+  font-family: 'Gudea', sans-serif;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 550 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var color = d3.scale.category10();
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+// function for grid y axis
+
+				function make_y_axis() {
+					return d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.ticks(10)
+					}
+
+// function for grid x axis
+
+				function make_x_axis() {
+					return d3.svg.axis()
+					.scale(x)
+					 .orient("bottom")
+					 .ticks(10)
+					}
+
+// calling the tsv file
+
+d3.csv("../data/d_behav_mdistance.csv", function(error, data) {
+  data.forEach(function(d) {
+    d.distance = +d.distance;
+    d.sessionDurationBucket = +d.sessionDurationBucket;
+  });
+
+
+  x.domain(d3.extent(data, function(d) { return d.sessionDurationBucket; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.distance; })).nice();
+
+// code for hover
+				var formatTime = d3.time.format("%e %B");
+
+				var div = d3.select("body").append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+
+
+
+	// code to draw horizontal grid
+
+				svg.append("g")
+					.attr("class", "grid")
+					.attr("transform", "translate(0," + height + ")")
+					.style("stroke-dasharray", ("2, 2"))
+					.call(make_x_axis()
+						.tickSize(-height, 0, 0)
+						.tickFormat("")
+					)
+
+
+    svg.append("g")
+        .attr("class", "grid")
+        .style("stroke-dasharray", ("2, 2"))
+        .call(make_y_axis()
+            .tickSize(-width, 0, 0)
+            .tickFormat("")
+        )
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Session duration (in seconds)");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("pixels travelled per session")
+
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 4)
+      .attr("cx", function(d) { return x(d.sessionDurationBucket); })
+      .attr("cy", function(d) { return y(d.distance); })
+      .on("mouseover", function(d) {
+							div.transition()
+								.duration(200)
+								.style("opacity", .9);
+							div .html("pixels travelled per session" + " " + d.distance + "<br/>" + "session duration" + " " + d.sessionDurationBucket)
+								.style("left", (d3.event.pageX) + "px")
+								.style("top", (d3.event.pageY - 28) + "px");
+							})
+						.on("mouseout", function(d) {
+							div.transition()
+								.duration(500)
+								.style("opacity", 0);
+						});
+
+  var legend = svg.selectAll(".legend")
+      .data(color.domain())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+});
+
+</script>

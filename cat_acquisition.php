@@ -186,29 +186,27 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 	        <li class="sub">
 	            <a href="cat_interface.php" class="">
-	                <span class="icon-box"> <i class="icon-link"></i></span> INTERFACE
+	                <span class="icon-box"> <i class="icon-user"></i></span> INTERFACE
 	                <span class="arrow"></span>
 	            </a>
 	        </li>
 
-	        <li class="sub">
+	        <li class="has-sub active">
 	            <a href="cat_acquisition.php" class="">
 	                <span class="icon-box"> <i class="icon-link"></i></span> ACQUISITION
 	                <span class="arrow"></span>
 	            </a>
+	             <ul class="sub">
+	                <li><a class="" href="#intro_state">Overview</a></li>
+	                <li><a class="" href="#video">FNG</a></li>
+	            </ul>
 	        </li>
 
-            <li class="has-sub active">
+            <li class="has-sub">
                 <a href="cat_technical.php" class="">
                     <span class="icon-box"><i class="icon-wrench"></i></span> TECHNICAL
                     <span class="arrow"></span>
                 </a>
-                <ul class="sub">
-	                <li><a class="" href="#intro_state">Intro State</a></li>
-	                <li><a class="" href="#video">Video Popularity</a></li>
-	                <li><a class="" href="cat_behavior.php">Narrative Paths</a></li>
-	                <li><a class="" href="cat_behavior.php">First Click </a></li>
-	            </ul>
             </li>
 		</ul>
 		<!-- END SIDEBAR MENU -->
@@ -238,9 +236,10 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 <!-- START BEHAVIOR TITLE + QUESTION -->
 				<div>
-					<h1>TECHNICAL</h1>
+					<h1>BEHAVIOR</h1>
 					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
 				</div>
+
 
 
 				<a name="visitorflow"></a>
@@ -248,7 +247,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<div style="width:100%">
 					<div class="widget">
 						<div class="widget-title">
-							<h4>BROWSER TO INTRO</h4>
+							<h4>Visitor Flow</h4>
 							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 						</div>
@@ -260,7 +259,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 							// here we set up the query
 							// cf GA query explorer for reference
 							$optParams = array(
-								'dimensions' => 'ga:deviceCategory,ga:browser,ga:dimension1',
+								'dimensions' => 'ga:medium,ga:source,ga:dimension1',
 								//'sort' => '-ga:visits',
 								//'filters' => 'ga:eventAction==videopath',
 								'max-results' => '5000'
@@ -334,17 +333,16 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							// write the data to a file
 							// makes interfacing with D3 simpler
-							file_put_contents("data/d_tech_browsertointro.json",json_encode($newwork));
+							file_put_contents("data/d_acqui_referrals.json",json_encode($newwork));
 
 							?>
 
-							<iframe width="1000" height="520" src="vizmodules/tech_browsertointro.html" frameborder="0"></iframe>
+							<iframe width="1000" height="520" src="vizmodules/acqui_referrals.html" frameborder="0"></iframe>
 
 							<p>total sessions = <?php echo $edgecounter ?></p>
 						</div>
 					</div>
 				</div>
-
 
 
 

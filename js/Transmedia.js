@@ -1,5 +1,5 @@
 function displayTable(idTable){
-	
+
 	if(document.getElementById(idTable).style.display=="none"){
 		document.getElementById(idTable).style.display="inline"; //Shows the table
 	} else {
@@ -22,7 +22,7 @@ $(document).scroll( function() {
     if (!$('[data-role=header].ui-fixed-hidden').length) {
       $('[data-role=header]').toolbar('hide');
     }
-  } 
+  }
 
   // Scrolling up
   else {
@@ -32,17 +32,17 @@ $(document).scroll( function() {
     }
   }
 
-  lastScrollPosition = scrollPosition;  
+  lastScrollPosition = scrollPosition;
 });
 
 
 $(document).ready(function() {
-    $("#departing").datepicker();
-    $("#returning").datepicker();
+    $("#date_start").datepicker({dateFormat: "yy-mm-dd"});
+    $("#date_end").datepicker({dateFormat: "yy-mm-dd"});
     $("button").click(function() {
     	var selected = $("#dropdown option:selected").text();
-        var departing = $("#departing").val();
-        var returning = $("#returning").val();
+        var departing = $("#date_start").val();
+        var returning = $("#date_end").val();
         if (departing === "" || returning === "") {
 			alert("Please select departing and returning dates.");
         } else {

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.bar {
+  fill: #57B7B9;
+}
+
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.bar:hover {
+  fill: #E9B58C;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  display: inline;
+  width: 120px;
+  height: 40px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-size: 11px sans-serif;
+  background-color: #5D686E;
+  color: #FFF;
+  border: 0px;
+  pointer-events: none;
+  opacity: 0.8;
+  right: 100%;
+  top: 50%;
+  font-family: 'Gudea', sans-serif;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 10, right: 0, bottom: 30, left: 20},
+    width = 800 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(10);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// function for grid y axis (not being used here)
+
+				function make_y_axis() {
+					return d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.ticks(10)
+					}
+
+// function for grid x axis
+
+				function make_x_axis() {
+					return d3.svg.axis()
+					.scale(x)
+					 .orient("bottom")
+					 .ticks(10)
+					}
+
+
+d3.csv("../data/d_behav_infographics.csv", type, function(error, data) {
+  x.domain(data.map(function(d) { return d.infographic; }));
+  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+		var formatTime = d3.time.format("%e %B");
+
+		var div = d3.select("body").append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+
+
+// code to draw the grids
+
+
+
+				svg.append("g")
+					.attr("class", "grid")
+					.style("stroke-dasharray", ("2, 2"))
+					.call(make_y_axis()
+					.tickSize(-width, 0, 0)
+					.tickFormat("")
+					)
+
+
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Frequency");
+
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.infographic); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.frequency); })
+      .attr("height", function(d) { return height - y(d.frequency); })
+		.on("mouseover", function(d) {
+							div.transition()
+								.duration(200)
+								.style("opacity", .9);
+							div .html(d.infographic + "<br/>"  + "frequency" + " " + d.frequency)
+								.style("left", (d3.event.pageX) + "px")
+								.style("top", (d3.event.pageY - 28) + "px");
+							})
+						.on("mouseout", function(d) {
+							div.transition()
+								.duration(500)
+								.style("opacity", 0);
+						});
+});
+
+function type(d) {
+  d.frequency = +d.frequency;
+  return d;
+}
+
+</script>

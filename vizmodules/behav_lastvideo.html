@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Bar Chart</title>
+<style>
+
+body {
+  font: 10px sans-serif;
+   margin:0px;
+}
+
+.bar.positive {
+  fill: #57B7B9;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+
+.bar:hover {
+  fill: #E9B58C;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  display: inline;
+  width: 95px;
+  height: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-size: 11px sans-serif;
+  background-color: #5D686E;
+  color: #FFF;
+  border: 0px;
+  pointer-events: none;
+  opacity: 0.8;
+  right: 100%;
+  top: 50%;
+  font-family: 'Gudea', sans-serif;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+
+
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+				var margin = {top: 0, right: 0, bottom: 0, left: 100},
+					width = 400 - margin.left - margin.right,
+					height = 300 - margin.top - margin.bottom;
+
+				var x = d3.scale.linear()
+					.range([0, width]);
+
+				var y = d3.scale.ordinal()
+					.rangeRoundBands([0, height], .3);
+
+				var yAxis = d3.svg.axis()
+					.scale(y)
+					.orient("left");
+
+				var xAxis = d3.svg.axis()
+					.scale(x)
+					.orient("bottom");
+
+				var svg = d3.select("body").append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+				  .append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+// function for grid y axis (not being used here)
+
+				function make_y_axis() {
+					return d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.ticks(10)
+					}
+
+// function for grid x axis
+
+				function make_x_axis() {
+					return d3.svg.axis()
+					.scale(x)
+					 .orient("bottom")
+					 .ticks(10)
+					}
+
+
+// calling the .tsv
+
+				d3.csv("../data/d_behav_lastvideo.csv", type, function(error, data) {
+				  x.domain([0, d3.max(data, function(d) { return d.sessions; })]);////d3.extent(data, function(d) { return d.avgsessionduration; })).nice();
+				  y.domain(data.map(function(d) { return d.label; }));
+
+				var formatTime = d3.time.format("%e %B");
+
+				var div = d3.select("body").append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+
+
+// code to draw horizontal grid
+
+
+				svg.append("g")
+					.attr("class", "grid")
+					.attr("transform", "translate(0," + height + ")")
+					.style("stroke-dasharray", ("2, 2"))
+					.call(make_x_axis()
+						.tickSize(-height, 0, 0)
+						.tickFormat("")
+					)
+
+// code to draw bars
+
+				  svg.selectAll(".bar")
+					  .data(data)
+					.enter().append("rect")
+					  .attr("class",  "bar positive")
+					  .attr("x", 0)
+					  .attr("y", function(d) { return y(d.label); })
+					  .attr("width", function(d) { return x(d.sessions); })
+					  .attr("height", y.rangeBand())
+					  .on("mouseover", function(d) {
+							div.transition()
+								.duration(200)
+								.style("opacity", .9);
+							div .html(d.label + "<br/>"  + d.sessions)
+								.style("left", (d3.event.pageX) + "px")
+								.style("top", (d3.event.pageY - 28) + "px");
+							})
+						.on("mouseout", function(d) {
+							div.transition()
+								.duration(500)
+								.style("opacity", 0);
+						});
+
+
+
+
+// code to place the X-axis at the bottom of graph
+
+				   svg.append("g")
+					  .attr("class", "x axis")
+					  .attr("transform", "translate(0," + height + ")")
+					  .call(xAxis);
+
+// code for Y-axis
+
+				  svg.append("g")
+					  .attr("class", "y axis")
+					  .call(yAxis)
+				 		.selectAll("text")
+						.style("text-anchor", "end")
+						.attr("dx", "-.8em")
+						.attr("dy", ".15em");
+
+
+
+// Label X-axis
+				svg.append("text")
+						.attr("x", 940 )
+						.attr("y", 440 )
+						.style("text-anchor", "middle")
+						.text("avg time on site (in seconds)");
+				});
+
+				function type(d) {
+				  d.sessions = +d.sessions;
+				  return d;
+				}
+
+</script>

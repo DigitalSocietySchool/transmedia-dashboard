@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<!--
-Template Name: Admin Lab Dashboard build with Bootstrap v2.3.1
-Template Version: 1.2
-Author: Mosaddek Hossain
-Website: http://thevectorlab.net/
--->
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
-<!-- BEGIN HEAD -->
+<?php
+
+// authenticate
+// user will be redirected if not logged in with right credentials
+include "includes/auth.php";
+
+$startdate = ($_GET["date_start"]) ? $_GET["date_start"]:date("Y-m-d", time() - 60 * 60 * 24 * 14);
+$enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 60 * 24 * 1);
+
+?>
 <head>
 	<meta charset="utf-8" />
+
 	<title>Submarine Dashboard</title>
+
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-	<meta content="" name="description" />
-	<meta content="" name="author" />
+
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
 	<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
 	<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -24,311 +26,447 @@ Website: http://thevectorlab.net/
 
 	<link href="assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="assets/uniform/css/uniform.default.css" />
-	<link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+	<!-- <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" /> -->
 	<link href="assets/jqvmap/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
 	<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'>
-	<link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+
 	<link rel='stylesheet' type='text/css' href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css'/>
-	<script type='text/javascript' src='script.js'></script>
+
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-
-
-
-</head>
-
-
-
 	<script src="js/d3.min.js"></script>
+
+
+	<style>
+
+	body { font-family: 'Gudea', sans-serif; }
+
+	.arc path {
+	  stroke: #fff;
+	  stroke-width:5;
+	}
+
+	#project {
+		font-family: 'Gudea', sans-serif;
+		padding:10px;
+	}
+
+	a.tooltips {
+		position: relative;
+		display: inline;
+	}
+
+	a.tooltips span {
+		position: absolute;
+		width:210px;
+		color: #FFFFFF;
+		background: #777E88;
+	 	height: 100px;
+		text-align:center;
+		visibility: hidden;
+		border-radius: 14px;
+	}
+	a.tooltips span:after {
+	  position: absolute;
+	  top: 50%;
+	  left: 100%;
+	  margin-top: -8px;
+	  width: 0; height: 0;
+	  border-left: 8px solid #777E88;
+	  border-top: 8px solid transparent;
+	  border-bottom: 8px solid transparent;
+	}
+	a:hover.tooltips span {
+	  visibility: visible;
+	  opacity: 0.8;
+	  right: 100%;
+	  top: 50%;
+	  margin-top: -50px;
+	  margin-right: 15px;
+	  z-index: 999;
+	}
+
+	</style>
 </head>
-<style>
-
-body {font-family: 'Gudea', sans-serif;
-
-}
-
-
-
-.arc path {
-  stroke: #fff;
-  stroke-width:5;
-
-}
-
-#project {
-	font-family: 'Gudea', sans-serif;
-}
-
-
-
-a.tooltips {
-  position: relative;
-  display: inline;
-}
-a.tooltips span {
-  position: absolute;
-  width:210px;
-  color: #FFFFFF;
-  background: #777E88;
-  height: 100px;
-  text-align:center;
-  visibility: hidden;
-  border-radius: 14px;
-
-}
-a.tooltips span:after {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -8px;
-  width: 0; height: 0;
-  border-left: 8px solid #777E88;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-}
-a:hover.tooltips span {
-  visibility: visible;
-  opacity: 0.8;
-  right: 100%;
-  top: 50%;
-  margin-top: -50px;
-  margin-right: 15px;
-  z-index: 999;
-}
-
-
-</style>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="fixed-top">
-	<!-- BEGIN HEADER -->
-    <div id="header" class="navbar navbar-inverse navbar-fixed-top">
-        <!-- BEGIN TOP NAVIGATION BAR -->
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <!-- BEGIN LOGO -->
-                <a class="brand" href="Behavior1AB.html">
 
-                </a>
-                <!-- END LOGO -->
-                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-                <a class="btn btn-navbar collapsed" id="main_menu_trigger" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="arrow"></span>
-                </a>
-                <!-- END RESPONSIVE MENU TOGGLER -->
-                <div id="top_menu" class="nav notify-row">
-                    <!-- BEGIN NOTIFICATION -->
-                    <ul class="nav top-menu">
-                        <!-- BEGIN PROJECT -->
-                        <li class="dropdown">
-                            <a class="dropdown-toggle element" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title=>
-                                <p id="project"> Last Hijack</p>
-                            </a>
-                        </li>
-                        <!-- END PROJECT -->
+<!-- BEGIN HEADER -->
+<div id="header" class="navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <!-- BEGIN LOGO -->
+            <a class="brand" href="Behavior1AB.html"></a>
+            <!-- END LOGO -->
 
-                    </ul>
-                </div>
-                <!-- END  NOTIFICATION -->
-                <div class="top-nav ">
-                    <ul class="nav pull-right top-menu" >
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a class="btn btn-navbar collapsed" id="main_menu_trigger" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="arrow"></span>
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
 
-                        <!-- BEGIN USER LOGIN DROPDOWN -->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="img/Geert.jpg" alt="">
-                                <span class="username">	Transmedia Analytics</span>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                                <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
-                                <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
-                                <li class="divider"></li>
-                                <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
-                            </ul>
-                        </li>
-                        <!-- END USER LOGIN DROPDOWN -->
-                    </ul>
-                    <!-- END TOP NAVIGATION MENU -->
-                </div>
+            <div id="top_menu" class="nav notify-row">
+				<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+					<p id="project">
+
+                        <!-- DATEPICKER CODE-->
+						<span>
+							Last Hijack from <input type="text" name="date_start" id="date_start" value="<?php echo $startdate; ?>">
+						</span>
+
+						<span>
+							to <input type="text" name="date_end" id="date_end"  value="<?php echo $enddate; ?>">
+						</span>
+
+						<input type="submit" value="update" />
+					</p>
+				</form>
+            </div>
+
+
+            <div class="top-nav ">
+                <ul class="nav pull-right top-menu" >
+
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="img/Geert.jpg" alt="">
+                            <span class="username">	Transmedia Analytics</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
+                            <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
+                            <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
+                            <li class="divider"></li>
+                            <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+                <!-- END TOP NAVIGATION MENU -->
             </div>
         </div>
-        <!-- END TOP NAVIGATION BAR -->
     </div>
-	<!-- END HEADER -->
-	<!-- BEGIN CONTAINER -->
-	<div id="container" class="row-fluid">
-		<!-- BEGIN SIDEBAR -->
-		<div id="sidebar" class="nav-collapse collapse">
-			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-			<div class="sidebar-toggler hidden-phone"></div>
-			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
 
-			<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-			<div class="navbar-inverse">
-				<form class="navbar-search visible-phone">
-					<input type="text" class="search-query" placeholder="Search" />
-				</form>
-			</div>
-			<!-- END RESPONSIVE QUICK SEARCH FORM -->
-			<!-- BEGIN SIDEBAR MENU -->
-            <ul class="sidebar-menu">
-            <li>
-                    <a href="javascript:;" class="">
-                        <span class="icon-box"> <i class="icon-user"></i></span> PERSONAL
-                        <span class="arrow"></span>
-                    </a>
-              	  <li class="has-sub">
-                    <a href="javascript:;" class="">
-                        <span class="icon-box"> <i class="icon-user"></i></span> BEHAVIOR
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="Acquisition1AB.html" > Visitor Flow</a></li>
-                         <li class="active"><a class="" href="Acquisition1AB.html" >Intro State</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Narrative Paths</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > First Click </a></li>
-                    </ul>
-                </li>
 
-                <li class="has-sub">
-                    <a href="javascript:;" class="">
-                        <span class="icon-box"> <i class="icon-link"></i></span> ACQUISITION
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="Acquisition1AB.html" >Referral performance:  overview</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: intro state</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: engagement</a></li>
-                    </ul>
-                </li>
-                <li class="has-sub">
-                    <a href="javascript:;" class="">
-                        <span class="icon-box"><i class="icon-wrench"></i></span> TECHNICAL
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="Technical1AB.html">Last vido watched & loading time</a></li>
-                        <li><a class="" href="Technical2AB.html">Time on site & width/height</a></li>
-                        <li><a class="" href="Technical2CD.html">Browser</a></li>
-                    </ul>
-                </li>
 
-                    </ul>
-                </li>
+<!-- BEGIN CONTAINER -->
+<div id="container" class="row-fluid">
 
-            </ul>
-			<!-- END SIDEBAR MENU -->
+	<!-- BEGIN SIDEBAR -->
+	<div id="sidebar" class="nav-collapse collapse">
+		<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+		<div class="sidebar-toggler hidden-phone"></div>
+		<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+
+		<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+		<div class="navbar-inverse">
+			<form class="navbar-search visible-phone">
+				<input type="text" class="search-query" placeholder="Search" />
+			</form>
 		</div>
-		<!-- END SIDEBAR -->
-		<!-- BEGIN PAGE -->
-		<div id="main-content">
-			<!-- BEGIN PAGE CONTAINER-->
-			<div class="container-fluid">
-				<!-- BEGIN PAGE HEADER-->
-				<div class="row-fluid">
+		<!-- END RESPONSIVE QUICK SEARCH FORM -->
+		<!-- BEGIN SIDEBAR MENU -->
+        <ul class="sidebar-menu">
+
+	      	<li class="has-sub active">
+	            <a href="javascript:;" class="">
+	                <span class="icon-box"> <i class="icon-user"></i></span> BEHAVIOR
+	                <span class="arrow"></span>
+	            </a>
+	            <ul class="sub">
+	                <li><a class="" href="#intro_state">Intro State</a></li>
+	                <li><a class="" href="#video">Video Popularity</a></li>
+	                <li><a class="" href="cat_behavior.php">Narrative Paths</a></li>
+	                <li><a class="" href="cat_behavior.php">First Click </a></li>
+	            </ul>
+	        </li>
+
+	        <li class="sub">
+	            <a href="cat_acquisition.php" class="">
+	                <span class="icon-box"> <i class="icon-link"></i></span> ACQUISITION
+	                <span class="arrow"></span>
+	            </a>
+	        </li>
+
+            <li class="has-sub">
+                <a href="cat_technical.php" class="">
+                    <span class="icon-box"><i class="icon-wrench"></i></span> TECHNICAL
+                    <span class="arrow"></span>
+                </a>
+            </li>
+		</ul>
+		<!-- END SIDEBAR MENU -->
+	</div>
+	<!-- END SIDEBAR -->
 
 
 
-<!--BEGIN BEHAVIOR -->
+	<!-- BEGIN PAGE -->
+	<div id="main-content">
+		<!-- BEGIN PAGE CONTAINER-->
+		<div class="container-fluid">
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row-fluid">
 
-			<!-- BEGIN BREADCRUMB-->
-					<div class="span12">
-						<ul class="breadcrumb">
-							<li>
-                                <a href="index.php"><i class="icon-home"></i></a><span class="divider">&nbsp;</span>
-							</li>
-                            <li>
-                                <a href="cat_behavior.php">BEHAVIOR</a> <span class="divider">&nbsp;</span>
-                            </li>
-							<li><a href="#"> Intro state</a><span class="divider-last">&nbsp;</span></li>
+				<!-- BEGIN BREADCRUMB-->
+				<div class="span12">
+					<ul class="breadcrumb">
+						<li><a href="index.php"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
 
-						</ul>
-					</div>
+                        <li><a href="cat_behavior.php">BEHAVIOR</a> <span class="divider">&nbsp;</span></li>
+
+						<li><a href="#"> Intro state</a><span class="divider-last">&nbsp;</span></li>
+					</ul>
+				</div>
 
 
 <!-- START BEHAVIOR TITLE + QUESTION -->
-					<div>
-						<h1>BEHAVIOR</h1>
-							<h5>How are users exploring the content and what is the content that drives
-						stopping exploration of the content?</h5>
+				<div>
+					<h1>BEHAVIOR</h1>
+					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
+				</div>
+
+
+
+				<a name="visitorflow"></a>
+
+				<div style="width:100%">
+					<div class="span6">
+						<div class="widget">
+							<div class="widget-title">
+								<h4>Visitor Flow</h4>
+								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+							</div>
+
+							<div class="widget-body">
+
+								<?php
+
+								// here we set up the query
+								// cf GA query explorer for reference
+								$optParams = array(
+									'dimensions' => 'ga:eventLabel',
+									//'sort' => '-ga:visits',
+									'filters' => 'ga:eventAction==videopath',
+									'max-results' => '5000'
+								);
+
+
+								// make the call to the API
+								try {
+									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
+								} catch (Exception $e) {
+							    	print_r($e);
+								}
+
+								$network = array();
+								$network["nodes"] = array();
+								$network["links"] = array();
+								$translate = array();
+
+								foreach($data["rows"] as $row) {
+
+									$items = explode(":", $row[0]);
+
+									// maximum depth
+									$stop = (count($items) > 10) ? 10:count($items);
+
+									$target = "";
+
+									for($i = 0; $i < $stop; $i += 2) {
+
+										$source = $items[$i];
+										if($items[$i] != "intro") {
+											$source = substr($items[$i], 0, strpos($items[$i], "."));
+										}
+
+										$source = $i . "_" . $source;
+
+										if(isset($items[$i+2])) {
+
+											$target = $items[$i+2];
+											if($items[$i+2] != "intro") {
+												$target = substr($items[$i+2], 0, strpos($items[$i+2], "."));
+											}
+
+											$target = $i + 2 . "_" . $target;
+
+
+											//echo $items[$i] . " ";
+											if(!in_array($source,$network["nodes"])) {
+												$network["nodes"][] = $source;
+												$translate[$source] = count($network["nodes"]) - 1;
+											}
+
+											if(!in_array($target,$network["nodes"])) {
+												$network["nodes"][] = $target;
+												$translate[$target] = count($network["nodes"]) - 1;
+											}
+
+											$edge = $source . "_XXX_" . $target;
+
+											if(!isset($network["links"][$edge])) {
+												$network["links"][$edge] = 0;
+											}
+											$network["links"][$edge] += $row[1];
+											//echo $edge . " ";
+										}
+									}
+								}
+
+								//print_r($network);
+
+								$newwork = array();
+								$newwork["nodes"] = array();
+								$newwork["links"] = array();
+
+								for($i = 0; $i < count($network["nodes"]); $i++) {
+									$newwork["nodes"][$i] = array("name" => $network["nodes"][$i]);
+								}
+
+								foreach($network["links"] as $key => $value) {
+									$elements = explode("_XXX_", $key);
+									$edge = array("source" => $translate[$elements[0]],"target" => $translate[$elements[1]], "value" => $value);
+									$newwork["links"][] =  $edge;
+								}
+
+								//print_r(json_encode($newwork)); print_r($translate); exit;
+
+
+
+								// write the data to a file
+								// makes interfacing with D3 simpler
+								file_put_contents("data/d_behav_visitorflow.json",json_encode($newwork));
+
+								?>
+
+								<iframe width="500" height="310" src="vizmodules/behav_visitorflow.html" frameborder="0"></iframe>
+
+								<p>total sessions = <?php echo $data["rows"][0][2]; ?></p>
+							</div>
+						</div>
 					</div>
+				</div>
+
+
+
 
 <!-- START INTRO STATE:OVERVIEW -->
+				<a name="intro_state"></a>
 
-                <div style="width:100%">
-                	<div class="widget">
-                        <div class="widget-title">
-                            <h4> Intro state: overview </h4>
-                     			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+	            <div style="width:100%">
+
+            		<div class="widget">
+	                    <div class="widget-title">
+	                        <h4> Intro state: overview (<?php echo $startdate . " - " . $enddate; ?>)</h4>
+	                 			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-                   	 	</div>
+	               	 	</div>
 						<div class="widget-body">
 
 							<p> This graph shows the ratio between how many visitors skipped the intro (in % of all sessions), how many visitors leave the website without watching the full (intro in % of all sessions) and how many visitors watch the entire intro in % of all sessions.  </p>
 
-							<!-- DATEPICKER CODE-->
-							<div class="left">
-								<p>Start date:</p> <input type="text" id="departing"></p>
-							</div>
-
-							<div class="right">
-								<p> End date:</p> <input type="text" id="returning">
-							</div>
 
 							<div id="pieIntro" ></div>
 
-<!-- SCRIPT PIECHART INTRO STATE-->
+	<!-- SCRIPT PIECHART INTRO STATE-->
+
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:dimension1',
+								//'sort' => '-ga:visits',
+								//'filters' => 'ga:medium==organic',
+								'max-results' => '5000'
+							);
+
+
+							// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+							// CSV file format first line
+							$content = "label,session,percentage\n";
+
+							// parse data and write to file
+						    foreach($data["rows"] as $row) {
+								$content .= $row[0] . "," .
+											$row[1] . "," .
+											round(($row[1] / $data["totalsForAllResults"]["ga:sessions"]) * 100) .		// percentage needs to be calculated
+											"\n";
+							}
+
+							//print_r($content);
+
+							// write the data to a file
+							// makes interfacing with D3 simpler
+							file_put_contents("data/d_behav_intro.csv", $content);
+
+							?>
+
 
 							<script>
-								var width = 980,
-								 height = 400,
+
+							var width = 500,
+								height = 400,
 								radius = Math.min(width, height) / 2;
 
-								var color = d3.scale.ordinal()
-								.range(["#EEE8D6", " #E9B690", " #57B7B9"]);
+
+							var div = d3.select("body").append("div")
+								.attr("class", "tooltip")
+								.style("opacity", 0);
+
+							var color = d3.scale.ordinal()
+								.range(["#EEE8D6", " #E9B690", "#57B7B9", "#9BA3B1"]);
 
 
-								var arc = d3.svg.arc()
-								 .outerRadius(radius - 19)
-								 .innerRadius(0);
+							var arc = d3.svg.arc()
+								.outerRadius(radius - 19)
+								.innerRadius(0);
 
-								var arcBorder = d3.svg.arc()
-								  .innerRadius(radius - 15 )
-								  .outerRadius(radius - 10);
+							var arcBorder = d3.svg.arc()
+								.innerRadius(radius - 15 )
+								.outerRadius(radius - 10);
 
-								var pie = d3.layout.pie()
-								 .sort(null)
+							var pie = d3.layout.pie()
+								.sort(null)
 								.value(function(d) { return d.session; });
 
+							var svg = d3.select("#pieIntro").append("svg")
+								.attr("width", width)
+								.attr("height", height)
+								.append("g")
+								.attr("class","circle")
+								.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-								var svg = d3.select("#pieIntro").append("svg")
-								 .attr("width", width)
-								 .attr("height", height)
-								 .append("g")
-								 .attr("class","circle")
-								 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-								d3.csv("data/data1.1.2.csv", function(error, data) {
+							d3.csv("data/d_behav_intro.csv", function(error, data) {
 
 								data.forEach(function(d) {
-								 d.session = +d.session;
-								 });
-
-								var div = d3.select("body").append("div")
-									.attr("class", "tooltip")
-									.style("opacity", 0);
+									d.session = +d.session;
+								});
 
 								var g = svg.selectAll(".arc")
 									.data(pie(data))
 									.enter().append("g")
 									.attr("class", "arc");
 
-								 g.append("path")
+								g.append("path")
 									.attr("d", arc)
 									.style("fill", function(d) { return color(d.data.label); });
 
@@ -337,441 +475,371 @@ a:hover.tooltips span {
 									.attr("d", arcBorder)
 									.style("stroke-width", "1pt");
 
-								 g.append("text")
+								g.append("text")
 									.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-									 .attr("dy", ".35em")
-									 .style("text-anchor", "middle")
-									 .text(function(d) { return d.data.percentage; });
+									.attr("dy", ".35em")
+									.style("text-anchor", "middle")
+									.text(function(d) { return d.data.percentage + "% " + d.data.label; });			// added label here to simplify
 
-//LABEL (ON HOVER) INTRO STATE: OVERVIEW
 								g.on("mouseover", function(d) {
 									div.transition()
-										.duration(200)
-										.style("opacity", .9);
-									div.html(d.data.session )
+										.duration(100)
+										.style("opacity",.9);
+									div.html(d.data.session + " sessions")
 										.style("left", (d3.event.pageX) + "px")
 										.style("top", (d3.event.pageY - 28) + "px")
+										.style("position","absolute")						// added this to fix hover label
 										.style("padding-left","10px")
-										.style ("padding-right","10px")
-										.style("font-size", "11pt" )
-										.style("background-color", "#5D686E")
-										.style("color", "#FFF");
+										.style("padding-right","10px")
+										.style("font-size","11pt")
+										.style("background-color","#5D686E")
+										.style("color","#FFF");
 									})
-								.on("mouseout", function(d) {
+									.on("mouseout", function(d) {
 									div.transition()
-										.duration(500)
+										.duration(100)
 										.style("opacity", 0);
-								});
+									});
+							});
 
-// end
 
-								var outerRadius = 100;
-								g.append("text")
-									.attr("transform", function(d) { var pos = arc.centroid(d);
-									var posY=pos[1]*1.3;
-									if(pos[1]<0){
-									posY=pos[1]*0.7;
-													}
-										return "translate(" + pos[0] +"," + posY + ")";})
-									 .attr("dy", ".35em")
-									 .style("text-anchor", "middle")
-									 .text(function(d) {  return d.data.label ; });
+							// Commented the following out to simplify
+							// LABEL
 
-								});
+							//var outerRadius = 100;
+
+							/*
+							g.append("text")
+								.attr("transform", function(d) {  var pos = arc.centroid(d);
+
+									var posY = pos[1] * 1.3;
+									if(pos[1] < 0){
+										posY = pos[1] * 0.7;
+									}
+
+									return "translate(" + pos[0] +"," + posY + ")";})
+										.attr("dy", ".35em")
+										.style("text-anchor", "middle")
+										.text(function(d) {  return d.data.label; });
+							*/
+
 							</script>
 
-							<p style="text-align:center;"> total sessions = 2473 </p>
+							<p style="text-align:center;"> total sessions = <?php echo $data["totalsForAllResults"]["ga:sessions"]; ?> </p>
 
-						 </div>
+					 	</div>
 					</div>
-                </div>
+            	</div>
 
 
 
+				<a name="splash"></a>
 
-
-<!-- START MANUAL VS AUTO:OVERVIEW-->
-
-					<div style="width:100%">
+				<div style="width:100%">
 					<div class="span6">
 						<div class="widget">
 							<div class="widget-title">
-								<h4>Manual vs. autoplay: overview </h4>
+								<h4>Help splash page</h4>
 								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 							</div>
 
 							<div class="widget-body">
 
-<!-- DATEPICKER MANUAL VS AUTO-->
+								<?php
 
-								<div class="left">
-										<p>Start date:</p> <input type="text" id="start_ManualvsAuto"></p>
-								</div>
-
-								<div class="right">
-									<p> End date:</p> <input type="text" id="end_ManualvsAuto">
-								</div>
-
-
-<!-- SCRIPT MANUAL VS AUTO -->
-
-							<div>
-								<div id="pieManual"> </div>
-
-									<script>
-										var width = 500,
-										 height = 400,
-										radius = Math.min(width, height) / 2;
+								// here we set up the query
+								// cf GA query explorer for reference
+								$optParams = array(
+									'dimensions' => 'ga:eventLabel',
+									//'sort' => '-ga:visits',
+									'filters' => 'ga:eventLabel==showhelp',
+									'max-results' => '5000'
+								);
 
 
-										var div = d3.select("body").append("div")
-											.attr("class", "tooltip")
-											.style("opacity", 0);
+								// make the call to the API
+								try {
+									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions,ga:uniqueEvents,ga:totalEvents',	 $optParams);
+								} catch (Exception $e) {
+							    	print_r($e);
+								}
 
-										var color = d3.scale.ordinal()
-										.range(["#EEE8D6", " #E9B690", "#57B7B9", "#9BA3B1"]);
+								//print_r($data); exit;
 
-										var arc = d3.svg.arc()
-										 .outerRadius(radius - 19)
-										 .innerRadius(0);
+								// CSV file format first line
+								$content = "label,sessions\n";
 
-										var arcBorder = d3.svg.arc()
-										  .innerRadius(radius - 15 )
-										  .outerRadius(radius - 10);
+								// parse data and write to file
+							 	$content .= "automatic" . "," . $data["rows"][0][2] . "\n";
+								$content .= "manual" . "," . ($data["rows"][0][3] - $data["rows"][0][2]) . "\n";
 
-										var pie = d3.layout.pie()
-										 .sort(null)
-										.value(function(d) { return d.session; });
+								//print_r($content);
 
-										var svg2 = d3.select("#pieManual").append("svg")
-										 .attr("width", width)
-										 .attr("height", height)
-										 .append("g")
-										 .attr("class","circle")
-										 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+								// write the data to a file
+								// makes interfacing with D3 simpler
+								file_put_contents("data/d_behav_helpbutton.csv", $content);
 
-										d3.csv("data/data1.4.1.csv", function(error, data) {
+								?>
 
-										data.forEach(function(d) {
-										 d.session = +d.session;
-										 });
+								<iframe width="500" height="310" src="vizmodules/behav_helpbutton.html" frameborder="0"></iframe>
 
-										var g = svg2.selectAll(".arc")
-											.data(pie(data))
-											.enter().append("g")
-											.attr("class", "arc");
-
-										 g.append("path")
-											.attr("d", arc)
-											.style("fill", function(d) { return color(d.data.label); });
-
-										g.append("path")
-											.attr("fill", "#5D686E")
-											.attr("d", arcBorder)
-											.style("stroke-width", "1pt");
-
-										 g.append("text")
-											.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-											 .attr("dy", ".35em")
-											 .style("text-anchor", "middle")
-											 .text(function(d) { return d.data.percentage; });
-
-										 g.on("mouseover", function(d) {
-											div.transition()
-												.duration(200)
-												.style("opacity", .9);
-											div.html(d.data.session)
-												.style("left", (d3.event.pageX) + "px")
-												.style("top", (d3.event.pageY - 28) + "px")
-												.style("padding-left", "10px")
-												.style ("padding-right","10px")
-												.style("font-size", "11pt" )
-												.style("background-color", "#5D686E")
-												.style("color", "#FFF");
-											})
-										.on("mouseout", function(d) {
-											div.transition()
-												.duration(500)
-												.style("opacity", 0);
-										});
-
-//LABEL (ON HOVER) MANUAL VS AUTO
-
-										var outerRadius = 100;
-										g.append("text")
-											.attr("transform", function(d) {  var pos = arc.centroid(d);
-												var posY=pos[1]*1.3;
-												if(pos[1]<0){
-													posY=pos[1]*0.7;
-												}
-												return "translate(" + pos[0] +"," + posY + ")";})
-											 .attr("dy", ".35em")
-											 .style("text-anchor", "middle")
-											 .text(function(d) {  return d.data.label ; });
-
-										});
-									</script>
-
-
-									<p> Total sessions = 6897 </p>
-								</div>
+								<p>total sessions = <?php echo $data["rows"][0][2]; ?></p>
 							</div>
 						</div>
-
 					</div>
+				</div>
 
-					<div class="span6" >
 
-						<!-- START Narrative paths: overview-->
+
+
+				<a name="infographic"></a>
+
+				<div style="width:100%">
+
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Inforgraphics </h4>
+							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+						</div>
+
+						<div class="widget-body">
+
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:eventLabel',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:eventAction==info',
+								'max-results' => '5000'
+							);
+
+									// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:totalEvents',$optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+							//print_r($data); exit;
+
+							// CSV file format first line
+							$content = "infographic,frequency\n";
+
+							// parse data and write to file
+							$add = 0;
+						    foreach($data["rows"] as $row) {
+						    	$names = array("hijacks","history","illegalfishing","moneyflows");
+						    	if(in_array($row[0], $names)) {
+						    		$content .= $row[0] . "," . $row[1] . "\n";
+									$add += $row[1];
+						    	}
+							}
+
+							//print_r($content);
+
+							// write the data to a file
+							// makes interfacing with D3 simpler
+							file_put_contents("data/d_behav_infographics.csv", $content);
+
+							?>
+
+							<iframe width="1000" height="340" src="vizmodules/behav_infographics.html" frameborder="0"></iframe>
+
+							<p>sum = <?php echo $add; ?></p>
+						</div>
+					</div>
+				</div>
+
+
+
+				<a name="clickedelements"></a>
+
+				<div style="width:100%">
+
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Clicked Elements</h4>
+							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+						</div>
+
+						<div class="widget-body">
+
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:eventLabel',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:eventAction==clicked',
+								'max-results' => '5000'
+							);
+
+									// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:totalEvents',$optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+							//print_r($data); exit;
+
+							// CSV file format first line
+							$content = "sidemenu,frequency\n";
+
+							// parse data and write to file
+							$add = 0;
+						    foreach($data["rows"] as $row) {
+						    	$names = array("showabout","showautopilot","showhelp");
+						    	if(in_array($row[0], $names)) {
+						    		$content .= $row[0] . "," . $row[1] . "\n";
+									$add += $row[1];
+						    	}
+							}
+
+							//print_r($content);
+
+							// write the data to a file
+							// makes interfacing with D3 simpler
+							file_put_contents("data/d_behav_clickedelements.csv", $content);
+
+							?>
+
+							<iframe width="1000" height="340" src="vizmodules/behav_clickedelements.html" frameborder="0"></iframe>
+
+							<p>sum = <?php echo $add; ?></p>
+						</div>
+					</div>
+				</div>
+
+
+				<a name="lastvideo"></a>
+
+				<div style="width:100%">
+					<div class="span6">
 						<div class="widget">
 							<div class="widget-title">
-								<h4>Narrative paths: overview</h4>
+								<h4>Last video watched</h4>
 								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 							</div>
 
 							<div class="widget-body">
 
-	<!-- DATEPICKER-->
+								<?php
 
-								<div class="left">
-										<p>Start date:</p> <input type="text" id="start_ManualvsAuto"></p>
-								</div>
-
-								<div class="right">
-									<p> End date:</p> <input type="text" id="end_ManualvsAuto">
-								</div>
-
-								<div>
-									<div id="pie2"> </div>
-
-	<!-- SCRIPT MANUAL VS AUTO -->
-										<script>
-
-											var arc1 = d3.svg.arc()
-											 .outerRadius(radius - 19)
-											 .innerRadius(0);
-
-											var div1 = d3.select("body").append("div")
-												.attr("class", "tooltip")
-												.style("opacity", 0)
-												.style("padding", "30px");
-
-											var arcBorder1 = d3.svg.arc()
-											  .innerRadius(radius - 15 )
-											  .outerRadius(radius - 10);
-
-											var pie1 = d3.layout.pie()
-											 .sort(null)
-											.value(function(d) { return d.session; });
+								// here we set up the query
+								// cf GA query explorer for reference
+								$optParams = array(
+									'dimensions' => 'ga:dimension4',
+									//'sort' => '-ga:visits',
+									//'filters' => '',
+									'max-results' => '5000'
+								);
 
 
-											var svg1 = d3.select("#pie2").append("svg")
-											 .attr("width", width)
-											 .attr("height", height)
-											 .append("g")
-											 .attr("class","circle")
-											 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+								// make the call to the API
+								try {
+									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
+								} catch (Exception $e) {
+							    	print_r($e);
+								}
 
+								//print_r($data); exit;
 
-											d3.csv("data/data1.4.2.csv", function(error, data) {
+								// CSV file format first line
+								$content = "label,sessions\n";
 
-											data.forEach(function(d) {
-											 d.session = +d.session;
-											 });
+								$newdata = array();
+								foreach($data["rows"] as $row) {
+									$row[0] = substr($row[0], 0, strpos($row[0], "."));
+									if(!isset($newdata[$row[0]])) {
+										$newdata[$row[0]] = 0;
+									}
+									$newdata[$row[0]] += $row[1];
+								}
 
-											var g1 = svg1.selectAll(".arc")
-												.data(pie(data))
-												.enter().append("g")
-												.attr("class", "arc");
+								arsort($newdata);
 
-											g1.append("path")
-												.attr("d", arc1)
-												.style("fill", function(d) { return color(d.data.label); });
+								foreach($newdata as $key => $value) {
+						    			$content .= $key . "," . $value . "\n";
+								}
 
-											g1.append("text")
-												.attr("transform", function(d) { return "translate(" + arc1.centroid(d) + ")"; })
-												 .attr("dy", ".35em")
-												 .style("text-anchor", "middle")
-												 .style("z-index", "8")
-												 .text(function(d) { return d.data.percentage; });
+								//print_r($content);
 
-											g1.append("path")
-												.attr("fill", "#5D686E")
-												.attr("d", arcBorder1)
-												.style("stroke-width", "1pt");
+								// write the data to a file
+								// makes interfacing with D3 simpler
+								file_put_contents("data/d_behav_lastvideo.csv", $content);
 
+								?>
 
-
-											g1.on("mouseover", function(d) {
-												div1.transition()
-													.duration(200)
-													.style("opacity", .9);
-												div1.html(d.data.session)
-													.style("left", (d3.event.pageX) + "px")
-													.style("top", (d3.event.pageY - 28) + "px")
-													.style("padding", "0px")
-													.style("padding-left", "10px")
-													.style ("padding-right","10px")
-													.style("font-size", "11pt" )
-													.style("background-color", "#5D686E")
-													.style("color", "#FFF")
-
-												})
-											 .on("mouseout", function(d) {
-												  div1.transition()
-													.duration(500)
-													.style("opacity", 0);
-
-											});
-
-
-											var outerRadius = 100;
-													g1.append("text")
-														.attr("transform", function(d) {  var pos = arc.centroid(d);
-															var posY=pos[1]*1.3;
-															if(pos[1]<0){
-																posY=pos[1]*0.7;
-															}
-															return "translate(" + pos[0] +"," + posY + ")";})
-														 .attr("dy", ".35em")
-														 .style("text-anchor", "middle")
-														 .style("z-index","10")
-														 .style("position","absolute")
-														 .text(function(d) {  return d.data.label ; });
-
-													});
-
-											</script>
-											<p style="text-align:center"> Total session = 7890 </p>
-								</div>
+								<iframe width="500" height="310" src="vizmodules/behav_lastvideo.html" frameborder="0"></iframe>
 							</div>
 						</div>
-
 					</div>
 				</div>
 
 
-
-
-
-
-
-<!-- START VIDEO POPULARITY-->
-
-				<div class="widget">
-					<div class="widget-title">
-						<h4>Video popularity</h4>
-						<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-						<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-				</div>
-
-				<div class="widget-body">
-
-<!-- DATEPICKER VIDEO POPULARITY-->
-
-				<div class="left">
-					<p>Start date:</p> <input type="text" id="start_VideoPopularity"></p>
-				</div>
-
-				<div class="right">
-					<p> End date:</p> <input type="text" id="end_VideoPopularity">
-				</div>
-
-				<div>	</div>
-
-				</div>
-
-
-<!-- START FIRST CLICK-->
-
-				<div class="widget">
-					 <div class="widget-title">
-						<h4>First Click</h4>
-						<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-						<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-				</div>
-
-				<div class="widget-body">
-
-<!-- DATEPICKER FIRST CLICK -->
-
-				<div class="left">
-					<p>Start date:</p> <input type="text" id="start_FirstClick"></p>
-				</div>
-
-				<div class="right">
-					<p> End date:</p> <input type="text" id="end_FirstClick">
-				</div>
-
-				<div id="main">
-
-
-				</div>
-				</div>
-
-
-
-<!-- END PAGE CONTENT-->
-
-			<!-- END PAGE CONTAINER-->
+			</div>
 		</div>
-		<!-- END PAGE -->
-	    </div>
-	    </div>
-	<!-- END CONTAINER -->
-	<!-- BEGIN FOOTER -->
-        <div id="footer">
-            2014 &copy; Transmedia Analytics.
-            <div class="span pull-right">
-                <span class="go-top"><i class="icon-arrow-up"></i></span>
-            </div>
+	</div>
+
+    <div id="footer">
+        2014 &copy; Transmedia Analytics.<br /><br />
+        <div class="span pull-right">
+            <span class="go-top"><i class="icon-arrow-up"></i></span>
         </div>
-        <!-- END FOOTER -->
-        <!-- BEGIN JAVASCRIPTS -->
-        <!-- Load javascripts at bottom, this will reduce page load time -->
-        <script src="js/jquery-1.8.3.min.js"></script>
-        <script src="assets/jquery-slimscroll/jquery-ui-1.9.2.custom.min.js"></script>
-        <script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="assets/fullcalendar/fullcalendar/fullcalendar.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="js/jquery.blockui.js"></script>
-        <script src="js/jquery.cookie.js"></script>
-        <!-- ie8 fixes -->
-        <!--[if lt IE 9]>
-        <script src="js/excanvas.js"></script>
-        <script src="js/respond.js"></script>
-        <![endif]-->
-        <script src="assets/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
-        <script src="assets/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-        <script src="assets/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-        <script src="assets/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-        <script src="assets/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-        <script src="assets/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-        <script src="assets/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
-        <script src="assets/jquery-knob/js/jquery.knob.js"></script>
-        <script src="assets/flot/jquery.flot.js"></script>
-        <script src="assets/flot/jquery.flot.resize.js"></script>
+    </div>
 
-        <script src="assets/flot/jquery.flot.pie.js"></script>
-        <script src="assets/flot/jquery.flot.stack.js"></script>
-        <script src="assets/flot/jquery.flot.crosshair.js"></script>
+</div>
 
-        <script src="js/jquery.peity.min.js"></script>
-        <script type="text/javascript" src="assets/uniform/jquery.uniform.min.js"></script>
-        <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
-		<script type="text/javascript" src="js/Transmedia.js"></script>
-        <script src="js/scripts.js"></script>
-        <script>
-            jQuery(document).ready(function() {
-                // initiate layout and plugins
-                App.setMainPage(true);
-                App.init();
-            });
-        </script>
-        <!-- END JAVASCRIPTS -->
+<!-- BEGIN JAVASCRIPTS -->
+<!-- Load javascripts at bottom, this will reduce page load time -->
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="assets/jquery-slimscroll/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- <script src="assets/fullcalendar/fullcalendar/fullcalendar.min.js"></script> -->
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/jquery.blockui.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<!-- ie8 fixes -->
+<!--[if lt IE 9]>
+<script src="js/excanvas.js"></script>
+<script src="js/respond.js"></script>
+<![endif]-->
+<script src="assets/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+<script src="assets/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+<script src="assets/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<script src="assets/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+<script src="assets/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+<script src="assets/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+<script src="assets/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+<script src="assets/jquery-knob/js/jquery.knob.js"></script>
+<script src="assets/flot/jquery.flot.js"></script>
+<script src="assets/flot/jquery.flot.resize.js"></script>
+
+<script src="assets/flot/jquery.flot.pie.js"></script>
+<script src="assets/flot/jquery.flot.stack.js"></script>
+<script src="assets/flot/jquery.flot.crosshair.js"></script>
+
+<script src="js/jquery.peity.min.js"></script>
+<script type="text/javascript" src="assets/uniform/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="js/Transmedia.js"></script>
+<script src="js/scripts.js"></script>
+<script>
+    jQuery(document).ready(function() {
+        // initiate layout and plugins
+        App.setMainPage(true);
+        App.init();
+    });
+</script>
+
 </body>
-<!-- END BODY -->
 </html>

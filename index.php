@@ -1,3 +1,11 @@
+<?php
+
+// authenticate
+// user will be redirected if not logged in with right credentials
+include "includes/auth.php";
+
+?>
+
 <!DOCTYPE html>
 <!--
 Template Name: Admin Lab Dashboard build with Bootstrap v2.3.1
@@ -30,7 +38,7 @@ Website: http://thevectorlab.net/
 	 <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
 	<link rel='stylesheet' type='text/css' href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css'/>
 	<link href="css/ballsstyle.css" rel="stylesheet" />
-		<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'/>
 	<script type='text/javascript' src='script.js'></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
@@ -102,6 +110,10 @@ a:hover.tooltips span {
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="fixed-top">
+
+
+
+
 	<!-- BEGIN HEADER -->
     <div id="header" class="navbar navbar-inverse navbar-fixed-top">
         <!-- BEGIN TOP NAVIGATION BAR -->
@@ -178,51 +190,26 @@ a:hover.tooltips span {
 			<!-- END RESPONSIVE QUICK SEARCH FORM -->
 			<!-- BEGIN SIDEBAR MENU -->
             <ul class="sidebar-menu">
-            <li>
-                    <a href="javascript:;" class="">
-                        <span class="icon-box"> <i class="icon-user"></i></span> PERSONAL
-                        <span class="arrow"></span>
-                    </a>
-              	  <li class="has-sub">
-                    <a href="javascript:;" class="">
+				<li class="sub">
+                    <a href="cat_behavior.php" class="">
                         <span class="icon-box"> <i class="icon-user"></i></span> BEHAVIOR
                         <span class="arrow"></span>
                     </a>
-                    <ul class="sub">
-                        <li><a class="" href="Acquisition1AB.html" > Visitor Flow</a></li>
-                         <li class="active"><a class="" href="Acquisition1AB.html" >Intro State</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Video Popularity</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > Narrative Paths</a></li>
-                         <li><a class="" href="Acquisition1AB.html" > First Click </a></li>
-                    </ul>
                 </li>
 
-                <li class="has-sub">
-                    <a href="javascript:;" class="">
+                <li class="sub">
+                    <a href="cat_acquisition.php" class="">
                         <span class="icon-box"> <i class="icon-link"></i></span> ACQUISITION
                         <span class="arrow"></span>
                     </a>
-                    <ul class="sub">
-                        <li><a class="" href="Acquisition1AB.html" >Referral performance:  overview</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: intro state</a></li>
-                         <li><a class="" href="Acquisition1AB.html" >Referral performance: engagement</a></li>
-                    </ul>
                 </li>
+
                 <li class="has-sub">
-                    <a href="javascript:;" class="">
+                    <a href="cat_technical.php" class="">
                         <span class="icon-box"><i class="icon-wrench"></i></span> TECHNICAL
                         <span class="arrow"></span>
                     </a>
-                    <ul class="sub">
-                        <li><a class="" href="Technical1AB.html">Last vido watched & loading time</a></li>
-                        <li><a class="" href="Technical2AB.html">Time on site & width/height</a></li>
-                        <li><a class="" href="Technical2CD.html">Browser</a></li>
-                    </ul>
                 </li>
-
-                    </ul>
-                </li>
-
             </ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -265,21 +252,64 @@ a:hover.tooltips span {
 <!-- START REFERRAL PERFORMANCE: OVERVIEW -->
 
                 <div class="span10" >
-                    <div class="widget">
+					<div class="widget">
                         <div class="widget-title">
                             <h4> Referral performance: overview </h4>
                      			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-                   	 </div>
+									<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span>
+								</a>
+                   	 	</div>
 
 
-                    <div class="widget-body">
-                    	<div>
-                        	<h5>This graph shows what kind or category of referral source drives visitors to your website. Sources are categorized for easy overview, and feature the three best performing sources per category.</h5>
-                       	</div>
+						<div class="widget-body">
+                    		<div>
+                        		<h5>
 
-	</div>
+                        		<?php
 
+				// let's get some data!
+
+
+				// here we set up the query
+				// cf GA query explorer for reference
+				$optParams = array(
+					'dimensions' => 'ga:dimension1',
+					//'sort' => '-ga:visits',
+					//'filters' => 'ga:medium==organic',
+					'max-results' => '5000'
+				);
+
+				// make the call to the API
+				try {
+					$data = $service -> data_ga -> get('ga:81935905', '2014-05-05', '2014-05-19', 'ga:sessions',	 $optParams);
+				} catch (Exception $e) {
+			    	print_r($e);
+				}
+
+				// CSV file format first line
+				$content = "label,session,percentage\n";
+
+				// parse data and write to file
+			    foreach($data["rows"] as $row) {
+					$content .= $row[0] . "," .
+								$row[1] . "," .
+								round(($row[1] / $data["totalsForAllResults"]["ga:sessions"]) * 100) .		// percentage needs to be calculated
+								"\n";
+				}
+
+				print_r($content);
+
+				// write the data to a file
+				// makes interfacing with D3 simpler
+				//file_put_contents("data/rtdata_pie.csv", $content);
+
+				?>
+
+
+                        		</h5>
+                       		</div>
+						</div>
+					</div>
 
 
 

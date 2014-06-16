@@ -178,8 +178,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
         <ul class="sidebar-menu">
 
 	      	<li class="has-sub active">
-	            <a href="javascript:;" class="">
-	                <span class="icon-box"> <i class="icon-user"></i></span> BEHAVIOR
+	            <a href="cat_content.php" class="">
+	                <span class="icon-box"> <i class="icon-user"></i></span> CONTENT
 	                <span class="arrow"></span>
 	            </a>
 	            <ul class="sub">
@@ -188,6 +188,13 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 	                <li><a class="" href="cat_behavior.php">Narrative Paths</a></li>
 	                <li><a class="" href="cat_behavior.php">First Click </a></li>
 	            </ul>
+	        </li>
+
+	        <li class="sub">
+	            <a href="cat_interface.php" class="">
+	                <span class="icon-box"> <i class="icon-link"></i></span> INTERFACE
+	                <span class="arrow"></span>
+	            </a>
 	        </li>
 
 	        <li class="sub">
@@ -231,7 +238,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 <!-- START BEHAVIOR TITLE + QUESTION -->
 				<div>
-					<h1>BEHAVIOR</h1>
+					<h1>CONTENT NAVIGATION</h1>
 					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
 				</div>
 
@@ -240,120 +247,122 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<a name="visitorflow"></a>
 
 				<div style="width:100%">
-					<div class="span6">
-						<div class="widget">
-							<div class="widget-title">
-								<h4>Visitor Flow</h4>
-								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-							</div>
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Visitor Flow</h4>
+							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
+							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
+						</div>
 
-							<div class="widget-body">
+						<div class="widget-body">
 
-								<?php
+							<?php
 
-								// here we set up the query
-								// cf GA query explorer for reference
-								$optParams = array(
-									'dimensions' => 'ga:eventLabel',
-									//'sort' => '-ga:visits',
-									'filters' => 'ga:eventAction==videopath',
-									'max-results' => '5000'
-								);
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:eventLabel',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:eventAction==videopath',
+								'max-results' => '5000'
+							);
 
 
-								// make the call to the API
-								try {
-									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
-								} catch (Exception $e) {
-							    	print_r($e);
-								}
+							// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
 
-								$network = array();
-								$network["nodes"] = array();
-								$network["links"] = array();
-								$translate = array();
+							$network = array();
+							$network["nodes"] = array();
+							$network["links"] = array();
+							$translate = array();
+							$edgecounter = 0;
 
-								foreach($data["rows"] as $row) {
+							foreach($data["rows"] as $row) {
 
-									$items = explode(":", $row[0]);
+								$items = explode(":", $row[0]);
 
-									// maximum depth
-									$stop = (count($items) > 10) ? 10:count($items);
+								// maximum depth
+								$stop = (count($items) > 10) ? 10:count($items);
 
-									$target = "";
+								$target = "";
 
-									for($i = 0; $i < $stop; $i += 2) {
+								for($i = 0; $i < $stop; $i += 2) {
 
-										$source = $items[$i];
-										if($items[$i] != "intro") {
-											$source = substr($items[$i], 0, strpos($items[$i], "."));
+									$source = $items[$i];
+									if($items[$i] != "intro") {
+										$source = substr($items[$i], 0, strpos($items[$i], "."));
+									}
+
+									$source = $i . "_" . $source;
+
+									if(isset($items[$i+2])) {
+
+										$target = $items[$i+2];
+										if($items[$i+2] != "intro") {
+											$target = substr($items[$i+2], 0, strpos($items[$i+2], "."));
 										}
 
-										$source = $i . "_" . $source;
-
-										if(isset($items[$i+2])) {
-
-											$target = $items[$i+2];
-											if($items[$i+2] != "intro") {
-												$target = substr($items[$i+2], 0, strpos($items[$i+2], "."));
-											}
-
-											$target = $i + 2 . "_" . $target;
+										$target = $i + 2 . "_" . $target;
 
 
-											//echo $items[$i] . " ";
-											if(!in_array($source,$network["nodes"])) {
-												$network["nodes"][] = $source;
-												$translate[$source] = count($network["nodes"]) - 1;
-											}
-
-											if(!in_array($target,$network["nodes"])) {
-												$network["nodes"][] = $target;
-												$translate[$target] = count($network["nodes"]) - 1;
-											}
-
-											$edge = $source . "_XXX_" . $target;
-
-											if(!isset($network["links"][$edge])) {
-												$network["links"][$edge] = 0;
-											}
-											$network["links"][$edge] += $row[1];
-											//echo $edge . " ";
+										//echo $items[$i] . " ";
+										if(!in_array($source,$network["nodes"])) {
+											$network["nodes"][] = $source;
+											$translate[$source] = count($network["nodes"]) - 1;
 										}
+
+										if(!in_array($target,$network["nodes"])) {
+											$network["nodes"][] = $target;
+											$translate[$target] = count($network["nodes"]) - 1;
+
+										}
+
+										$edge = $source . "_XXX_" . $target;
+
+										if(!isset($network["links"][$edge])) {
+											$network["links"][$edge] = 0;
+										}
+										$network["links"][$edge] += $row[1];
+										$edgecounter += $row[1];
+										//echo $edge . " ";
 									}
 								}
+							}
 
-								//print_r($network);
+							//print_r($network);
 
-								$newwork = array();
-								$newwork["nodes"] = array();
-								$newwork["links"] = array();
+							$newwork = array();
+							$newwork["nodes"] = array();
+							$newwork["links"] = array();
 
-								for($i = 0; $i < count($network["nodes"]); $i++) {
-									$newwork["nodes"][$i] = array("name" => $network["nodes"][$i]);
-								}
+							for($i = 0; $i < count($network["nodes"]); $i++) {
+								$network["nodes"][$i] = preg_replace("/\d_/","", $network["nodes"][$i]);
+								$newwork["nodes"][$i] = array("name" => $network["nodes"][$i]);
+							}
 
-								foreach($network["links"] as $key => $value) {
-									$elements = explode("_XXX_", $key);
-									$edge = array("source" => $translate[$elements[0]],"target" => $translate[$elements[1]], "value" => $value);
-									$newwork["links"][] =  $edge;
-								}
+							foreach($network["links"] as $key => $value) {
+								$elements = explode("_XXX_", $key);
+								$edge = array("source" => $translate[$elements[0]],"target" => $translate[$elements[1]], "value" => $value);
+								$newwork["links"][] =  $edge;
+							}
 
-								//print_r(json_encode($newwork)); print_r($translate); exit;
+							//print_r(json_encode($newwork)); print_r($translate); exit;
 
 
 
-								// write the data to a file
-								// makes interfacing with D3 simpler
-								file_put_contents("data/d_behav_visitorflow.json",json_encode($newwork));
+							// write the data to a file
+							// makes interfacing with D3 simpler
+							file_put_contents("data/d_behav_visitorflow.json",json_encode($newwork));
 
-								?>
+							?>
 
-								<iframe width="500" height="310" src="vizmodules/behav_visitorflow.html" frameborder="0"></iframe>
+							<iframe width="1000" height="520" src="vizmodules/behav_visitorflow.html" frameborder="0"></iframe>
 
-								<p>total sessions = <?php echo $data["rows"][0][2]; ?></p>
-							</div>
+							<p>total transitions = <?php echo $edgecounter ?></p>
 						</div>
 					</div>
 				</div>
@@ -599,7 +608,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 					<div class="widget">
 						<div class="widget-title">
-							<h4>Inforgraphics </h4>
+							<h4>Infographics </h4>
 							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
 							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 						</div>
@@ -656,133 +665,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 
 
-				<a name="clickedelements"></a>
 
-				<div style="width:100%">
-
-					<div class="widget">
-						<div class="widget-title">
-							<h4>Clicked Elements</h4>
-							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-						</div>
-
-						<div class="widget-body">
-
-							<?php
-
-							// here we set up the query
-							// cf GA query explorer for reference
-							$optParams = array(
-								'dimensions' => 'ga:eventLabel',
-								//'sort' => '-ga:visits',
-								'filters' => 'ga:eventAction==clicked',
-								'max-results' => '5000'
-							);
-
-									// make the call to the API
-							try {
-								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:totalEvents',$optParams);
-							} catch (Exception $e) {
-						    	print_r($e);
-							}
-
-							//print_r($data); exit;
-
-							// CSV file format first line
-							$content = "sidemenu,frequency\n";
-
-							// parse data and write to file
-							$add = 0;
-						    foreach($data["rows"] as $row) {
-						    	$names = array("showabout","showautopilot","showhelp");
-						    	if(in_array($row[0], $names)) {
-						    		$content .= $row[0] . "," . $row[1] . "\n";
-									$add += $row[1];
-						    	}
-							}
-
-							//print_r($content);
-
-							// write the data to a file
-							// makes interfacing with D3 simpler
-							file_put_contents("data/d_behav_clickedelements.csv", $content);
-
-							?>
-
-							<iframe width="1000" height="340" src="vizmodules/behav_clickedelements.html" frameborder="0"></iframe>
-
-							<p>sum = <?php echo $add; ?></p>
-						</div>
-					</div>
-				</div>
-
-
-				<a name="lastvideo"></a>
-
-				<div style="width:100%">
-					<div class="span6">
-						<div class="widget">
-							<div class="widget-title">
-								<h4>Last video watched</h4>
-								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-							</div>
-
-							<div class="widget-body">
-
-								<?php
-
-								// here we set up the query
-								// cf GA query explorer for reference
-								$optParams = array(
-									'dimensions' => 'ga:dimension4',
-									//'sort' => '-ga:visits',
-									//'filters' => '',
-									'max-results' => '5000'
-								);
-
-
-								// make the call to the API
-								try {
-									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
-								} catch (Exception $e) {
-							    	print_r($e);
-								}
-
-								//print_r($data); exit;
-
-								// CSV file format first line
-								$content = "label,sessions\n";
-
-								$newdata = array();
-								foreach($data["rows"] as $row) {
-									$row[0] = substr($row[0], 0, strpos($row[0], "."));
-									if(!isset($newdata[$row[0]])) {
-										$newdata[$row[0]] = 0;
-									}
-									$newdata[$row[0]] += $row[1];
-								}
-
-								arsort($newdata);
-
-								foreach($newdata as $key => $value) {
-						    			$content .= $key . "," . $value . "\n";
-								}
-
-								//print_r($content);
-
-								// write the data to a file
-								// makes interfacing with D3 simpler
-								file_put_contents("data/d_behav_lastvideo.csv", $content);
-
-								?>
-
-								<iframe width="500" height="310" src="vizmodules/behav_lastvideo.html" frameborder="0"></iframe>
-							</div>
-						</div>
-					</div>
-				</div>
 
 
 			</div>

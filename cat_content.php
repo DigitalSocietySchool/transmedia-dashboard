@@ -183,10 +183,10 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 	                <span class="arrow"></span>
 	            </a>
 	            <ul class="sub">
-	                <li><a class="" href="#intro_state">Intro State</a></li>
-	                <li><a class="" href="#video">Video Popularity</a></li>
-	                <li><a class="" href="cat_behavior.php">Narrative Paths</a></li>
-	                <li><a class="" href="cat_behavior.php">First Click </a></li>
+	                <li><a class="" href="#visitor_flow">Visitor Flow</a></li>
+	                <li><a class="" href="#intro_interaction">Intro Interaction</a></li>
+	                <li><a class="" href="#help_page">Help Page</a></li>
+	                <li><a class="" href="#infographics">Infographics</a></li>
 	            </ul>
 	        </li>
 
@@ -244,7 +244,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 
 
-				<a name="visitorflow"></a>
+				<a name="visitor_flow"></a>
 
 				<div style="width:100%">
 					<div class="widget">
@@ -340,7 +340,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 							$newwork["links"] = array();
 
 							for($i = 0; $i < count($network["nodes"]); $i++) {
-								$network["nodes"][$i] = preg_replace("/\d_/","", $network["nodes"][$i]);
+								$network["nodes"][$i] = preg_replace("/\d+_/","", $network["nodes"][$i]);
 								$newwork["nodes"][$i] = array("name" => $network["nodes"][$i]);
 							}
 
@@ -371,7 +371,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 
 <!-- START INTRO STATE:OVERVIEW -->
-				<a name="intro_state"></a>
+				<a name="intro_interaction"></a>
 
 	            <div style="width:100%">
 
@@ -542,7 +542,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 
 
-				<a name="splash"></a>
+				<a name="help_page"></a>
 
 				<div style="width:100%">
 					<div class="span6">
@@ -602,7 +602,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 
 
-				<a name="infographic"></a>
+				<a name="infographics"></a>
 
 				<div style="width:100%">
 

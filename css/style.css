@@ -77,7 +77,6 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
 
-
 h1.block, h2.block, h3.block, h4.block, h5.block, h6.block {
     padding-bottom: 10px;
 }
@@ -247,6 +246,13 @@ a.icon.huge i{
 /*fix outlines on click*/
 a,a:focus, a:hover, a:active {
     outline: 0;
+}
+
+.category-subtitle {
+    margin-left: 13px;
+    margin-top: 2px;
+    font-size: 10px;
+    color:#5d686e;
 }
 
 /*logo*/
@@ -629,9 +635,9 @@ position: fixed;
     text-decoration: none;
     color: #fff;
     cursor: pointer;
-    margin-top: -3px;
+    margin-top: 10px;
     margin-right: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     font-size: 16px;
     background-color: #111;
     opacity: 0.8;
@@ -856,7 +862,7 @@ form legend {
 
 .widget-title > h4 {
     float: left;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: bold;
     padding: 12px 11px 10px 15px;
     line-height: 12px;

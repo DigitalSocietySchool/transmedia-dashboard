@@ -97,7 +97,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
     <div class="navbar-inner">
         <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <a class="brand" href="Behavior1AB.html"></a>
+            <a class="brand" href="index.php"></a>
             <!-- END LOGO -->
 
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -140,8 +140,6 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                            <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
-                            <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
                             <li class="divider"></li>
                             <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
                         </ul>
@@ -197,8 +195,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 	                <span class="arrow"></span>
 	            </a>
 	             <ul class="sub">
-	                <li><a class="" href="#intro_state">Overview</a></li>
-	                <li><a class="" href="#video">FNG</a></li>
+	                <li><a class="" href="#referrals_overview">Referrals Overview</a></li>
+	                <li><a class="" href="#referrals_engagement">Referrals Engagement</a></li>
 	            </ul>
 	        </li>
 
@@ -226,34 +224,32 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<div class="span12">
 					<ul class="breadcrumb">
 						<li><a href="index.php"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
-
-                        <li><a href="cat_behavior.php">BEHAVIOR</a> <span class="divider">&nbsp;</span></li>
-
-						<li><a href="#"> Intro state</a><span class="divider-last">&nbsp;</span></li>
+						<li><a href="#">ACQUISITION</a><span class="divider-last">&nbsp;</span></li>
 					</ul>
 				</div>
 
 
 <!-- START BEHAVIOR TITLE + QUESTION -->
 				<div>
-					<h1>BEHAVIOR</h1>
+					<h1>ACQUISITION</h1>
 					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
 				</div>
 
 
 
-				<a name="visitorflow"></a>
+				<a name="referralsoverview"></a>
 
-				<div style="width:100%">
+				<div class="largevisualization">
 					<div class="widget">
 						<div class="widget-title">
 							<h4>Visitor Flow</h4>
-							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-						</div>
+							</div>
 
 						<div class="widget-body">
 
+							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
+  								<span style="width:500px;">Shows an overview of incoming traffic sources to the website and the engagement of visitors from each source with the intro video. The first column represents the medium of the referral and the second column, the source. Hover over a connection to find out the number of sessions for each medium/source.</span>
+							</span>
 							<?php
 
 							// here we set up the query
@@ -344,7 +340,27 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 				</div>
 
+<!-- REFERRALS ENGAGEMENT -->
 
+				<a name="referrals_engagement"></a>
+
+				<div class="largevisualization" >
+					<div class="widget" style="height:600px;">
+						<div class="widget-title">
+							<h4>Referrals Engagement</h4>
+					</div>
+						<div class="widget-body">
+							<p style="width:700px"></p>
+						
+							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
+  								<span style="width:500px;">Shows the level of engagement of incoming visitors from the most important referral sources for the website. The size of the bubble represents the average number of videos watched/session for visitors coming from a certain source, while the position of the bubble on the grid represents the average percentage of available video content watched in a session by visitors from the  same source.  The graph only shows the top ten sources in terms of sessions generated.</span>
+							</span>
+
+						</div>
+					</div>
+				</div>
+
+<!-- END REFERRALS ENGAGEMENT -->
 
 			</div>
 		</div>

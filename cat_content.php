@@ -2,7 +2,7 @@
 
 // authenticate
 // user will be redirected if not logged in with right credentials
-include "includes/auth.php";
+include "includes/auth.php"; //COMMENT TO SKIP AUTHENTICATION
 
 $startdate = ($_GET["date_start"]) ? $_GET["date_start"]:date("Y-m-d", time() - 60 * 60 * 24 * 14);
 $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 60 * 24 * 1);
@@ -33,6 +33,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 	<link rel='stylesheet' type='text/css' href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css'/>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+
 	<script src="js/d3.min.js"></script>
 
 
@@ -97,7 +98,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
     <div class="navbar-inner">
         <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <a class="brand" href="Behavior1AB.html"></a>
+            <a class="brand" href="index.php"></a>
             <!-- END LOGO -->
 
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -122,7 +123,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 							to <input type="text" name="date_end" id="date_end"  value="<?php echo $enddate; ?>">
 						</span>
 
-						<input type="submit" value="update" />
+						<input type="submit" value="update"/>
 					</p>
 				</form>
             </div>
@@ -140,8 +141,6 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                            <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
-                            <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
                             <li class="divider"></li>
                             <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
                         </ul>
@@ -183,10 +182,14 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 	                <span class="arrow"></span>
 	            </a>
 	            <ul class="sub">
-	                <li><a class="" href="#visitor_flow">Visitor Flow</a></li>
 	                <li><a class="" href="#intro_interaction">Intro Interaction</a></li>
-	                <li><a class="" href="#help_page">Help Page</a></li>
+	                <li><a class="" href="#intro_interaction">Deciding Time Intro</a></li>
+	                <li><a class="" href="#video_popularity">Video Popularity</a></li>
 	                <li><a class="" href="#infographics">Infographics</a></li>
+	                <li><a class="" href="#last_video">Last Video Watched</a></li>
+					<li><a class="" href="#visitor_flow">Visitor Flow</a></li>
+
+
 	            </ul>
 	        </li>
 
@@ -228,10 +231,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<div class="span12">
 					<ul class="breadcrumb">
 						<li><a href="index.php"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
-
-                        <li><a href="cat_behavior.php">BEHAVIOR</a> <span class="divider">&nbsp;</span></li>
-
-						<li><a href="#"> Intro state</a><span class="divider-last">&nbsp;</span></li>
+						<li><a href="#">CONTENT</a><span class="divider-last">&nbsp;</span></li>
 					</ul>
 				</div>
 
@@ -242,151 +242,21 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
 				</div>
 
-
-
-				<a name="visitor_flow"></a>
-
-				<div style="width:100%">
-					<div class="widget">
-						<div class="widget-title">
-							<h4>Visitor Flow</h4>
-							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-						</div>
-
-						<div class="widget-body">
-
-							<?php
-
-							// here we set up the query
-							// cf GA query explorer for reference
-							$optParams = array(
-								'dimensions' => 'ga:eventLabel',
-								//'sort' => '-ga:visits',
-								'filters' => 'ga:eventAction==videopath',
-								'max-results' => '5000'
-							);
-
-
-							// make the call to the API
-							try {
-								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
-							} catch (Exception $e) {
-						    	print_r($e);
-							}
-
-							$network = array();
-							$network["nodes"] = array();
-							$network["links"] = array();
-							$translate = array();
-							$edgecounter = 0;
-
-							foreach($data["rows"] as $row) {
-
-								$items = explode(":", $row[0]);
-
-								// maximum depth
-								$stop = (count($items) > 10) ? 10:count($items);
-
-								$target = "";
-
-								for($i = 0; $i < $stop; $i += 2) {
-
-									$source = $items[$i];
-									if($items[$i] != "intro") {
-										$source = substr($items[$i], 0, strpos($items[$i], "."));
-									}
-
-									$source = $i . "_" . $source;
-
-									if(isset($items[$i+2])) {
-
-										$target = $items[$i+2];
-										if($items[$i+2] != "intro") {
-											$target = substr($items[$i+2], 0, strpos($items[$i+2], "."));
-										}
-
-										$target = $i + 2 . "_" . $target;
-
-
-										//echo $items[$i] . " ";
-										if(!in_array($source,$network["nodes"])) {
-											$network["nodes"][] = $source;
-											$translate[$source] = count($network["nodes"]) - 1;
-										}
-
-										if(!in_array($target,$network["nodes"])) {
-											$network["nodes"][] = $target;
-											$translate[$target] = count($network["nodes"]) - 1;
-
-										}
-
-										$edge = $source . "_XXX_" . $target;
-
-										if(!isset($network["links"][$edge])) {
-											$network["links"][$edge] = 0;
-										}
-										$network["links"][$edge] += $row[1];
-										$edgecounter += $row[1];
-										//echo $edge . " ";
-									}
-								}
-							}
-
-							//print_r($network);
-
-							$newwork = array();
-							$newwork["nodes"] = array();
-							$newwork["links"] = array();
-
-							for($i = 0; $i < count($network["nodes"]); $i++) {
-								$network["nodes"][$i] = preg_replace("/\d+_/","", $network["nodes"][$i]);
-								$newwork["nodes"][$i] = array("name" => $network["nodes"][$i]);
-							}
-
-							foreach($network["links"] as $key => $value) {
-								$elements = explode("_XXX_", $key);
-								$edge = array("source" => $translate[$elements[0]],"target" => $translate[$elements[1]], "value" => $value);
-								$newwork["links"][] =  $edge;
-							}
-
-							//print_r(json_encode($newwork)); print_r($translate); exit;
-
-
-
-							// write the data to a file
-							// makes interfacing with D3 simpler
-							file_put_contents("data/d_behav_visitorflow.json",json_encode($newwork));
-
-							?>
-
-							<iframe width="1000" height="520" src="vizmodules/behav_visitorflow.html" frameborder="0"></iframe>
-
-							<p>total transitions = <?php echo $edgecounter ?></p>
-						</div>
-					</div>
-				</div>
-
-
-
-
 <!-- START INTRO STATE:OVERVIEW -->
 				<a name="intro_interaction"></a>
 
-	            <div style="width:100%">
+	            <div class="smallvisualization-1" >
 
-            		<div class="widget">
+            		<div class="widget" style="height:600px;"  >
 	                    <div class="widget-title">
 	                        <h4> Intro state: overview (<?php echo $startdate . " - " . $enddate; ?>)</h4>
-	                 			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 	               	 	</div>
 						<div class="widget-body">
+							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
+  								<span style="width:500px;">Shows how visitors react to the intro video- watch it completely, skip it or navigate away from the website. The numbers are expressed in percentage of sessions . Hover over a segment for the value expressed in number of sessions.</span>
+							</span>
 
-							<p> This graph shows the ratio between how many visitors skipped the intro (in % of all sessions), how many visitors leave the website without watching the full (intro in % of all sessions) and how many visitors watch the entire intro in % of all sessions.  </p>
-
-
-							<div id="pieIntro" ></div>
+							<div id="pieIntro"></div>
 
 	<!-- SCRIPT PIECHART INTRO STATE-->
 
@@ -534,86 +404,77 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							</script>
 
-							<p style="text-align:center;"> total sessions = <?php echo $data["totalsForAllResults"]["ga:sessions"]; ?> </p>
+							<p style="text-align:center;"> total sessions = <!--?php echo $data["totalsForAllResults"]["ga:sessions"]; ?--> </p>
 
 					 	</div>
 					</div>
+
             	</div>
 
+<!-- END INTROSTATE -->
 
+<!-- DECIDING TIME -->
+				
+				<a name="deciding_time"></a>
 
-				<a name="help_page"></a>
+				<div class="largevisualization" >
+					<div class="widget" style="height:500px;">
+						<div class="widget-title">
+							<h4>Deciding Time</h4>
 
-				<div style="width:100%">
-					<div class="span6">
-						<div class="widget">
-							<div class="widget-title">
-								<h4>Help splash page</h4>
-								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-							</div>
+						</div>
+					
+						<div class="widget-body">
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Provides insight into the “SKIPPED” and “WENT AWAY” segments. The graph shows what is the moment in the intro when visitors decide to skip or leave the website. The bubbles represent 5 seconds increments of the intro video. The size of the bubble represents the number of visitors that dropped of/ skipped at a certain moment in the intro. For number of sessions hover over a bubble.</span>
+							</span>
 
-							<div class="widget-body">
-
-								<?php
-
-								// here we set up the query
-								// cf GA query explorer for reference
-								$optParams = array(
-									'dimensions' => 'ga:eventLabel',
-									//'sort' => '-ga:visits',
-									'filters' => 'ga:eventLabel==showhelp',
-									'max-results' => '5000'
-								);
-
-
-								// make the call to the API
-								try {
-									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions,ga:uniqueEvents,ga:totalEvents',	 $optParams);
-								} catch (Exception $e) {
-							    	print_r($e);
-								}
-
-								//print_r($data); exit;
-
-								// CSV file format first line
-								$content = "label,sessions\n";
-
-								// parse data and write to file
-							 	$content .= "automatic" . "," . $data["rows"][0][2] . "\n";
-								$content .= "manual" . "," . ($data["rows"][0][3] - $data["rows"][0][2]) . "\n";
-
-								//print_r($content);
-
-								// write the data to a file
-								// makes interfacing with D3 simpler
-								file_put_contents("data/d_behav_helpbutton.csv", $content);
-
-								?>
-
-								<iframe width="500" height="310" src="vizmodules/behav_helpbutton.html" frameborder="0"></iframe>
-
-								<p>total sessions = <?php echo $data["rows"][0][2]; ?></p>
-							</div>
 						</div>
 					</div>
 				</div>
 
+<!-- END DECIDING TIME -->
 
+<!-- DECIDING TIME -->
+				
+				<a name="video_popularity"></a>
+
+				<div class="largevisualization" >
+					<div class="widget" style="height:370px;">
+						<div class="widget-title">
+							<h4>Popularity of a video</h4>
+						</div>
+					
+
+					<div class="widget-body">
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows the top content based on level of enagagement. The size of the bubble represents how many times a video was watched. The position of the bubble on the grid indicates the average percentage of the full video length that is watched before users navigate to another video.</span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+<!-- END DECIDING TIME -->
+
+<!-- INFOGRAPHICS -->
 
 
 				<a name="infographics"></a>
 
-				<div style="width:100%">
+				<div class="smallvisualization-1" >
 
-					<div class="widget">
+					<div class="widget" style="height:487px">
 						<div class="widget-title">
 							<h4>Infographics </h4>
-							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
 						</div>
 
 						<div class="widget-body">
+						
+						<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows how many times the infographic elements not included in the autopilot narrative were viewed by users. </span>
+							</span>
+
+
 
 							<?php
 
@@ -658,10 +519,217 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							<iframe width="1000" height="340" src="vizmodules/behav_infographics.html" frameborder="0"></iframe>
 
-							<p>sum = <?php echo $add; ?></p>
+							<p>sum = <!--?php echo $add; ?--></p>
 						</div>
 					</div>
 				</div>
+
+
+<!-- END INFOGRAPHICS -->
+
+<!-- LAST VIDEO WATCHED -->
+
+				<a name="last_video"></a>
+
+				<div class="smallvisualization-1">
+						<div class="widget" style="height:487px">
+							<div class="widget-title">
+								<h4>Last video watched</h4>							
+							</div>
+
+							<div class="widget-body">
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows how many times visitors used the Help -function. “Automatic” indicates the number of times the function was triggered automatically, as a splash page at the beginning of the session (at the moment this happens for all sessions). “Manual” indicates the number of people that chose to view the help page an additional time during the session, from the side menu.</span>
+							</span>
+
+								<?php
+
+								// here we set up the query
+								// cf GA query explorer for reference
+								$optParams = array(
+									'dimensions' => 'ga:dimension4',
+									//'sort' => '-ga:visits',
+									//'filters' => '',
+									'max-results' => '5000'
+								);
+
+
+								// make the call to the API
+								try {
+									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
+								} catch (Exception $e) {
+							    	print_r($e);
+								}
+
+								//print_r($data); exit;
+
+								// CSV file format first line
+								$content = "label,sessions\n";
+
+								$newdata = array();
+								foreach($data["rows"] as $row) {
+									$row[0] = substr($row[0], 0, strpos($row[0], "."));
+									if(!isset($newdata[$row[0]])) {
+										$newdata[$row[0]] = 0;
+									}
+									$newdata[$row[0]] += $row[1];
+								}
+
+								arsort($newdata);
+
+								foreach($newdata as $key => $value) {
+						    			$content .= $key . "," . $value . "\n";
+								}
+
+								//print_r($content);
+
+								// write the data to a file
+								// makes interfacing with D3 simpler
+								file_put_contents("data/d_behav_lastvideo.csv", $content);
+
+								?>
+
+								<iframe width="500" height="310" src="vizmodules/behav_lastvideo.html" frameborder="0"></iframe>
+							</div>
+					</div>
+				</div>
+
+<!-- END LAST VIDEO WATCHED -->
+
+<!-- VISITOR FLOW -->
+
+				<a name="visitor_flow"></a>
+
+				<div class="largevisualization">
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Visitor Flow</h4>
+						</div>
+						<div class="widget-body">
+
+						<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">This visualization shows how users navigate through the video content. Each column is a new step in the interaction. The two perspectives of the narrative are indicated by color of the blocks. The height of the connection represents the number of sessions. To get the number of sessions, hover over a connection.</span>
+						</span>
+
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:eventLabel',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:eventAction==videopath',
+								'max-results' => '5000'
+							);
+
+
+							// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+							$network = array();
+							$network["nodes"] = array();
+							$network["links"] = array();
+							$translate = array();
+							$edgecounter = 0;
+
+							foreach($data["rows"] as $row) {
+
+								$items = explode(":", $row[0]);
+
+								// maximum depth
+								$stop = (count($items) > 10) ? 10:count($items);
+
+								$target = "";
+
+								for($i = 0; $i < $stop; $i += 2) {
+
+									$source = $items[$i];
+									if($items[$i] != "intro") {
+										$source = substr($items[$i], 0, strpos($items[$i], "."));
+									}
+
+									$source = $i . "_" . $source;
+
+									if(isset($items[$i+2])) {
+
+										$target = $items[$i+2];
+										if($items[$i+2] != "intro") {
+											$target = substr($items[$i+2], 0, strpos($items[$i+2], "."));
+										}
+
+										$target = $i + 2 . "_" . $target;
+
+
+										//echo $items[$i] . " ";
+										if(!in_array($source,$network["nodes"])) {
+											$network["nodes"][] = $source;
+											$translate[$source] = count($network["nodes"]) - 1;
+										}
+
+										if(!in_array($target,$network["nodes"])) {
+											$network["nodes"][] = $target;
+											$translate[$target] = count($network["nodes"]) - 1;
+
+										}
+
+										$edge = $source . "_XXX_" . $target;
+
+										if(!isset($network["links"][$edge])) {
+											$network["links"][$edge] = 0;
+										}
+										$network["links"][$edge] += $row[1];
+										$edgecounter += $row[1];
+										//echo $edge . " ";
+									}
+								}
+							}
+
+							//print_r($network);
+
+							$newwork = array();
+							$newwork["nodes"] = array();
+							$newwork["links"] = array();
+
+							for($i = 0; $i < count($network["nodes"]); $i++) {
+								$network["nodes"][$i] = preg_replace("/\d+_/","", $network["nodes"][$i]);
+								$newwork["nodes"][$i] = array("name" => $network["nodes"][$i]);
+							}
+
+							foreach($network["links"] as $key => $value) {
+								$elements = explode("_XXX_", $key);
+								$edge = array("source" => $translate[$elements[0]],"target" => $translate[$elements[1]], "value" => $value);
+								$newwork["links"][] =  $edge;
+							}
+
+							//print_r(json_encode($newwork)); print_r($translate); exit;
+
+
+
+							// write the data to a file
+							// makes interfacing with D3 simpler
+							file_put_contents("data/d_behav_visitorflow.json",json_encode($newwork));
+
+							?>
+
+							<iframe width="1000" height="520" src="vizmodules/behav_visitorflow.html" frameborder="0"></iframe>
+
+							<p>total transitions = <?php echo $edgecounter ?></p>
+						</div>
+					</div>
+
+
+				</div>
+
+
+
+<!-- END VISITOR FLOW -->
+
+
+
 
 
 

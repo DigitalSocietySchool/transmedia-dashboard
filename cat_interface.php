@@ -97,7 +97,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
     <div class="navbar-inner">
         <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <a class="brand" href="Behavior1AB.html"></a>
+            <a class="brand" href="index.php"></a>
             <!-- END LOGO -->
 
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -122,7 +122,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 							to <input type="text" name="date_end" id="date_end"  value="<?php echo $enddate; ?>">
 						</span>
 
-						<input type="submit" value="update" />
+						<input type="submit" value="update" class="submit" />
 					</p>
 				</form>
             </div>
@@ -140,8 +140,6 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                            <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
-                            <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
                             <li class="divider"></li>
                             <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
                         </ul>
@@ -191,10 +189,9 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 	                <span class="arrow"></span>
 	            </a>
 	            <ul class="sub">
-	                <li><a class="" href="#intro_state">Intro State</a></li>
-	                <li><a class="" href="#video">Video Popularity</a></li>
-	                <li><a class="" href="cat_behavior.php">Narrative Paths</a></li>
-	                <li><a class="" href="cat_behavior.php">First Click </a></li>
+	                <li><a class="" href="#clicked_elements">Clicked Elements</a></li>
+	                <li><a class="" href="#help_page">Help Splash Page</a></li>
+	                <li><a class="" href="#mousedistance&nervousness">Mouse Distance & Nervousness</a></li>
 	            </ul>
 	        </li>
 
@@ -229,10 +226,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<div class="span12">
 					<ul class="breadcrumb">
 						<li><a href="index.php"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
-
-                        <li><a href="cat_behavior.php">BEHAVIOR</a> <span class="divider">&nbsp;</span></li>
-
-						<li><a href="#"> Intro state</a><span class="divider-last">&nbsp;</span></li>
+						<li><a href="#">INTERFACE</a><span class="divider-last">&nbsp;</span></li>
 					</ul>
 				</div>
 
@@ -246,19 +240,19 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 
 
-				<a name="clickedelements"></a>
+				<a name="clicked_elements"></a>
 
-				<div style="width:100%">
+				<div class="smallvisualization-1">
 
-					<div class="widget">
+					<div class="widget" style="height:517px">
 						<div class="widget-title">
 							<h4>Clicked Elements</h4>
-							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-						</div>
+							</div>
 
 						<div class="widget-body">
-
+							<span class="dropt">Explenation of this visualization
+  								<span style="width:500px;">Shows how many times visitors clicked on elements in the side menu and what the most used functions are. Note that “show help” is triggered automatically at the beginning of a session. For further insight, please see “Help splash page” visualization.</span>
+							</span>
 							<?php
 
 							// here we set up the query
@@ -300,6 +294,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							?>
 
+
+
 							<iframe width="1000" height="340" src="vizmodules/behav_clickedelements.html" frameborder="0"></iframe>
 
 							<p>sum = <?php echo $add; ?></p>
@@ -310,32 +306,38 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 				<a name="lastvideo"></a>
 
-				<div style="width:100%">
-					<div class="span6">
-						<div class="widget">
+
+
+<!-- HELP SPLASH PAGE -->
+
+				<a name="help_page"></a>
+
+					<div class="smallvisualization-1">
+						<div class="widget" style="height:517px">
 							<div class="widget-title">
-								<h4>Last video watched</h4>
-								<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-								<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-							</div>
+								<h4>Help splash page</h4>
+								</div>
 
 							<div class="widget-body">
 
+								<span class="dropt">Explanation of this visualization
+  									<span style="width:500px;">Shows how many times visitors used the Help -function. “Automatic” indicates the number of times the function was triggered automatically, as a splash page at the beginning of the session (at the moment this happens for all sessions). “Manual” indicates the number of people that chose to view the help page an additional time during the session, from the side menu. </span>
+								</span>
 								<?php
 
 								// here we set up the query
 								// cf GA query explorer for reference
 								$optParams = array(
-									'dimensions' => 'ga:dimension4',
+									'dimensions' => 'ga:eventLabel',
 									//'sort' => '-ga:visits',
-									//'filters' => '',
+									'filters' => 'ga:eventLabel==showhelp',
 									'max-results' => '5000'
 								);
 
 
 								// make the call to the API
 								try {
-									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',	 $optParams);
+									$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions,ga:uniqueEvents,ga:totalEvents',	 $optParams);
 								} catch (Exception $e) {
 							    	print_r($e);
 								}
@@ -345,48 +347,43 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 								// CSV file format first line
 								$content = "label,sessions\n";
 
-								$newdata = array();
-								foreach($data["rows"] as $row) {
-									$row[0] = substr($row[0], 0, strpos($row[0], "."));
-									if(!isset($newdata[$row[0]])) {
-										$newdata[$row[0]] = 0;
-									}
-									$newdata[$row[0]] += $row[1];
-								}
-
-								arsort($newdata);
-
-								foreach($newdata as $key => $value) {
-						    			$content .= $key . "," . $value . "\n";
-								}
+								// parse data and write to file
+							 	$content .= "automatic" . "," . $data["rows"][0][2] . "\n";
+								$content .= "manual" . "," . ($data["rows"][0][3] - $data["rows"][0][2]) . "\n";
 
 								//print_r($content);
 
 								// write the data to a file
 								// makes interfacing with D3 simpler
-								file_put_contents("data/d_behav_lastvideo.csv", $content);
+								file_put_contents("data/d_behav_helpbutton.csv", $content);
 
 								?>
 
-								<iframe width="500" height="310" src="vizmodules/behav_lastvideo.html" frameborder="0"></iframe>
+								<iframe width="500" height="310" src="vizmodules/behav_helpbutton.html" frameborder="0"></iframe>
+
+								<p>total sessions = <!--?php echo $data["rows"][0][2]; ?--></p>
 							</div>
 						</div>
 					</div>
-				</div>
+		
 
+<!-- END HELP SPLASH PAGE -->
 
+<!-- MOUSE DISTANCE & NERVOUSNESS -->
 
-				<a name="visitorflow"></a>
+				<a name="mousedistance&nervousness"></a>
 
-				<div style="width:100%">
+				<div class="largevisualization">
 					<div class="widget">
 						<div class="widget-title">
 							<h4>MOUSE DISTANCE & NERVOUSNESS</h4>
-							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-						</div>
+							</div>
 
 						<div class="widget-body">
+
+						<span class="dropt" title="Title for the pop-up">Explanation of this visualization
+  							<span style="width:500px;">Indicates mouse movement, calculated in  number of pixels travelled with the mouse pointer within a session. The user interacts with  the  content  through the mouse, therefore low mouse distance and higher session duration could indicate low engagement with the interactive functions of the project and the experiencing of the narrative in “autoplay” mode.</span>
+						</span>
 
 							<?php
 
@@ -445,15 +442,20 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							?>
 
-							<iframe width="560" height="320" src="vizmodules/behav_mdistance.html" frameborder="0"></iframe>
-							<iframe width="560" height="320" src="vizmodules/behav_mnervousness.html" frameborder="0"></iframe>
+							<iframe width="1000" height="320" src="vizmodules/behav_mdistance.html" frameborder="0"></iframe>
+
+							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
+  								<span style="width:500px;">Shows mouse nervousness within a session, expressed as number of pixels travelled per second within a session. This graph only takes into account visits with a maximum length of 300 seconds (5 minutes). High mouse nervousness with lower session duration could indicate a confused or impatient user. </span>
+							</span>
+
+							<iframe width="1000" height="320" src="vizmodules/behav_mnervousness.html" frameborder="0"></iframe>
 
 							<p>total sessions = <?php echo $sessions; ?></p>
 						</div>
 					</div>
 				</div>
 
-
+<!-- MOUSE DISTANCE & NERVOUSNESS -->
 
 			</div>
 		</div>

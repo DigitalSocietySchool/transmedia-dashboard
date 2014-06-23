@@ -97,7 +97,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
     <div class="navbar-inner">
         <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <a class="brand" href="Behavior1AB.html"></a>
+            <a class="brand" href="index.php"></a>
             <!-- END LOGO -->
 
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -140,8 +140,6 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                            <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
-                            <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
                             <li class="divider"></li>
                             <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
                         </ul>
@@ -204,10 +202,12 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub">
-	                <li><a class="" href="#intro_state">Intro State</a></li>
-	                <li><a class="" href="#video">Video Popularity</a></li>
-	                <li><a class="" href="cat_behavior.php">Narrative Paths</a></li>
-	                <li><a class="" href="cat_behavior.php">First Click </a></li>
+	                <li><a class="" href="#browser">Browser</a></li>
+	                <li><a class="" href="#browser_averageloadingtime">Browser and Loadingtime</a></li>
+	                <li><a class="" href="#avgtimeonsite_width_desktop">Average Time on Site and Screen Width (Desktop)</a></li>
+	                <li><a class="" href="#avgtimeonsite_height_desktop">Average Time on Site and Screen Height (Desktop)</a></li>
+	                <li><a class="" href="#avgtimeonsite_width_mobile">Average Time on Site and Screen Width (Mobile)</a></li>
+	                <li><a class="" href="#avgtimeonsite_height_mobile">Average Time on Site and Screen Height (Mobile)</a></li>
 	            </ul>
             </li>
 		</ul>
@@ -228,10 +228,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<div class="span12">
 					<ul class="breadcrumb">
 						<li><a href="index.php"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
-
-                        <li><a href="cat_behavior.php">BEHAVIOR</a> <span class="divider">&nbsp;</span></li>
-
-						<li><a href="#"> Intro state</a><span class="divider-last">&nbsp;</span></li>
+						<li><a href="#"> Technical</a><span class="divider-last">&nbsp;</span></li>
 					</ul>
 				</div>
 
@@ -242,18 +239,21 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
 				</div>
 
+				
 
-				<a name="visitorflow"></a>
+				<a name="browser"></a>
 
-				<div style="width:100%">
+				<div class="largevisualization">
 					<div class="widget">
 						<div class="widget-title">
-							<h4>BROWSER TO INTRO</h4>
-							<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-							<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span></a>
-						</div>
+							<h4>BROWSER</h4>
+							</div>
 
 						<div class="widget-body">
+
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows an overview of types of devices and browsers used by visitors of your website. The diagram also shows how visitors interact with the intro video. An important ratio of users who navigate away at intro could indicate content loading problems for a certian browser or device.  </span>
+							</span>
 
 							<?php
 
@@ -345,7 +345,109 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 				</div>
 
+		
+<!-- BROWSER AND AVERAGE LOADINGTIME -->
 
+				<a name="browser_averageloadingtime"></a>
+
+				<div class="smallvisualization-2">
+					<div class="widget" style="height:500px;">
+						<div class="widget-title">
+							<h4>Browser and Average Loadingtime</h4>
+
+						</div>
+						<div class="widget-body">
+						
+
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows average loading time of the content per browser. Each column represents a browser. Height of the column represents the loading time and the width of each column represents the number of sessions/browser. Higher loading time could indicate a tehnical problem in certain browsers.</span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+<!-- END BROWSER AND AVERAGE LOADINGTIME -->
+
+<!-- Average LOADIDNGTIME AND WIDTH (DESKTOP) -->
+
+				<a name="avgtimeonsite_width_desktop"></a>
+
+				<div class="smallvisualization-1">
+					<div class="widget" style="height:500px;">
+						<div class="widget-title">
+							<h4>Average Time on Site and Screen Width (Desktop)</h4>
+
+						</div>
+						<div class="widget-body">
+						
+
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows average loading time of the content per browser. Each column represents a browser. Height of the column represents the loading time and the width of each column represents the number of sessions/browser. Higher loading time could indicate a tehnical problem in certain browsers.</span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+<!-- END Average LOADIDNGTIME AND WIDTH (DESKTOP) -->
+
+<!-- Average LOADIDNGTIME AND HEIGHT (DESKTOP) -->
+
+				<a name="avgtimeonsite_height_desktop"></a>
+
+				<div class="smallvisualization-1">
+					<div class="widget" style="height:500px;">
+						<div class="widget-title">
+							<h4>Average Time on Site and Screen Height (Desktop)</h4>
+					</div>
+						<div class="widget-body">
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows average session time and height of the viewport used to display the content on desktop devices. Each column represents a height category  of 200 pixels. The height taken into account is the actual size of the display window for the content and does not include toolbars or other elements that could clutter the viewport. Height of the column represents the average time on site and the width of each column represents the number of sessions/browser. Lower average time on site could indicate that the content is not displaying properly in certain screen dimensions, while wider columns will inform you about the most popular screen heights used by visitors to your website.</span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+<!-- END Average LOADIDNGTIME AND HEIGHT (DESKTOP) -->
+
+<!-- Average LOADIDNGTIME AND WIDTH (MOBILE) -->
+
+				<a name="avgtimeonsite_width_mobile"></a>
+
+				<div class="smallvisualization-1">
+					<div class="widget" style="height:500px;">
+						<div class="widget-title">
+							<h4>Average Time on Site and Screen Width (Mobile)</h4>
+					</div>
+						<div class="widget-body">
+							<div class="foldout">
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows average session time and width of the viewport used to display the content on mobile and tablet devices. Each column represents a width category  of 200 pixels. The width taken into account is the actual size of the display window for the content and does not include toolbars or other elements that could clutter the viewport. Height of the column represents the average time on site and the width of each column represents the number of sessions/browser. Lower average time on site could indicate that the content is not displaying properly in certain screen dimensions, while wider columns will inform you about the most popular screen widths used by visitors to your website.</span>
+							</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+<!-- END Average LOADIDNGTIME AND WIDTH (MOBILE) -->
+
+<!-- Average LOADIDNGTIME AND WIDTH (MOBILE) -->
+
+				<a name="avgtimeonsite_height_mobile"></a>
+
+				<div class="smallvisualization-1">
+					<div class="widget" style="height:500px;">
+						<div class="widget-title">
+							<h4>Average Time on Site and Screen Height (Mobile)</h4>
+					</div>
+						<div class="widget-body">
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows average session time and height of the viewport used to display the content on mobile devices. Each column represents a height category  of 200 pixels. The height taken into account is the actual size of the display window for the content and does not include toolbars or other elements that could clutter the viewport. Height of the column represents the average time on site and the width of each column represents the number of sessions/browser. Lower average time on site could indicate that the content is not displaying properly in certain screen dimensions, while wider columns will inform you about the most popular screen heights used by visitors to your website.</span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+<!-- END Average LOADIDNGTIME AND WIDTH (MOBILE) -->
 
 
 			</div>

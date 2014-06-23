@@ -351,11 +351,77 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 						<div class="widget-body">
 							<p style="width:700px"></p>
-						
+
 							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
   								<span style="width:500px;">Shows the level of engagement of incoming visitors from the most important referral sources for the website. The size of the bubble represents the average number of videos watched/session for visitors coming from a certain source, while the position of the bubble on the grid represents the average percentage of available video content watched in a session by visitors from the  same source.  The graph only shows the top ten sources in terms of sessions generated.</span>
 							</span>
 
+							<?php
+
+							/*
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:source,ga:eventLabel',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:eventAction==videopath;ga:source!=(direct)',
+								'max-results' => '5000'
+							);
+
+
+							// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate,$enddate,'ga:sessions',$optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+
+							print_r($data); exit;
+
+							$buckets = array();
+							$bucketsize = 200;
+							$sessioncounter = 0;
+							foreach($data["rows"] as $row) {
+								$sessioncounter += $row[1];
+							}
+
+							$factor = 700 / $sessioncounter;
+
+							for($i = 600; $i < 2600; $i = $i + $bucketsize) {
+
+								$bucket = $i . "-" . ($i + $bucketsize - 1) . " px";
+
+
+								$buckets[$bucket] = array("sessions" => 0,"averagesessionduration" => 0);
+
+								foreach($data["rows"] as $row) {
+									if($row[0] >= $i && $row[0] < $i + $bucketsize) {
+										$buckets[$bucket]["sessions"] += $row[1];
+										$buckets[$bucket]["averagesessionduration"] += $row[2];
+									}
+								}
+							}
+
+
+
+							//print_r($buckets); exit;
+
+							$content = "widthrange	sessions	averagesessionduration	scale\n";
+							$scale = 0;
+
+							foreach($buckets as $bucketname => $values) {
+								$content .= $bucketname . "\t" . ($values["sessions"] * $factor) . "\t" . ($values["averagesessionduration"] / $values["sessions"]) . "\t" . ($scale * $factor) . "\n";
+								$scale += $values["sessions"];
+							}
+
+							file_put_contents("data/d_tech_timeonsitewidthheight.tsv",$content);
+
+							 */
+
+							?>
+
+							<iframe width="1000" height="520" src="vizmodules/acqui_referralengagement.html" frameborder="0"></iframe>
 						</div>
 					</div>
 				</div>

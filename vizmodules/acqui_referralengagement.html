@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html>	
+<html>
 <style>
-div.tooltip {   
-  position: absolute;           
-  text-align: center;  
-  display: inline;         
-  width: 105px;                  
-  height: 20px;                 
-  padding-left: 5px; 
-  padding-right: 5px;  
-  padding-bottom: 5px;          
-  font-size: 11px sans-serif;        
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  display: inline;
+  width: 105px;
+  height: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-size: 11px sans-serif;
   background-color: #5D686E;
   color: #FFF;
-  border: 0px;                
+  border: 0px;
   pointer-events: none;
   opacity: 0.8;
   right: 100%;
@@ -22,96 +22,96 @@ div.tooltip {
   font-family: 'Gudea', sans-serif;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-}	
+}
 
 </style>
 
 
 <head>
-		<script src="js/d3.min.js"></script>
-		<link href="ballsstyle.css" rel="stylesheet" />
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<link href="../css/ballsstyle.css" rel="stylesheet" />
 		<link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'/>
 </head>
 
 	<body>
 		<div id="base" style="width:660px;heigth:700px">
 			<script>
-			
+
 				var margin={top:20, right:20, bottom:30, left:60},
 					width=660-margin.left-margin.right,
 					height=630-margin.top-margin.bottom;
-				
+
 				var x=d3.scale.linear()
 					.range([0,width]);
-					
+
 				var y = d3.scale.ordinal()
    					.rangePoints([0, width]);
-				
+
 				/*var y=d3.scale.linear()
 					.range([height,0]);*/
-				
+
 				var color = d3.scale.category10();
-				
+
 				var formatAxis = d3.format("0");
-				
+
 				var maxSession;
-								
+
 				var xAxis=d3.svg.axis()
 					.scale(x)
 					.orient("bottom");
-			
+
 				var yAxis=d3.svg.axis()
 					.scale(y)
 					.orient("left")
-					.ticks(10); 
-				
+					.ticks(10);
+
 				var svg=d3.select("#base").append("svg")
 					.attr("width", width+margin.left + margin.right)
 					.attr("height", height+margin.top + margin.bottom)
 					.append("g")
 					.attr("transform","translate("+margin.left+","+margin.top+")");
-			
-// code to draw grids				
-				function make_x_axis() {        
+
+// code to draw grids
+				function make_x_axis() {
     				return d3.svg.axis()
         			.scale(x)
         	   		.orient("bottom")
          			.ticks(10)
-         		
+
 				}
 
-				function make_y_axis() {        
+				function make_y_axis() {
   				 	return d3.svg.axis()
        			 	.scale(y)
         			.orient("left")
         			.ticks(10)
 				}
-				
+
 				function scaleSession (val){
 					// if maxSession = 35px then val ?
 					var max = 40;
 					return (max * val)/maxSession;
 				}
-					
-				
-				d3.csv("data/data_popularity_video.csv", function(error, data) {
+
+
+				d3.csv("../data/d_acqui_referralengagement.csv", function(error, data) {
 				data.forEach(function(d) {
 					d.session = 1 * d.session;
-					
+
 				});
 				maxSession=d3.max(data,function(d){return d.session});
 				//alert(maxSession);
 				// Defines the min and max values of the scales for the axis
 				x.domain([0,100]);
 				y.domain(data.map(function(d) { return d.video; }))
-				
-				
-		// function for hover				
-				var formatTime = d3.time.format("%e %B"); 
-				
-				var div = d3.select("body").append("div")   
-					.attr("class", "tooltip")               
-					.style("opacity", 0);  
+
+
+		// function for hover
+				var formatTime = d3.time.format("%e %B");
+
+				var div = d3.select("body").append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
 
 
 		// Gradient background
@@ -132,9 +132,9 @@ div.tooltip {
 					.attr("width", width)
 					.attr("height", height)
 					.style("fill", "url(#gradient)");
-			
+
 				svg.append("g")
-					  .attr("class", "x axis") 
+					  .attr("class", "x axis")
 					  .attr("transform", "translate(0," + height + ")")
 					  .call(xAxis)
 					.append("text")
@@ -155,7 +155,7 @@ div.tooltip {
 					  .attr("dy", ".71em")
 					  .style("text-anchor", "end")
 					  .text("Video's");
-					  
+
 // Code for grid
 						svg.append("g")
 						.attr("class", "grid")
@@ -163,25 +163,25 @@ div.tooltip {
 						.attr("height", height)
 						.style("fill", color)
 						.attr("id", "gradient");
-					
-								
-					svg.append("g")       
+
+
+					svg.append("g")
         				.attr("class", "grid")
        					 .attr("transform", "translate(0," + height + ")")
         				.call(make_x_axis()
             				.tickSize(-height, 0, 0)
             				.tickFormat("")
             			);
-       					
-       					svg.append("g")         
+
+       					svg.append("g")
        					 .attr("class", "grid")
        					 .call(make_y_axis()
            				 .tickSize(-width, 0, 0)
             			.tickFormat("")
-        				);    			
-        				
+        				);
+
 // Code for circles
-					
+
 				 	 svg.selectAll(".dot")
 					  .data(data)
 					.enter().append("circle")
@@ -189,27 +189,27 @@ div.tooltip {
 					  .attr("r", function(d) { return scaleSession(d.session); })//Size
 					  .attr("cx", function(d) { return x(d.percentage); })//position x-axis
 					  .attr("cy", function(d) { return y(d.video); }) //position y-axis
-						.on("mouseover", function(d) {      
-							div.transition()        
-								.duration(200)      
-								.style("opacity", .9);      
-							div .html("Video  "+ d.video+ "<br/>" + "Percentage watched: " + d.percentage)  
-								.style("left", (d3.event.pageX) + "px")     
-								.style("top", (d3.event.pageY - 28) + "px");    
-							})                  
-						.on("mouseout", function(d) {       
-							div.transition()        
-								.duration(500)      
-								.style("opacity", 0);   
+						.on("mouseover", function(d) {
+							div.transition()
+								.duration(200)
+								.style("opacity", .9);
+							div .html("Video  "+ d.video+ "<br/>" + "Percentage watched: " + d.percentage)
+								.style("left", (d3.event.pageX) + "px")
+								.style("top", (d3.event.pageY - 28) + "px");
+							})
+						.on("mouseout", function(d) {
+							div.transition()
+								.duration(500)
+								.style("opacity", 0);
 						});
-					  
-					  
-					  
+
+
+
 				});
-			</script>                                                                                                                            
+			</script>
 		</div>
-		
-		
+
+
 	</body>
 </html>
 

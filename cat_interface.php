@@ -361,11 +361,11 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 								<iframe width="500" height="310" src="vizmodules/behav_helpbutton.html" frameborder="0"></iframe>
 
-								<p>total sessions = <!--?php echo $data["rows"][0][2]; ?--></p>
+								<p>total sessions = <?php echo $data["rows"][0][2]; ?></p>
 							</div>
 						</div>
 					</div>
-		
+
 
 <!-- END HELP SPLASH PAGE -->
 

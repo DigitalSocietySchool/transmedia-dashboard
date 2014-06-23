@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #eee;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.text {
+	  font-family: sans-serif;
+    font-size: 11px;
+}
+
+.circle {
+    fill: #E9B58C;
+    opacity: 0.7;
+}
+
+circle:hover {
+  fill: #57B7B9;
+}
+
+
+.circle {
+stroke: #D0A482;
+}
+
+
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  display: inline;
+  width: 140px;
+  height: 35px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-size: 11px sans-serif;
+  background-color: #5D686E;
+  color: #FFF;
+  border: 0px;
+  pointer-events: none;
+  opacity: 0.8;
+  right: 100%;
+  top: 50%;
+  font-family: 'Gudea', sans-serif;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+
+</style>
+
+<body>
+
+
+
+<script src="http://d3js.org/d3.v2.min.js"></script>
+
+
+<script>
+
+			var margin = {top: 30, right: 50, bottom: 40, left: 100},
+				h = 300 - margin.top - margin.bottom,
+				w = 900 - margin.left - margin.right,
+				pad = 0;
+
+				//width = 1200 - margin.left - margin.right,
+//					height = 500 - margin.top - margin.bottom
+
+
+// selecting the div for the graph to go
+
+			var svg = d3.select("body")
+					.append("svg")
+					.attr("width", w + margin.left + margin.right)
+					.attr("height", h + margin.top + margin.bottom)
+					.append("g")
+						.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// setting the scale
+			 var x = d3.scale.linear()
+			 	.range([0, w]);
+
+			 var y = d3.scale.ordinal()
+			 .rangeRoundBands([0, h], .3);
+
+
+
+
+// code for orients
+			var xAxis = d3.svg.axis().scale(x).orient("bottom");
+
+
+			var	yAxis = d3.svg.axis().scale(y).orient("right");
+
+
+function make_y_axis() {
+					return d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.ticks(10)
+					}
+
+			d3.csv("../data/d_behavior_decidingtime.csv", function(data) {
+				data.forEach(function(d){
+						  d.decidingtime = +d.decidingtime;
+						  d.sessions = +d.sessions;
+					});
+
+				  x.domain([0, d3.max(data, function(d) { return d.decidingtime; })]);
+				  y.domain(data.map(function(d) { return d.introstate; }));
+
+
+
+
+					svg.append("g")
+						.attr("class", "x axis")
+						.attr("transform", "translate(0, "+(h-pad)+")")
+						.call(xAxis);
+
+				   svg.append("g")
+					  .attr("class", "y axis")
+					  .call(yAxis)
+				 		.selectAll("text")
+						.style("text-anchor", "end")
+						.attr("dx", "-2.9em")
+						.attr("dy", ".15em");
+
+// function for hover
+
+				  	var formatTime = d3.time.format("%e %B");
+
+					var div = d3.select("body").append("div")
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+
+
+
+
+// code for radius
+			var max_r = d3.max(data.map(
+                       function (d) {  return d.sessions; })),
+			r = d3.scale.linear()
+				.domain([0, d3.max(data, function (d) { return d.sessions; })])
+				.range([0, 12]);
+
+
+
+			svg.selectAll("circle")
+				.data(data)
+				.enter()
+				.append("circle")
+				.attr("class", "circle")
+				.attr("cx", function (d) { return x(d.decidingtime); })
+				.attr("cy", function (d) { return y(d.introstate)+34; })
+				.attr("r", function (d) { return r(d.sessions)*3; })
+
+					  .on("mouseover", function(d) {
+							div.transition()
+								.duration(200)
+								.style("opacity", .9);
+							div .html("DecidingTime" + " " + d.decidingtime + "<br/>" + "sessions" + " " + + d.sessions)
+								.style("left", (d3.event.pageX) + "px")
+								.style("top", (d3.event.pageY - 28) + "px");
+							})
+						.on("mouseout", function(d) {
+							div.transition()
+								.duration(500)
+								.style("opacity", 0);
+					});
+
+
+
+			});
+
+
+
+
+			function type(d) {
+					/*d.forEach(function(e){
+						  e.decidingtime = +e.decidingtime;
+						  e.sessions = +e.sessions;
+					});*/
+				  return d;
+				}
+
+
+
+</script>
+</body>

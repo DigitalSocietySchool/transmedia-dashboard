@@ -120,7 +120,7 @@ a:hover.tooltips span {
         <div class="navbar-inner">
             <div class="container-fluid">
                 <!-- BEGIN LOGO -->
-                <a class="brand" href="Behavior1AB.html">
+                <a class="brand" href="index.php">
 
                 </a>
                 <!-- END LOGO -->
@@ -158,10 +158,8 @@ a:hover.tooltips span {
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                                <li><a href="login.html"><i class="icon-info-sign"></i> Help</a></li>
-                                <li><a href="login.html"><i class="icon-flag"></i> About</a></li>
                                 <li class="divider"></li>
-                                <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+                                <li><a href=""><i class="icon-key"></i> Log Out</a></li>
                             </ul>
                         </li>
                         <!-- END USER LOGIN DROPDOWN -->
@@ -253,70 +251,31 @@ a:hover.tooltips span {
 
 					<div>
 						<h1>LAST HIJACK ANALYTICS</h1>
-							<h5>Check stuff</h5>
 					</div>
 
-<!-- START REFERRAL PERFORMANCE: OVERVIEW -->
-
-                <div class="span10" >
-					<div class="widget">
-                        <div class="widget-title">
-                            <h4> Referral performance: overview </h4>
-                     			<a class="tooltips" href="#" style="float:right"><p type="button" class="icon-question-sign" style="margin:12px"></p>
-									<span>The date span filter can be used to zoom in to a specific period of time. By hovering over a slice the absolute number of sessions is displayed.</span>
-								</a>
-                   	 	</div>
-
-
-						<div class="widget-body">
-                    		<div>
-                        		<h5>
-
-                        		<?php
-
-				// let's get some data!
-
-
-				// here we set up the query
-				// cf GA query explorer for reference
-				$optParams = array(
-					'dimensions' => 'ga:dimension1',
-					//'sort' => '-ga:visits',
-					//'filters' => 'ga:medium==organic',
-					'max-results' => '5000'
-				);
-
-				// make the call to the API
-				try {
-					$data = $service -> data_ga -> get('ga:81935905', '2014-05-05', '2014-05-19', 'ga:sessions',	 $optParams);
-				} catch (Exception $e) {
-			    	print_r($e);
-				}
-
-				// CSV file format first line
-				$content = "label,session,percentage\n";
-
-				// parse data and write to file
-			    foreach($data["rows"] as $row) {
-					$content .= $row[0] . "," .
-								$row[1] . "," .
-								round(($row[1] / $data["totalsForAllResults"]["ga:sessions"]) * 100) .		// percentage needs to be calculated
-								"\n";
-				}
-
-				print_r($content);
-
-				// write the data to a file
-				// makes interfacing with D3 simpler
-				//file_put_contents("data/rtdata_pie.csv", $content);
-
-				?>
-
-
-                        		</h5>
-                       		</div>
-						</div>
-					</div>
+ <div class="textcontent">
+                <br>
+                <h5>
+                Figures analytics dashboard is a prototype analytics tool developed by University of Amsterdam and MediaLAB Amsterdam in collaboration with transmedia production company Submarine. The tool was developed to offer producers of interactive documentaries concrete, actionable insights into the performance of their productions. 
+                </h5>
+                <br>
+                <h4>Figures for transmedia producers</h4>
+                <h5>Unlike other tools on the market, Figures was custom designed with common characteristics and non-hierarchical structure of interactive storytelling productions in mind. The tool was developed to answer questions that especially transmedia producers have about the performance of their productions in terms of engagement with a narrative, perspective changes, correlations between referral sources and engagement etcetera.  </h5>
+                <br>
+                <h4>Getting started</h4>
+                <h5>In the navigation panel on the left you can find all visualisations categorized under behavior, acquisition and technical. They are subdivided into meaningful groups that together give an overview of certain issues or aspects of the production's performance. Each visualisation is explained, and additional navigational instructions can be found next to each visualisation by hovering over the question mark button. </h5>
+                <br>
+                <h4>Additional info</h4>
+                <h5>Some functionality might not be entirely operational. Unless stated otherwise, each visualisation is connected to the Google Analytics API and shows actual current data. </h5>
+                <br>
+                <h4>Credits</h4>
+                <h5>Bernhard Rieder, Stefania Bercu, Anne van Egmond, Sieta van Horck, Geert Hagelaar, Yannick Diezenberg, Loes Bogers, Emile den Tex & Submarine</h5>
+                <div style="margin-top:30px">
+                    <img src="img/logo_medialab.png" width="200px">
+                    <img src="img/logo_uva.png" width="200px">
+                    <img src="img/logo_submarine.png" width="200px">
+                </div>
+            </div>    
 
 
 

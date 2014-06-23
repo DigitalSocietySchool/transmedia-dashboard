@@ -643,10 +643,7 @@ position: fixed;
     opacity: 0.8;
     padding: 3px 5px 2px 6px;
     opacity:0.4;
-    filter: alpha(opacity = 40);
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
+  
 }
 
 /* custom wells */
@@ -3520,3 +3517,68 @@ ul.amounts li {
 	position: relative;
     float: right;
 }
+
+/* Visualizations (large/small) */
+
+.smallvisualization-1 {
+    width: 495px;
+    float: left;
+    margin-right: 10px;
+}
+
+.smallvisualization-2 {
+    width: 495px;
+    float: left;
+    margin-right: 510px;
+}
+
+.largevisualization {
+    width: 1000px;
+    float: left;
+    margin-right: 10px;
+}
+
+.textcontent {
+    margin-left: 20px;
+    margin-right: 50px;
+    width: 700px;
+}
+
+/* Explenations */
+
+
+span.dropt {
+    border-bottom: thin dotted; 
+    cursor: pointer;
+}
+span.dropt:hover {
+    text-decoration: none; 
+    background: #ffffff; z-index: 6; 
+}
+
+span.dropt span {
+    position: absolute; left: -9999px;
+    margin: 20px 0 0 0px; padding: 3px 3px 3px 3px;
+    border-style:solid; border-color:black; border-width:1px; z-index: 6;
+}
+span.dropt:hover span {
+    left: 25%;
+    background: #ffffff;
+    position: absolute;
+}
+
+span.dropt span {
+    position: absolute; 
+    left: -9999px;
+    margin: 4px 0 0 0px; 
+    padding: 3px 3px 3px 3px; 
+    border-style:solid; 
+    border-color:black; 
+    border-width:1px;
+}
+
+span.dropt:hover span {
+    margin: 20px 0 0 170px; 
+    background: #ffffff; 
+    z-index:6;
+} 

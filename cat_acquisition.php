@@ -353,13 +353,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 						<div class="widget-body">
 							<p style="width:700px"></p>
 
-<<<<<<< HEAD
 							<span class="dropt">This graph shows the level of engagement of incoming visitors from the most important referral sources for the website. 
   								<span style="width:500px;">This graph shows the level of engagement of incoming visitors from the most important referral sources for the website. The size of the bubble represents the average number of videos watched/session for visitors coming from a certain source, while the position of the bubble on the grid represents the average percentage of available video content watched in a session by visitors from the  same source.  The graph only shows the top ten sources in terms of sessions generated.</span>
-=======
-							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
-  								<span style="width:500px;">Shows the level of engagement of incoming visitors from the most important referral sources for the website. The size of the bubble represents the average number of videos watched/session for visitors coming from a certain source, while the position of the bubble on the grid represents the average percentage of available video content watched in a session by visitors from the  same source.  The graph only shows the top ten sources in terms of sessions generated.</span>
->>>>>>> FETCH_HEAD
 							</span>
 
 							<?php
@@ -427,15 +422,11 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							?>
 
-<<<<<<< HEAD
 							<iframe width="1000" height="700" src="vizmodules/acqui_referralengagement.html" frameborder="0"></iframe>
 
 							<input type="submit" value="CSV File" onClick="window.location.href='data/d_acqui_referralengagement.csv'">
 
 
-=======
-							<iframe width="1000" height="520" src="vizmodules/acqui_referralengagement.html" frameborder="0"></iframe>
->>>>>>> FETCH_HEAD
 						</div>
 					</div>
 				</div>

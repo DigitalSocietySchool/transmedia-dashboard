@@ -404,15 +404,12 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 							</script>
 
 							<p style="text-align:center;"> total sessions = <?php echo $data["totalsForAllResults"]["ga:sessions"]; ?> </p>
-<<<<<<< HEAD
 
 							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_intro.csv'">
 
 
 
 
-=======
->>>>>>> FETCH_HEAD
 
 					 	</div>
 					</div>
@@ -480,11 +477,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							<!-- <p>sum = <?php echo $add; ?></p> -->
 
-<<<<<<< HEAD
 							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behavior_decidingtime.csv'">
 
-=======
->>>>>>> FETCH_HEAD
 						</div>
 					</div>
 				</div>
@@ -507,14 +501,10 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
   								<span style="width:500px;">This graph shows the top content based on level of enagagement. The size of the bubble represents how many times a video was watched. The position of the bubble on the grid indicates the average percentage of the full video length that is watched before users navigate to another video.</span>
 							</span>
 
-<<<<<<< HEAD
 							<iframe width="1000" height="700" src="vizmodules/behav_videopopularity.html" frameborder="0"></iframe>
 						
 							<input type="submit" class="download" value="CSV File" onClick="window.location.href='/data/d_behav_videopopularity.csv'">
 
-=======
-							<iframe width="1000" height="340" src="vizmodules/behav_videopopularity.html" frameborder="0"></iframe>
->>>>>>> FETCH_HEAD
 						</div>
 					</div>
 				</div>
@@ -535,14 +525,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 						<div class="widget-body">
 
-<<<<<<< HEAD
 						<p>This graph shows how many times the infographic elements not included in the autopilot narrative were viewed by users. </p>
 							
-=======
-						<span class="dropt">Explanation of this visualization
-  								<span style="width:500px;">Shows how many times the infographic elements not included in the autopilot narrative were viewed by users. </span>
-							</span>
->>>>>>> FETCH_HEAD
 
 
 
@@ -591,12 +575,9 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							<!-- -->
 							<p>sum = <?php echo $add; ?></p>
-<<<<<<< HEAD
 
 							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_infographics.csv'">
 
-=======
->>>>>>> FETCH_HEAD
 						</div>
 					</div>
 				</div>

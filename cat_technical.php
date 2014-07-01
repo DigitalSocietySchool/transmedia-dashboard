@@ -236,7 +236,11 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
 				</div>
 
+<<<<<<< HEAD
 <!-- BROWSER -->
+=======
+
+>>>>>>> FETCH_HEAD
 
 				<a name="browser"></a>
 
@@ -343,7 +347,92 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 				</div>
 
+<<<<<<< HEAD
 <!-- END BROWSER -->
+=======
+
+
+
+				<div class="largevisualization">
+					<div class="widget">
+						<div class="widget-title">
+							<h4>BROWSER</h4>
+							</div>
+
+						<div class="widget-body">
+
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows an overview of types of devices and browsers used by visitors of your website. The diagram also shows how visitors interact with the intro video. An important ratio of users who navigate away at intro could indicate content loading problems for a certian browser or device.  </span>
+							</span>
+
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:dimension7',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:deviceCategory==desktop',
+								'max-results' => '5000'
+							);
+
+
+							// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions,ga:avgSessionDuration',	 $optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+
+							//print_r($data); exit;
+							$buckets = array();
+							$bucketsize = 200;
+							$sessioncounter = 0;
+							foreach($data["rows"] as $row) {
+								$sessioncounter += $row[1];
+							}
+
+							$factor = 700 / $sessioncounter;
+
+							for($i = 600; $i < 2600; $i = $i + $bucketsize) {
+
+								$bucket = $i . "-" . ($i + $bucketsize - 1) . " px";
+
+
+								$buckets[$bucket] = array("sessions" => 0,"averagesessionduration" => 0);
+
+								foreach($data["rows"] as $row) {
+									if($row[0] >= $i && $row[0] < $i + $bucketsize) {
+										$buckets[$bucket]["sessions"] += $row[1];
+										$buckets[$bucket]["averagesessionduration"] += $row[2];
+									}
+								}
+							}
+
+
+
+							//print_r($buckets); exit;
+
+							$content = "widthrange	sessions	averagesessionduration	scale\n";
+							$scale = 0;
+
+							foreach($buckets as $bucketname => $values) {
+								$content .= $bucketname . "\t" . ($values["sessions"] * $factor) . "\t" . ($values["averagesessionduration"] / $values["sessions"]) . "\t" . ($scale * $factor) . "\n";
+								$scale += $values["sessions"];
+							}
+
+							file_put_contents("data/d_tech_timeonsitewidthheight.tsv",$content);
+
+							?>
+
+							<iframe width="1000" height="520" src="vizmodules/tech_timeonsitewidthheight.html" frameborder="0"></iframe>
+
+							<p>total sessions = <?php echo $sessioncounter ?></p>
+						</div>
+					</div>
+				</div>
+>>>>>>> FETCH_HEAD
 
 
 
@@ -352,13 +441,20 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<a name="browser_averageloadingtime"></a>
 
 				<div class="largevisualization">
+<<<<<<< HEAD
 					<div class="widget" style="height=400px;">
 						<div class="widget-title">
 							<h4>Browser & Loading Time</h4>
+=======
+					<div class="widget">
+						<div class="widget-title">
+							<h4>BROWSER</h4>
+>>>>>>> FETCH_HEAD
 							</div>
 
 						<div class="widget-body">
 
+<<<<<<< HEAD
 							<!-- 
 							
 							<span class="dropt">This gaph shows an overview of types of devices and browsers used by visitors of your website.
@@ -369,6 +465,12 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							<p>This gaph shows the average loading time that is related to used browsers.</p>
 
+=======
+							<span class="dropt">Explanation of this visualization
+  								<span style="width:500px;">Shows an overview of types of devices and browsers used by visitors of your website. The diagram also shows how visitors interact with the intro video. An important ratio of users who navigate away at intro could indicate content loading problems for a certian browser or device.  </span>
+							</span>
+
+>>>>>>> FETCH_HEAD
 							<?php
 
 							// here we set up the query
@@ -410,15 +512,21 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							?>
 
+<<<<<<< HEAD
 							<iframe width="1000" height="350" src="vizmodules/tech_browseravgloadtime.html" frameborder="0"></iframe>
 
 							<input type="submit" value="TSV File" onClick="window.location.href='data/d_tech_browseravgloadtime.tsv'">
+=======
+							<iframe width="1000" height="520" src="vizmodules/tech_browseravgloadtime.html" frameborder="0"></iframe>
+
+>>>>>>> FETCH_HEAD
 
 						</div>
 					</div>
 				</div>
 
 
+<<<<<<< HEAD
 <!-- END BROWSER AND AVERAGE LOADINGTIME -->
 
 <!-- AVERAGE TIME ON SITE & SCREEN WIDTH (DESKTOP) -->
@@ -515,6 +623,13 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 
 <!-- END AVERAGE TIME ON SITE & SCREEN WIDTH (DESKTOP) -->
+=======
+
+
+
+<!-- END BROWSER AND AVERAGE LOADINGTIME -->
+
+>>>>>>> FETCH_HEAD
 
 <!--
 

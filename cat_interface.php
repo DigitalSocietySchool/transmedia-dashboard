@@ -364,9 +364,12 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 								<iframe width="500" height="310" src="vizmodules/behav_helpbutton.html" frameborder="0"></iframe>
 
 								<p>total sessions = <?php echo $data["rows"][0][2]; ?></p>
+<<<<<<< HEAD
 
 								<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_helpbutton.csv'">
 
+=======
+>>>>>>> FETCH_HEAD
 							</div>
 						</div>
 					</div>

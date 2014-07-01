@@ -258,7 +258,7 @@ a,a:focus, a:hover, a:active {
 /*logo*/
 #header .brand {
     background:#191D23;
-    background-image:url("../img/submarine-logo-klein.png");
+    background-image:url("../img/logo_figures.png");
     background-repeat: no-repeat;
     margin-top: 0px !important;
     opacity:0.6;
@@ -3541,7 +3541,7 @@ ul.amounts li {
 .textcontent {
     margin-left: 20px;
     margin-right: 50px;
-    width: 700px;
+    width: 710px;
 }
 
 /* Explenations */
@@ -3582,3 +3582,67 @@ span.dropt:hover span {
     background: #ffffff; 
     z-index:6;
 } 
+
+/* ### Fold Outs ###*/
+
+.foldout{
+
+	max-height:35px; /*----------------------------------------    sets the resting height of the content area*/
+
+	width:90%;
+
+	margin-left:auto;
+
+	margin-right:auto;
+
+	margin-bottom:12px;
+
+	border:thin black solid;
+
+	border-radius:2px;
+
+	overflow: hidden; /*---------------------------------------  hides the text outside of the div------*/
+
+	background-color:white;  /*----------------------------------sets the resting background color----*/
+
+/* ------------  below are the actual transition functions for each browser ---------------------------------*/
+
+	transition: max-height 1s, background-color 1s;
+
+	-moz-transition: max-height 1s, background-color 1s;        /* Firefox 4 */
+
+	-webkit-transition: max-height 1s, background-color 1s;     /* Safari and Chrome */
+
+	-o-transition: max-height 1s, background-color 1s;          /* Opera */
+
+}
+
+.foldout p{
+
+	margin:10px 10px 10px 10px; /*gives the text a little elbow room*/
+
+}
+
+.foldout:hover{
+
+	background-color:white; /* Transition-to when hovered */
+
+	max-height:1000px;      /* this value must be set for this to work could be 1000 100000 1000000 */
+
+}
+
+*/ download button
+
+.download {
+     
+ color: #fff;
+ font-size: 0;
+ width: 135px;
+ height: 60px;
+ border: none;
+ margin: 0;
+ padding: 0;
+ background: #0c0 url(image) 0 0 no-repeat; 
+
+}
+

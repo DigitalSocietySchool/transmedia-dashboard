@@ -244,14 +244,14 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 				<div class="smallvisualization-1">
 
-					<div class="widget" style="height:517px">
+					<div class="widget" style="height:500px">
 						<div class="widget-title">
 							<h4>Clicked Elements</h4>
 							</div>
 
 						<div class="widget-body">
-							<span class="dropt">Explenation of this visualization
-  								<span style="width:500px;">Shows how many times visitors clicked on elements in the side menu and what the most used functions are. Note that “show help” is triggered automatically at the beginning of a session. For further insight, please see “Help splash page” visualization.</span>
+							<span class="dropt">This graph shows how many times visitors clicked on elements in the side menu and what the most used functions are.
+  								<span style="width:500px;">This graph shows how many times visitors clicked on elements in the side menu and what the most used functions are. Note that “show help” is triggered automatically at the beginning of a session. For further insight, please see “Help splash page” visualization.</span>
 							</span>
 							<?php
 
@@ -294,11 +294,13 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							?>
 
-
-
 							<iframe width="1000" height="340" src="vizmodules/behav_clickedelements.html" frameborder="0"></iframe>
 
 							<p>sum = <?php echo $add; ?></p>
+
+							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_clickedelements.csv'">
+
+
 						</div>
 					</div>
 				</div>
@@ -313,15 +315,15 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<a name="help_page"></a>
 
 					<div class="smallvisualization-1">
-						<div class="widget" style="height:517px">
+						<div class="widget" style="height:500px">
 							<div class="widget-title">
 								<h4>Help splash page</h4>
 								</div>
 
 							<div class="widget-body">
 
-								<span class="dropt">Explanation of this visualization
-  									<span style="width:500px;">Shows how many times visitors used the Help -function. “Automatic” indicates the number of times the function was triggered automatically, as a splash page at the beginning of the session (at the moment this happens for all sessions). “Manual” indicates the number of people that chose to view the help page an additional time during the session, from the side menu. </span>
+								<span class="dropt">This graph shows how many times visitors used the Help -function.
+  									<span style="width:500px;">This graph shows how many times visitors used the Help -function. “Automatic” indicates the number of times the function was triggered automatically, as a splash page at the beginning of the session (at the moment this happens for all sessions). “Manual” indicates the number of people that chose to view the help page an additional time during the session, from the side menu. </span>
 								</span>
 								<?php
 
@@ -361,11 +363,14 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 								<iframe width="500" height="310" src="vizmodules/behav_helpbutton.html" frameborder="0"></iframe>
 
-								<p>total sessions = <!--?php echo $data["rows"][0][2]; ?--></p>
+								<p>total sessions = <?php echo $data["rows"][0][2]; ?></p>
+
+								<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_helpbutton.csv'">
+
 							</div>
 						</div>
 					</div>
-		
+
 
 <!-- END HELP SPLASH PAGE -->
 
@@ -381,7 +386,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 						<div class="widget-body">
 
-						<span class="dropt" title="Title for the pop-up">Explanation of this visualization
+						<span class="dropt">Indicates mouse movement, calculated in  number of pixels travelled with the mouse pointer within a session.
   							<span style="width:500px;">Indicates mouse movement, calculated in  number of pixels travelled with the mouse pointer within a session. The user interacts with  the  content  through the mouse, therefore low mouse distance and higher session duration could indicate low engagement with the interactive functions of the project and the experiencing of the narrative in “autoplay” mode.</span>
 						</span>
 
@@ -444,13 +449,20 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							<iframe width="1000" height="320" src="vizmodules/behav_mdistance.html" frameborder="0"></iframe>
 
-							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
+							<span class="dropt" title="Title for the pop-up">This graph shows mouse nervousness within a session, expressed as number of pixels travelled per second within a session.
   								<span style="width:500px;">Shows mouse nervousness within a session, expressed as number of pixels travelled per second within a session. This graph only takes into account visits with a maximum length of 300 seconds (5 minutes). High mouse nervousness with lower session duration could indicate a confused or impatient user. </span>
 							</span>
+							<br>
+							<br>
+							<input type="submit" value="CSV File" onClick="window.location.href='data/data/d_behav_mdistance.csv'">
+
 
 							<iframe width="1000" height="320" src="vizmodules/behav_mnervousness.html" frameborder="0"></iframe>
 
 							<p>total sessions = <?php echo $sessions; ?></p>
+
+							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_mnervousness.csv'">
+
 						</div>
 					</div>
 				</div>

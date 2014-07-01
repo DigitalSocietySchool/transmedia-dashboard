@@ -183,13 +183,11 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 	            </a>
 	            <ul class="sub">
 	                <li><a class="" href="#intro_interaction">Intro Interaction</a></li>
-	                <li><a class="" href="#intro_interaction">Deciding Time Intro</a></li>
+	                <li><a class="" href="#deciding_time">Deciding Time Intro</a></li>
 	                <li><a class="" href="#video_popularity">Video Popularity</a></li>
 	                <li><a class="" href="#infographics">Infographics</a></li>
 	                <li><a class="" href="#last_video">Last Video Watched</a></li>
 					<li><a class="" href="#visitor_flow">Visitor Flow</a></li>
-
-
 	            </ul>
 	        </li>
 
@@ -247,13 +245,14 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 	            <div class="smallvisualization-1" >
 
-            		<div class="widget" style="height:600px;"  >
+            		<div class="widget" style="height:450px;"  >
 	                    <div class="widget-title">
-	                        <h4> Intro state: overview (<?php echo $startdate . " - " . $enddate; ?>)</h4>
+	                        <h4> Intro Interaction (<?php echo $startdate . " - " . $enddate; ?>)</h4>
 	               	 	</div>
 						<div class="widget-body">
-							<span class="dropt" title="Title for the pop-up">Explanation of this visualization
-  								<span style="width:500px;">Shows how visitors react to the intro video- watch it completely, skip it or navigate away from the website. The numbers are expressed in percentage of sessions . Hover over a segment for the value expressed in number of sessions.</span>
+
+							<span class="dropt">This graph shows how visitors react to the intro video
+  								<span style="width:500px;">This graph shows how visitors react to the intro video- watch it completely, skip it or navigate away from the website. The numbers are expressed in percentage of sessions . Hover over a segment for the value expressed in number of sessions.</span>
 							</span>
 
 							<div id="pieIntro"></div>
@@ -301,8 +300,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							<script>
 
-							var width = 500,
-								height = 400,
+							var width = 300,
+								height = 300,
 								radius = Math.min(width, height) / 2;
 
 
@@ -404,7 +403,13 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							</script>
 
-							<p style="text-align:center;"> total sessions = <!--?php echo $data["totalsForAllResults"]["ga:sessions"]; ?--> </p>
+							<p style="text-align:center;"> total sessions = <?php echo $data["totalsForAllResults"]["ga:sessions"]; ?> </p>
+
+							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_intro.csv'">
+
+
+
+
 
 					 	</div>
 					</div>
@@ -414,20 +419,65 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 <!-- END INTROSTATE -->
 
 <!-- DECIDING TIME -->
-				
+
 				<a name="deciding_time"></a>
 
 				<div class="largevisualization" >
-					<div class="widget" style="height:500px;">
+					<div class="widget">
 						<div class="widget-title">
 							<h4>Deciding Time</h4>
 
 						</div>
-					
+
 						<div class="widget-body">
-							<span class="dropt">Explanation of this visualization
-  								<span style="width:500px;">Provides insight into the “SKIPPED” and “WENT AWAY” segments. The graph shows what is the moment in the intro when visitors decide to skip or leave the website. The bubbles represent 5 seconds increments of the intro video. The size of the bubble represents the number of visitors that dropped of/ skipped at a certain moment in the intro. For number of sessions hover over a bubble.</span>
+							<span class="dropt">This graph provides insight into the “SKIPPED” and “WENT AWAY” segments.
+  								<span style="width:500px;">This graph provides insight into the “SKIPPED” and “WENT AWAY” segments. The graph shows what is the moment in the intro when visitors decide to skip or leave the website. The bubbles represent 5 seconds increments of the intro video. The size of the bubble represents the number of visitors that dropped of/ skipped at a certain moment in the intro. For number of sessions hover over a bubble.</span>
 							</span>
+
+
+
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:dimension1,ga:dimension2',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:dimension1!=FULL',
+								'max-results' => '5000'
+							);
+
+									// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',$optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+							//print_r($data); exit;
+
+							// CSV file format first line
+							$content = "introstate,decidingtime,sessions\n";
+
+							// parse data and write to file
+							$add = 0;
+						    foreach($data["rows"] as $row) {
+						    	$content .= $row[0] . "," . $row[1] . "," . $row[2] . "\n";
+							}
+
+							//print_r($content);
+
+							// write the data to a file
+							// makes interfacing with D3 simpler
+							file_put_contents("data/d_behavior_decidingtime.csv", $content);
+
+							?>
+
+							<iframe width="1000" height="340" src="vizmodules/behav_decidingtime.html" frameborder="0"></iframe>
+
+							<!-- <p>sum = <?php echo $add; ?></p> -->
+
+							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behavior_decidingtime.csv'">
 
 						</div>
 					</div>
@@ -436,20 +486,25 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 <!-- END DECIDING TIME -->
 
 <!-- DECIDING TIME -->
-				
+
 				<a name="video_popularity"></a>
 
 				<div class="largevisualization" >
-					<div class="widget" style="height:370px;">
+					<div class="widget" style="height:820px;">
 						<div class="widget-title">
 							<h4>Popularity of a video</h4>
 						</div>
-					
+
 
 					<div class="widget-body">
-							<span class="dropt">Explanation of this visualization
-  								<span style="width:500px;">Shows the top content based on level of enagagement. The size of the bubble represents how many times a video was watched. The position of the bubble on the grid indicates the average percentage of the full video length that is watched before users navigate to another video.</span>
+							<span class="dropt">This graph shows the top content based on level of enagagement.
+  								<span style="width:500px;">This graph shows the top content based on level of enagagement. The size of the bubble represents how many times a video was watched. The position of the bubble on the grid indicates the average percentage of the full video length that is watched before users navigate to another video.</span>
 							</span>
+
+							<iframe width="1000" height="700" src="vizmodules/behav_videopopularity.html" frameborder="0"></iframe>
+						
+							<input type="submit" class="download" value="CSV File" onClick="window.location.href='/data/d_behav_videopopularity.csv'">
+
 						</div>
 					</div>
 				</div>
@@ -463,16 +518,15 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 				<div class="smallvisualization-1" >
 
-					<div class="widget" style="height:487px">
+					<div class="widget" style="height:500px">
 						<div class="widget-title">
 							<h4>Infographics </h4>
 						</div>
 
 						<div class="widget-body">
-						
-						<span class="dropt">Explanation of this visualization
-  								<span style="width:500px;">Shows how many times the infographic elements not included in the autopilot narrative were viewed by users. </span>
-							</span>
+
+						<p>This graph shows how many times the infographic elements not included in the autopilot narrative were viewed by users. </p>
+							
 
 
 
@@ -519,7 +573,11 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 							<iframe width="1000" height="340" src="vizmodules/behav_infographics.html" frameborder="0"></iframe>
 
-							<p>sum = <!--?php echo $add; ?--></p>
+							<!-- -->
+							<p>sum = <?php echo $add; ?></p>
+
+							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_infographics.csv'">
+
 						</div>
 					</div>
 				</div>
@@ -532,14 +590,14 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				<a name="last_video"></a>
 
 				<div class="smallvisualization-1">
-						<div class="widget" style="height:487px">
+						<div class="widget" style="height:500px">
 							<div class="widget-title">
-								<h4>Last video watched</h4>							
+								<h4>Last video watched</h4>
 							</div>
 
 							<div class="widget-body">
-							<span class="dropt">Explanation of this visualization
-  								<span style="width:500px;">Shows how many times visitors used the Help -function. “Automatic” indicates the number of times the function was triggered automatically, as a splash page at the beginning of the session (at the moment this happens for all sessions). “Manual” indicates the number of people that chose to view the help page an additional time during the session, from the side menu.</span>
+							<span class="dropt">This graph shows how many times visitors used the Help -function.
+  								<span style="width:500px;">This graph shows how many times visitors used the Help -function. “Automatic” indicates the number of times the function was triggered automatically, as a splash page at the beginning of the session (at the moment this happens for all sessions). “Manual” indicates the number of people that chose to view the help page an additional time during the session, from the side menu.</span>
 							</span>
 
 								<?php
@@ -590,6 +648,9 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 								?>
 
 								<iframe width="500" height="310" src="vizmodules/behav_lastvideo.html" frameborder="0"></iframe>
+							
+							<input type="submit" class="download" value="CSV File" onClick="window.location.href='data/d_behav_lastvideo.csv'">
+
 							</div>
 					</div>
 				</div>
@@ -607,7 +668,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 						</div>
 						<div class="widget-body">
 
-						<span class="dropt">Explanation of this visualization
+						<span class="dropt">This visualization shows how users navigate through the video content.
   								<span style="width:500px;">This visualization shows how users navigate through the video content. Each column is a new step in the interaction. The two perspectives of the narrative are indicated by color of the blocks. The height of the connection represents the number of sessions. To get the number of sessions, hover over a connection.</span>
 						</span>
 
@@ -718,6 +779,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 							<iframe width="1000" height="520" src="vizmodules/behav_visitorflow.html" frameborder="0"></iframe>
 
 							<p>total transitions = <?php echo $edgecounter ?></p>
+
 						</div>
 					</div>
 

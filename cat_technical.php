@@ -203,11 +203,8 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
                 </a>
                 <ul class="sub">
 	                <li><a class="" href="#browser">Browser</a></li>
-	                <li><a class="" href="#browser_averageloadingtime">Browser and Loadingtime</a></li>
+	                <li><a class="" href="#browser_averageloadingtime">Browser and Loading Time</a></li>
 	                <li><a class="" href="#avgtimeonsite_width_desktop">Average Time on Site and Screen Width (Desktop)</a></li>
-	                <li><a class="" href="#avgtimeonsite_height_desktop">Average Time on Site and Screen Height (Desktop)</a></li>
-	                <li><a class="" href="#avgtimeonsite_width_mobile">Average Time on Site and Screen Width (Mobile)</a></li>
-	                <li><a class="" href="#avgtimeonsite_height_mobile">Average Time on Site and Screen Height (Mobile)</a></li>
 	            </ul>
             </li>
 		</ul>
@@ -233,26 +230,26 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 				</div>
 
 
-<!-- START BEHAVIOR TITLE + QUESTION -->
+<!-- START TECHNICAL TITLE + QUESTION -->
 				<div>
 					<h1>TECHNICAL</h1>
 					<h5>How are users exploring the content and what is the content that drives stopping exploration of the content?</h5>
 				</div>
 
-				
+<!-- BROWSER -->
 
 				<a name="browser"></a>
 
 				<div class="largevisualization">
 					<div class="widget">
 						<div class="widget-title">
-							<h4>BROWSER</h4>
+							<h4>Browser</h4>
 							</div>
 
 						<div class="widget-body">
 
-							<span class="dropt">Explanation of this visualization
-  								<span style="width:500px;">Shows an overview of types of devices and browsers used by visitors of your website. The diagram also shows how visitors interact with the intro video. An important ratio of users who navigate away at intro could indicate content loading problems for a certian browser or device.  </span>
+							<span class="dropt">This graph shows an overview of types of devices and browsers used by visitors of your website.
+  								<span style="width:500px;">This graph shows an overview of types of devices and browsers used by visitors of your website. The diagram also shows how visitors interact with the intro video. An important ratio of users who navigate away at intro could indicate content loading problems for a certian browser or device.  </span>
 							</span>
 
 							<?php
@@ -341,34 +338,185 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 							<iframe width="1000" height="520" src="vizmodules/tech_browsertointro.html" frameborder="0"></iframe>
 
 							<p>total sessions = <?php echo $edgecounter ?></p>
+
 						</div>
 					</div>
 				</div>
 
-		
+<!-- END BROWSER -->
+
+
+
 <!-- BROWSER AND AVERAGE LOADINGTIME -->
 
 				<a name="browser_averageloadingtime"></a>
 
-				<div class="smallvisualization-2">
-					<div class="widget" style="height:500px;">
+				<div class="largevisualization">
+					<div class="widget" style="height=400px;">
 						<div class="widget-title">
-							<h4>Browser and Average Loadingtime</h4>
+							<h4>Browser & Loading Time</h4>
+							</div>
 
-						</div>
 						<div class="widget-body">
-						
 
-							<span class="dropt">Explanation of this visualization
-  								<span style="width:500px;">Shows average loading time of the content per browser. Each column represents a browser. Height of the column represents the loading time and the width of each column represents the number of sessions/browser. Higher loading time could indicate a tehnical problem in certain browsers.</span>
+							<!-- 
+							
+							<span class="dropt">This gaph shows an overview of types of devices and browsers used by visitors of your website.
+  								<span style="width:500px;">This gaph shows the average loading time that is related to used browsers.</span>
 							</span>
+
+							-->
+
+							<p>This gaph shows the average loading time that is related to used browsers.</p>
+
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:browser,ga:dimension13',
+								//'sort' => '-ga:visits',
+								//'filters' => 'ga:deviceCategory==desktop',
+								'max-results' => '5000'
+							);
+
+
+							// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions',$optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+
+							$bags = array();
+							$content = "browser	avgloadtime\n";
+
+							foreach($data["rows"] as $row) {
+
+								if(!isset($bags[$row[0]])) {
+									$bags[$row[0]] = array("sessions" => 0,"time" => 0);
+								}
+
+								$bags[$row[0]]["sessions"] += $row[2];
+								$bags[$row[0]]["time"] += ($row[1] * $row[2]);
+							}
+
+							foreach($bags as $browser => $values) {
+								$content .= $browser . "\t" . round(($values["time"] / $values["sessions"]) / 1000,2) . "\n";
+							}
+
+							file_put_contents("data/d_tech_browseravgloadtime.tsv",$content);
+
+							?>
+
+							<iframe width="1000" height="350" src="vizmodules/tech_browseravgloadtime.html" frameborder="0"></iframe>
+
+							<input type="submit" value="TSV File" onClick="window.location.href='data/d_tech_browseravgloadtime.tsv'">
+
 						</div>
 					</div>
 				</div>
 
+
 <!-- END BROWSER AND AVERAGE LOADINGTIME -->
 
-<!-- Average LOADIDNGTIME AND WIDTH (DESKTOP) -->
+<!-- AVERAGE TIME ON SITE & SCREEN WIDTH (DESKTOP) -->
+
+				<a name="avgtimeonsite_width_desktop"></a>
+				<div class="largevisualization">
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Average Time on Site & Screen Width (Desktop)</h4>
+						</div>
+
+						<div class="widget-body">
+
+							<!--
+
+							<span class="dropt">This graph shows an overview of types of devices and browsers used by visitors of your website.
+  								<span style="width:500px;">This graph shows an overview of types of devices and browsers used by visitors of your website. The diagram also shows how visitors interact with the intro video. An important ratio of users who navigate away at intro could indicate content loading problems for a certian browser or device.  </span>
+							</span>
+
+							-->
+
+							<p>This graph shows a an overview of an average time users spend a the project that use a certain screen width. The screen width is grouped by 200 pixels and the width of the bar indicates the amount of users. </p>
+							<?php
+
+							// here we set up the query
+							// cf GA query explorer for reference
+							$optParams = array(
+								'dimensions' => 'ga:dimension7',
+								//'sort' => '-ga:visits',
+								'filters' => 'ga:deviceCategory==desktop',
+								'max-results' => '5000'
+							);
+
+
+							// make the call to the API
+							try {
+								$data = $service -> data_ga -> get('ga:81935905',$startdate, $enddate, 'ga:sessions,ga:avgSessionDuration',	 $optParams);
+							} catch (Exception $e) {
+						    	print_r($e);
+							}
+
+
+							//print_r($data); exit;
+							$buckets = array();
+							$bucketsize = 200;
+							$sessioncounter = 0;
+							foreach($data["rows"] as $row) {
+								$sessioncounter += $row[1];
+							}
+
+							$factor = 700 / $sessioncounter;
+
+							for($i = 600; $i < 2600; $i = $i + $bucketsize) {
+
+								$bucket = $i . "-" . ($i + $bucketsize - 1) . " px";
+
+
+								$buckets[$bucket] = array("sessions" => 0,"averagesessionduration" => 0);
+
+								foreach($data["rows"] as $row) {
+									if($row[0] >= $i && $row[0] < $i + $bucketsize) {
+										$buckets[$bucket]["sessions"] += $row[1];
+										$buckets[$bucket]["averagesessionduration"] += $row[2];
+									}
+								}
+							}
+
+
+
+							//print_r($buckets); exit;
+
+							$content = "widthrange	sessions	averagesessionduration	scale\n";
+							$scale = 0;
+
+							foreach($buckets as $bucketname => $values) {
+								$content .= $bucketname . "\t" . ($values["sessions"] * $factor) . "\t" . ($values["averagesessionduration"] / $values["sessions"]) . "\t" . ($scale * $factor) . "\n";
+								$scale += $values["sessions"];
+							}
+
+							file_put_contents("data/d_tech_timeonsitewidthheight.tsv",$content);
+
+							?>
+
+							<iframe width="1000" height="650" src="vizmodules/tech_timeonsitewidthheight.html" frameborder="0"></iframe>
+
+							<p>total sessions = <?php echo $sessioncounter ?></p>
+
+							<input type="submit" value="TSV File" onClick="window.location.href='data/d_tech_timeonsitewidthheight.tsv'">
+
+
+						</div>
+					</div>
+				</div>
+
+
+<!-- END AVERAGE TIME ON SITE & SCREEN WIDTH (DESKTOP) -->
+
+<!--
 
 				<a name="avgtimeonsite_width_desktop"></a>
 
@@ -379,7 +527,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 
 						</div>
 						<div class="widget-body">
-						
+
 
 							<span class="dropt">Explanation of this visualization
   								<span style="width:500px;">Shows average loading time of the content per browser. Each column represents a browser. Height of the column represents the loading time and the width of each column represents the number of sessions/browser. Higher loading time could indicate a tehnical problem in certain browsers.</span>
@@ -388,9 +536,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 				</div>
 
-<!-- END Average LOADIDNGTIME AND WIDTH (DESKTOP) -->
 
-<!-- Average LOADIDNGTIME AND HEIGHT (DESKTOP) -->
 
 				<a name="avgtimeonsite_height_desktop"></a>
 
@@ -407,9 +553,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 				</div>
 
-<!-- END Average LOADIDNGTIME AND HEIGHT (DESKTOP) -->
 
-<!-- Average LOADIDNGTIME AND WIDTH (MOBILE) -->
 
 				<a name="avgtimeonsite_width_mobile"></a>
 
@@ -428,9 +572,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 				</div>
 
-<!-- END Average LOADIDNGTIME AND WIDTH (MOBILE) -->
 
-<!-- Average LOADIDNGTIME AND WIDTH (MOBILE) -->
 
 				<a name="avgtimeonsite_height_mobile"></a>
 
@@ -447,8 +589,7 @@ $enddate = ($_GET["date_end"]) ? $_GET["date_end"]:date("Y-m-d", time() - 60 * 6
 					</div>
 				</div>
 
-<!-- END Average LOADIDNGTIME AND WIDTH (MOBILE) -->
-
+-->
 
 			</div>
 		</div>
